@@ -19,12 +19,40 @@ InstallMethod( GSet,
     Omega := rec( );
     
     ObjectifyWithAttributes( Omega, TheTypeOfSkeletalGSets,
-            AsList,  L, 
+            AsList, L,
             UnderlyingGroup, G );
     
     Add( SkeletalGSets( G ), Omega );
     
     return Omega;
+    
+end );
+
+##
+InstallMethod( MapOfGSets,
+        "for two CAP skeletal G sets and a list",
+        [ IsSkeletalGSetRep, IsList, IsSkeletalGSetRep ],
+        
+  function( S, I, T )
+    local G, map;
+    
+    G := UnderlyingGroup( S );
+
+    if not IsIdenticalObj( G, UnderlyingGroup( T ) ) then
+        Error( "The underlying groups of the source and the range are not the same with respect to IsIdenticalObj" );
+    fi;
+    
+    map := rec( );
+    
+    ObjectifyWithAttributes( map, TheTypeOfMapsOfSkeletalGSets,
+        AsList, I,
+        Source, S,
+        Range, T 
+    );
+    
+    Add( SkeletalGSets( G ), map );
+     
+    return map;
     
 end );
 
@@ -119,28 +147,6 @@ InstallMethod( SkeletalGSets,
 
 
     ## Morphisms
-
-    ##
-    InstallMethod( MapOfGSets,
-            "for two CAP skeletal G sets and a list",
-            [ IsSkeletalGSetRep, IsList, IsSkeletalGSetRep ],
-            
-      function( S, I, T )
-        local map;
-        
-        map := rec( );
-        
-        ObjectifyWithAttributes( map, TheTypeOfMapsOfSkeletalGSets,
-            AsList, I,
-            Source, S,
-            Range, T 
-        );
-        
-        Add( SkeletalGSets, map );
-         
-        return map;
-        
-    end );
 
     ##
     AddIsWellDefinedForMorphisms( SkeletalGSets,
