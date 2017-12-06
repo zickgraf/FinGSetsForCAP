@@ -4,7 +4,7 @@
 # Declarations
 #
 
-#! @Chapter The skeletal category of G-sets
+#! @Chapter The category of skeletal finite G-sets
 
 DeclareRepresentation( "IsSkeletalGSetRep",
         IsAttributeStoringRep and
