@@ -1,3 +1,3 @@
-The GAP 4 package `FinSetsForCAP'
+The GAP 4 package `SkeletalGSetsForCAP'
 ==============================
 

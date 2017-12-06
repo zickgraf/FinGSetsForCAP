@@ -1,12 +1,18 @@
-@Chapter The category of finite sets
+@Chapter The category of skeletal finite G-sets
 
 @Section Attributes
 @Section Constructors
 @Section Tools
 @Section Examples
 
+@Subsection EqualForObjects
+@InsertSystem EqualForObjects
+
 @Subsection PreCompose
 @InsertSystem PreCompose
+
+@Subsection IdentityMorphism
+@InsertSystem IdentityMorphism
 
 @Subsection Initial and Terminal objects
 @InsertSystem InitialTerminal
@@ -31,9 +37,3 @@
 
 @Subsection Pushout
 @InsertSystem Pushout
-
-@Subsection SkeletalGSets
-@InsertSystem SkeletalGSets
-
-@Subsection UniversalMorphismDirectProduct
-@InsertSystem UniversalMorphismDirectProduct

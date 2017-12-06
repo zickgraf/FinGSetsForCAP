@@ -1,5 +1,5 @@
 #
-# FinSetsForCAP: The elementary topos of finite sets
+# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
 #
 # Declarations
 #
@@ -70,7 +70,7 @@ DeclareOperation( "GSet",
 #! @InsertSystem GSet
 
 #! @Description
-#!  Construct a map $\phi:$<A>s</A>$\to$<A>t</A> of the skeletal G-sets <A>s</A> and <A>t</A>,
+#!  Construct a map $\phi \colon$<A>s</A>$\to$<A>t</A> of the skeletal G-sets <A>s</A> and <A>t</A>,
 #!  i.e., a morphism in the &CAP; category <C>SkeletalGSets</C>, where <A>G</A>
 #!  is a list of lists describing the graph of $\phi$.
 #! @Arguments s, G, t

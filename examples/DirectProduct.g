@@ -1,10 +1,36 @@
-#! @System UniversalMorphismDirectProduct
+#! @System DirectProduct
 
-LoadPackage( "FinSets" );
+LoadPackage( "SkeletalGSets" );
 
 #! @Example
+
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
+A := GSet( S3, [0, 1, 0, 0] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( S3, [0, 0, 1, 0] );
+#! <An object in Skeletal Category of G-Sets>
+Display( DirectProduct( A, B ) );
+#! [ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 0, 0, 0 ] ]
+
+S4 := SymmetricGroup( 4 );
+#! Sym( [ 1 .. 4 ] )
+A := GSet( S4, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( S4, [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+Display( DirectProduct( A, B ) );
+#! [ SymmetricGroup( [ 1 .. 4 ] ), [ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+
+pi := ProjectionInFactorOfDirectProduct( [ A, A ], 1 );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( pi );
+#! true
+Display( AsList( pi ) );
+#! [ [ [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], 
+#!       [ 1, (), 3 ] ], [  ], [ [ 1, (), 3 ], [ 1, (), 3 ] ], [  ], 
+#!   [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
+
 
 A := GSet( S3, [0, 1, 0, 0] );
 #! <An object in Skeletal Category of G-Sets>
@@ -24,7 +50,7 @@ M := GSet( S3, [1, 2, 0, 0]);
 #! <An object in Skeletal Category of G-Sets>
 N := GSet( S3, [1, 0, 1, 2]);
 #! <An object in Skeletal Category of G-Sets>
-D:= [M, N];
+D := [ M, N ];
 #! [ <An object in Skeletal Category of G-Sets>, 
 #!   <An object in Skeletal Category of G-Sets> ]
 tau1 := ProjectionInFactorOfDirectProduct( D, 1 );
@@ -45,10 +71,13 @@ AsList( u );
 
 L := GSet( S3, [ 2, 1, 0, 1 ] );
 #! <An object in Skeletal Category of G-Sets>
-D:= [M, N, L];
+D := [ M, N, L ];
 #! [ <An object in Skeletal Category of G-Sets>,
 #!   <An object in Skeletal Category of G-Sets>, 
 #!   <An object in Skeletal Category of G-Sets> ]
-
+tau := ProjectionInFactorOfDirectProduct( D, 3 );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( tau );
+#! true
 
 #! @EndExample

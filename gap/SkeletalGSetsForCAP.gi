@@ -187,6 +187,7 @@ InstallMethod( SkeletalGSets,
                                     return Error( "3\n" );
                                 fi;
                                 
+                                # U_i has to be a subgroup of U_j up to conjugation with Inverse(g)
                                 U_i := RepresentativeOfSubgroupsUpToConjugation( i );
                                 U_j := RepresentativeOfSubgroupsUpToConjugation( j );
                                 if not IsSubset( U_j, ConjugateSubgroup( U_i, Inverse(g) ) ) then
@@ -1067,6 +1068,14 @@ InstallMethod( SkeletalGSets,
     end;
 
     ##
+    AddCoequalizer( SkeletalGSets,
+      function( D )
+        
+        return Range( ProjectionOntoCoequalizer( D ) );
+       
+    end );
+
+    ##
     AddProjectionOntoCoequalizer( SkeletalGSets,
       function( D )
         local A, B, M, N, Cq, ProcessedImagePositions, imgs, j, r, PreimagePositions, f, i, l, ImagePositions, p, img, temp, pos, Solutions;
@@ -1130,7 +1139,7 @@ InstallMethod( SkeletalGSets,
             od;
         od; 
         
-        return MapOfGSets( Range( D[ 1 ] ), imgs , Cq );
+        return MapOfGSets( Range( D[ 1 ] ), imgs , GSet( group, Cq ) );
         
     end );
 
@@ -1202,7 +1211,7 @@ InstallMethod( SkeletalGSets,
             od;
         od;
         
-        return MapOfGSets( Cq, imgs, Range( tau ) );
+        return MapOfGSets( GSet( group, Cq ), imgs, Range( tau ) );
         
      end );
 

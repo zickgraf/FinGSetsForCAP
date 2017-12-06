@@ -1,9 +1,7 @@
 #
-# FinSetsForCAP: The elementary topos of finite sets
+# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
 #
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "FinSetsForCAP", "gap/FinSetsForCAP.gd");
-ReadPackage( "FinSetsForCAP", "gap/SkeletalFinSetsForCAP.gd");
-ReadPackage( "FinSetsForCAP", "gap/SkeletalGSetsForCAP.gd");
+ReadPackage( "SkeletalGSetsForCAP", "gap/SkeletalGSetsForCAP.gd");

@@ -1,5 +1,5 @@
 #
-# FinSetsForCAP: The elementary topos of finite sets
+# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,12 +8,14 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "FinSetsForCAP",
-Subtitle := "The elementary topos of finite sets",
+PackageName := "SkeletalGSetsForCAP",
+Subtitle := "The elementary topos of skeletal finite G-sets",
 Version := Maximum( [
                    "2017.06.14", ## Mohamed's version
                    ## this line prevents merge conflicts
                    "2017.05.26", ## Julia's version
+                   ## this line prevents merge conflicts
+                   "2017.12.06", ## Fabian's version
                    ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -48,6 +50,20 @@ Persons := [
     Place := "Siegen",
     Institution := "University of Siegen",
   ),
+  rec(
+    IsAuthor := true,
+    IsMaintainer := true,
+    FirstNames := "Fabian",
+    LastName := "Zickgraf",
+    WWWHome := "https://github.com/zickgraf/",
+    Email := "zickgraf@rhrk.uni-kl.de",
+    PostalAddress := Concatenation(
+               "Walter-Flex-Str. 3\n",
+               "57068 Siegen\n",
+               "Germany" ),
+    Place := "Siegen",
+    Institution := "University of Siegen",
+  ),
 ],
 
 SourceRepository := rec(
@@ -56,6 +72,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 #SupportEmail   := "TODO",
+# TODO: Homepage says "Page not found"
 PackageWWWHome  := "https://mohamed-barakat.github.io/FinSetsForCAP/",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
@@ -78,12 +95,12 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "FinSetsForCAP",
+  BookName  := "SkeletalGSetsForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "The elementary topos of finite sets",
+  LongTitle := "The elementary topos of skeletal finite G-sets",
 ),
 
 Dependencies := rec(

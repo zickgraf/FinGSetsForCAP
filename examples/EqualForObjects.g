@@ -1,5 +1,9 @@
-Groups have to be the same!! 
+#! @System EqualForObjects
 
+LoadPackage( "SkeletalGSets" );
+
+#! @Example
+# Groups have to be the same with respect to IsIdenticalObj
 C6 := CyclicGroup( 6 );
 #! <pc group of size 6 with 2 generators>
 
@@ -19,4 +23,7 @@ IsWellDefined( w2 );
 #! true
 
 w1 = w2;
-#! Error, no method found! 
+#! Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+#! Error, no 1st choice method found for `IsEqualForObjects' on 2 arguments
+
+#! @EndExample
