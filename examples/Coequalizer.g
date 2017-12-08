@@ -37,9 +37,8 @@ IsWellDefined( f_2 );
 D := [ f_1, f_2 ];;
 Cq := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
-Display( Cq );
-#! [ SymmetricGroup( [ 1 .. 5 ] ), 
-#!   [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ] ]
+AsList( Cq );
+#! [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
@@ -70,9 +69,8 @@ IsWellDefined( f_2 );
 D := [ f_1, f_2 ];;
 Cq := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
-Display( Cq );
-#! [ SymmetricGroup( [ 1 .. 5 ] ), 
-#!   [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ] ]
+AsList( Cq );
+#! [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
@@ -86,6 +84,31 @@ id := IdentityMorphism( Cq );
 #! <An identity morphism in Skeletal Category of G-Sets>
 id = id_to_be;
 #! true
+
+
+
+A := GSet( S5, [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( S5, [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+f_1 := MapOfGSets(A, [ [ [ 1, (), 3 ] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+#! <A morphism in Skeletal Category of G-Sets>
+f_2 := MapOfGSets(A, [ [ [ 1, (1,2,3), 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( f_1 );
+#! true
+IsWellDefined( f_2 );
+#! true
+D := [ f_1, f_2 ];;
+Cq := Coequalizer( D );
+#! <An object in Skeletal Category of G-Sets>
+AsList( Cq );
+#! [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+pi := ProjectionOntoCoequalizer( D );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( pi );
+#! true
+
 
 
 G := SymmetricGroup( 0 );;

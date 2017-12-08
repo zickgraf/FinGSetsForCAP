@@ -15,7 +15,7 @@ pi1 := MapOfGSets( w1, [ [ [ 1, (2,3), 2 ] ], [ [ 1, (), 4 ], [ 1, (1,2), 2 ] ],
 pi2 := MapOfGSets( w1, [ [ [ 1, (), 2 ] ], [ [ 1, (), 4 ], [ 1, (1,2,3), 2 ] ], [], [] ], w2 );
 #! <A morphism in Skeletal Category of G-Sets>
 pi1 = pi2;
-#! true 
+#! true
 # BUT
 AsList( pi1 ) = AsList( pi2 );
 #! false

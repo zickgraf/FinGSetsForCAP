@@ -6,9 +6,9 @@ LoadPackage( "SkeletalGSets" );
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-A := GSet( S3, [0, 1, 0, 0] );
+A := GSet( S3, [ 0, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S3, [0, 0, 1, 0] );
+B := GSet( S3, [ 0, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 Display( DirectProduct( A, B ) );
 #! [ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 0, 0, 0 ] ]
@@ -32,9 +32,35 @@ Display( AsList( pi ) );
 #!   [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
 
 
-A := GSet( S3, [0, 1, 0, 0] );
+
+S5 := SymmetricGroup( 5 );
+#! Sym( [ 1 .. 5 ] )
+A := GSet( S5, [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S3, [0, 1, 0, 0] );
+B := GSet( S5, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+D := [ A, B ];
+#! [ <An object in Skeletal Category of G-Sets>, 
+#!   <An object in Skeletal Category of G-Sets> ]
+pi1 := ProjectionInFactorOfDirectProduct( D, 1 );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( pi1 );
+#! true
+pi2 := ProjectionInFactorOfDirectProduct( D, 2 );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( pi2 );
+#! true
+tau := [ pi1, pi2 ];
+#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+u := UniversalMorphismIntoDirectProduct( D, tau );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( u );
+#! true
+
+
+A := GSet( S3, [ 0, 1, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( S3, [ 0, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 pi1 := ProjectionInFactorOfDirectProduct( [ A, B ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
@@ -46,9 +72,9 @@ AsList(pi2);
 #! [ [ [ 1, (1,3), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
 
 
-M := GSet( S3, [1, 2, 0, 0]);
+M := GSet( S3, [ 1, 2, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-N := GSet( S3, [1, 0, 1, 2]);
+N := GSet( S3, [ 1, 0, 1, 2 ] );
 #! <An object in Skeletal Category of G-Sets>
 D := [ M, N ];
 #! [ <An object in Skeletal Category of G-Sets>, 
@@ -57,7 +83,7 @@ tau1 := ProjectionInFactorOfDirectProduct( D, 1 );
 #! <A morphism in Skeletal Category of G-Sets>
 tau2 := ProjectionInFactorOfDirectProduct( D, 2 );
 #! <A morphism in Skeletal Category of G-Sets>
-tau := [tau1, tau2];
+tau := [ tau1, tau2 ];
 #! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
 u := UniversalMorphismIntoDirectProduct( D, tau );
 #! <A morphism in Skeletal Category of G-Sets>

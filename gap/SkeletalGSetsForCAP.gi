@@ -73,9 +73,9 @@ InstallMethod( SkeletalGSets,
         ProjectionInFactorOfBinaryDirectProduct,
         OffsetInCartesianProduct,
         UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct,
-        AsASet,
         ExplicitCoequalizer,
-        CoequalizerOfAConnectedComponent;
+        CoequalizerOfAConnectedComponent,
+        ImagePositions;
     
     SkeletalGSets := CreateCapCategory( "Skeletal Category of G-Sets" );  # TODO
     
@@ -420,7 +420,7 @@ InstallMethod( SkeletalGSets,
             for a in [ 1 .. k ] do
                 U_a := RepresentativeOfSubgroupsUpToConjugation( a );
                 for g in group do
-                    if ConjugateSubgroup( s, Inverse( g ) ) = U_a then # TODO: g oder Inverse( g )?
+                    if ConjugateSubgroup( s, Inverse( g ) ) = U_a then
                         found_g := true;
                         break;
                     fi;
@@ -597,13 +597,13 @@ InstallMethod( SkeletalGSets,
                     fi;
                 od;
                 
-                s := Stabilizer( group, RoO[ o ], OnRight ); # = SRO[ o ]? TODO
+                s := SRO[ o ];
                 
                 found_conj := false;
                 for j in [ 1 .. k ] do
                     U_j := RepresentativeOfSubgroupsUpToConjugation( j );
                     for conj in group do
-                        if ConjugateSubgroup( s, Inverse( conj ) ) = U_j then # TODO: g oder Inverse( g )?
+                        if ConjugateSubgroup( s, Inverse( conj ) ) = U_j then
                             found_conj := true;
                             break;
                         fi;
@@ -837,24 +837,24 @@ InstallMethod( SkeletalGSets,
         
     end );
 
-    AsASet := function( M ) #TODO: AsSet?, eigener Typ um Gleichheit mod U_i direkt zu prüfen
-        local set, i, U, l, g;
-        
-        set := [];
-        for i in [ 1 .. k ] do
-            U := RepresentativeOfSubgroupsUpToConjugation( i );
-            for l in [ 1 .. M[ i ] ] do
-                set := Union2( set, List( RightTransversal( group, U ), g -> [ l, g, i ] ) );
-            od;
-        od;
-        return set;
-        
-    end;
-
     ##
     ExplicitCoequalizer :=  function( D )
-        local A, B, ASet, BSet, AreEquivalent, equivalence_classes, b, first_equivalence_class, i, class, j, element, OurAction, external_set, orbits, RoO, Cq, r, s;
+        local AsASet, A, B, ASet, BSet, AreEquivalent, equivalence_classes, b, first_equivalence_class, i, class, j, element, OurAction, external_set, orbits, RoO, Cq, r, s;
         
+        AsASet := function( M )
+            local set, i, U, l, g;
+            
+            set := [];
+            for i in [ 1 .. k ] do
+                U := RepresentativeOfSubgroupsUpToConjugation( i );
+                for l in [ 1 .. M[ i ] ] do
+                    set := Union2( set, List( RightTransversal( group, U ), g -> [ l, g, i ] ) );
+                od;
+            od;
+            return set;
+            
+        end;
+
         A := Source( D[ 1 ] );
         B := Range( D[ 1 ] );
         ASet := AsASet( AsList( A ) );
@@ -1060,7 +1060,7 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             U_i := RepresentativeOfSubgroupsUpToConjugation( i );
             for g in group do
-                if ConjugateSubgroup( V, Inverse( g ) ) = U_i then # TODO: g oder Inverse( g )?
+                if ConjugateSubgroup( V, Inverse( g ) ) = U_i then
                     for p in RangePositions do
                         r := p[ 1 ];
                         j := p[ 2 ];
@@ -1220,11 +1220,9 @@ InstallMethod( SkeletalGSets,
         return MapOfGSets( GSet( group, Cq ), imgs, Range( tau ) );
         
      end );
-
-    ##
-    AddImageObject( SkeletalGSets,
-      function( phi )
-        local S, M, imgs, L, i, l, r, j; 
+    
+    ImagePositions := function( phi )
+        local S, M, imgs, L, i, l, r, j;
         
         S := Source( phi );
         
@@ -1232,11 +1230,7 @@ InstallMethod( SkeletalGSets,
         
         imgs := AsList(phi);
         
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := [];
-        od;
+        L := List( [ 1 .. k ], i -> [] );
         
         for i in [ 1 .. k ] do
             for l in [ 1 .. M[ i ] ] do
@@ -1247,7 +1241,17 @@ InstallMethod( SkeletalGSets,
             od;
         od;
         
-        return GSet( group, List( L, x -> Length( Set ( x ) ) ) );
+        L := List( L, l -> Set( l ));
+
+        return L;
+        
+    end;
+    
+    ##
+    AddImageObject( SkeletalGSets,
+      function( phi )
+        
+        return GSet( group, List( ImagePositions( phi ), x -> Length( x ) ) );
         
     end );
 
@@ -1278,35 +1282,20 @@ InstallMethod( SkeletalGSets,
     ##
     AddImageEmbedding( SkeletalGSets,
       function( phi )
-        local I, M, imgs, L, i, l, r, j, D, C;
+        local I, M, L, i, l, D, C;
         
         I := ImageObject( phi );
         
         M := AsList( I );
         
-        imgs := AsList(phi);
-        
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := [];
-        od;
-        
-        for i in [ 1 .. k ] do
-            for l in [ 1 .. M[ i ] ] do
-                r := imgs[i][l][1];
-                j := imgs[i][l][3];
-                
-                Add(L[j], r);
-            od;
-        od;
+        L := ImagePositions( phi );
         
         D := [];
         
         for i in [ 1 .. k ] do 
             C := [];
             for l in [ 1 .. M[ i ] ] do
-                Add( C, [ Set( L[ i ] )[ l ], Identity( group ), i ] );
+                Add( C, [ L[ i ][ l ], Identity( group ), i ] );
             od;
             Add( D, C );
         od;
@@ -1326,20 +1315,7 @@ InstallMethod( SkeletalGSets,
         
         imgs := AsList(phi);
         
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := [];
-        od;
-        
-        for i in [ 1 .. k ] do
-            for l in [ 1 .. M[ i ] ] do
-                r := imgs[ i ][ l ][ 1 ];
-                j := imgs[ i ][ l ][ 3 ];
-                
-                Add(L[j], r);
-            od;
-        od;
+        L := ImagePositions( phi );
         
         D := [];
         
