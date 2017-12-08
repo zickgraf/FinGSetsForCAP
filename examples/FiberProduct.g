@@ -32,4 +32,55 @@ pi2 := ProjectionInFactorOfFiberProduct( D, 2 );
 AsList( pi2 );
 #! [ [ [ 2, (), 1 ] ], [  ], [  ], [  ] ]
 
+
+
+G := SymmetricGroup( 0 );;
+m := GSet( G, [ 5 ] );
+#! <An object in Skeletal Category of G-Sets>
+n1 := GSet( G, [ 3 ] );
+#! <An object in Skeletal Category of G-Sets>
+iota1 := MapOfGSets( n1, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ], m );
+#! <A morphism in Skeletal Category of G-Sets>
+IsMonomorphism( iota1 );
+#! true
+SetIsMonomorphism( iota1, true );
+n2 := GSet( G, [ 4 ] );
+#! <An object in Skeletal Category of G-Sets>
+iota2 := MapOfGSets( n2, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ] ] ], m );
+#! <A morphism in Skeletal Category of G-Sets>
+IsMonomorphism( iota2 );
+#! true
+SetIsMonomorphism( iota2, true );
+D := [ iota1, iota2 ];
+#! [ <A monomorphism in Skeletal Category of G-Sets>, <A monomorphism in Skeletal Category of G-Sets> ]
+Fib := FiberProduct( D );
+#! <An object in Skeletal Category of G-Sets>
+AsList( Fib );
+#! [ 3 ]
+pi1 := ProjectionInFactorOfFiberProduct( D, 1 );
+#! <A monomorphism in Skeletal Category of G-Sets>
+AsList( pi1 );
+#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+int1 := ImageObject( pi1 );
+#! <An object in Skeletal Category of G-Sets>
+AsList( int1 );
+#! [ 3 ]
+pi2 := ProjectionInFactorOfFiberProduct( D, 2 );
+#! <A monomorphism in Skeletal Category of G-Sets>
+AsList( pi2 );
+#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+int2 := ImageObject( pi2 );
+#! <An object in Skeletal Category of G-Sets>
+AsList( int2 );
+#! [ 3 ]
+omega1 := PreCompose( pi1, iota1 );
+#! <A monomorphism in Skeletal Category of G-Sets>
+omega2 := PreCompose( pi2, iota2 );
+#! <A monomorphism in Skeletal Category of G-Sets>
+omega1 = omega2;
+#! true
+AsList( omega1 );
+#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+
+
 #! @EndExample

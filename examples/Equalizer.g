@@ -23,4 +23,38 @@ Eq := Equalizer( [ psi1, psi2 ] );
 AsList( Eq );
 #! [ 0, 0, 2, 0 ]
 
+
+
+G := SymmetricGroup( 0 );;
+S := GSet( G, [ 5 ] );
+#! <An object in Skeletal Category of G-Sets>
+T := GSet( G, [ 3 ] );
+#! <An object in Skeletal Category of G-Sets>
+f1 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], T );
+#! <A morphism in Skeletal Category of G-Sets>
+f2 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+#! <A morphism in Skeletal Category of G-Sets>
+f3 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+#! <A morphism in Skeletal Category of G-Sets>
+D := [ f1, f2, f3 ];
+#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+Eq := Equalizer( D );
+#! <An object in Skeletal Category of G-Sets>
+AsList( Eq );
+#! [ 2 ]
+psi := EmbeddingOfEqualizer( D );
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( psi );
+#! [ [ [ 1, (), 1 ], [ 5, (), 1 ] ] ]
+D := [ f2, f3 ];
+#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+Eq := Equalizer( D );
+#! <An object in Skeletal Category of G-Sets>
+AsList( Eq );
+#! [ 3 ]
+psi := EmbeddingOfEqualizer( D );
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( psi );
+#! [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ] ] ]
+
 #! @EndExample

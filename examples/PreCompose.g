@@ -50,4 +50,22 @@ pi := PreCompose( psi1, psi2 );
 AsList( pi );
 #! [ [ [ 1, (2,3), 3 ], [ 1, (1,2,3), 2 ] ], [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ], [  ], [  ] ]
 
+
+G := SymmetricGroup( 0 );;
+m := GSet( G, [ 3 ] );
+#! <An object in Skeletal Category of G-Sets>
+n := GSet( G, [ 5 ] );
+#! <An object in Skeletal Category of G-Sets>
+p := GSet( G, [ 7 ] );
+#! <An object in Skeletal Category of G-Sets>
+psi := MapOfGSets( m, [ [ [ 2, (), 1 ], [ 5, (), 1 ], [ 3, (), 1 ] ] ], n );
+#! <A morphism in Skeletal Category of G-Sets>
+phi := MapOfGSets( n, [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], [ 3, (), 1 ] ] ], p );
+#! <A morphism in Skeletal Category of G-Sets>
+alpha := PreCompose( psi, phi );
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( alpha );
+#! [ [ [ 4, (), 1 ], [ 3, (), 1 ], [ 6, (), 1 ] ] ]
+
+
 #! @EndExample

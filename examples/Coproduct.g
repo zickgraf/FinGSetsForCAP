@@ -53,4 +53,27 @@ universal_morphism_into_terminal_object_to_be = UniversalMorphismIntoTerminalObj
 IsEpimorphism( universal_morphism_into_terminal_object_to_be );
 #! true
 
+
+G := SymmetricGroup( 0 );;
+m := GSet( G, [ 7 ] );
+#! <An object in Skeletal Category of G-Sets>
+n := GSet( G, [ 3 ] );
+#! <An object in Skeletal Category of G-Sets>
+p := GSet( G, [ 4 ] );
+#! <An object in Skeletal Category of G-Sets>
+c := Coproduct( m, n, p );
+#! <An object in Skeletal Category of G-Sets>
+AsList( c );
+#! [ 14 ]
+iota1 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 1 );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( iota1 );
+#! true
+AsList( iota1 );
+#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ], [ 6, (), 1 ], [ 7, (), 1 ] ] ]
+iota3 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 3 );
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( iota3 );
+#! [ [ [ 11, (), 1 ], [ 12, (), 1 ], [ 13, (), 1 ], [ 14, (), 1 ] ] ]
+
 #! @EndExample

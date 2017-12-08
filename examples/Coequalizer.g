@@ -87,4 +87,33 @@ id := IdentityMorphism( Cq );
 id = id_to_be;
 #! true
 
+
+G := SymmetricGroup( 0 );;
+s := GSet( G, [ 5 ] );
+#! <An object in Skeletal Category of G-Sets>
+t := GSet( G, [ 4 ] );
+#! <An object in Skeletal Category of G-Sets>
+f := MapOfGSets( s, [ [ [ 3, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+#! <A morphism in Skeletal Category of G-Sets>
+g := MapOfGSets( s, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+#! <A morphism in Skeletal Category of G-Sets>
+D := [ f, g ];
+#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+C := Coequalizer( D );
+#! <An object in Skeletal Category of G-Sets>
+AsList( C );
+#! [ 3 ]
+pi := ProjectionOntoCoequalizer(D);
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( pi );
+#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
+tau := MapOfGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], GSet( G, [ 2 ] ) );
+#! <A morphism in Skeletal Category of G-Sets>
+phi := UniversalMorphismFromCoequalizer( D, tau );
+#! <A morphism in Skeletal Category of G-Sets>
+AsList( phi );
+#! [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ]
+PreCompose( pi, phi ) = tau;
+#! true
+
 #! @EndExample
