@@ -18,6 +18,8 @@ InstallMethod( GSet,
             AsList, L,
             UnderlyingGroup, group );
     
+    Assert( 4, IsWellDefined( Omega ) );
+
     Add( SkeletalGSets( group ), Omega );
     
     return Omega;
@@ -65,6 +67,8 @@ InstallMethod( MapOfGSets,
         Range, T 
     );
     
+    Assert( 4, IsWellDefined( map ) );
+
     Add( SkeletalGSets( group ), map );
      
     return map;
@@ -269,11 +273,6 @@ InstallMethod( SkeletalGSets,
     AddPreCompose( SkeletalGSets,
       function( map_pre, map_post )
         local cmp, S, M, i, C, l, img_1, r_1, g_1, j_1, img_2, r_2, g_2, j_2;
-        
-        # TODO
-        if IsWellDefined( map_pre ) = false or IsWellDefined( map_post ) = false then
-            Error( "Check if the maps are well defined\n" );
-        fi;
         
         cmp := [];
         
@@ -1006,18 +1005,18 @@ InstallMethod( SkeletalGSets,
                     
                     if [ r_a, j_a ] = [ r, j ] then
                         if Solutions[ j ][ r ] = false and Solutions[ j_b ][ r_b ] <> false then
-                            Solutions[ j ][ r ] := Solutions[ j_b ][ r_b ]* g_b * Inverse( g_a );
+                            Solutions[ j ][ r ] := Solutions[ j_b ][ r_b ] * g_b * Inverse( g_a );
                         fi;
                         if Solutions[ j ][ r ] <> false and Solutions[ j_b ][ r_b ] = false then
-                            Solutions[ j_b ][ r_b ] := Solutions[ j ][ r ]* g_a * Inverse( g_b );
+                            Solutions[ j_b ][ r_b ] := Solutions[ j ][ r ] * g_a * Inverse( g_b );
                         fi;
                     
                     elif [ r_b, j_b ] = [ r, j ] then
                         if Solutions[ j ][ r ] = false and Solutions[ j_a ][ r_a ] <> false then
-                            Solutions[ j ][ r ] := Solutions[ j_a ][ r_a ]* g_a * Inverse( g_b );
+                            Solutions[ j ][ r ] := Solutions[ j_a ][ r_a ] * g_a * Inverse( g_b );
                         fi;
                         if Solutions[ j ][ r ] <> false and Solutions[ j_a ][ r_a ] = false then
-                            Solutions[ j_a ][ r_a ] := Solutions[ j ][ r ]* g_b * Inverse( g_a );
+                            Solutions[ j_a ][ r_a ] := Solutions[ j ][ r ] * g_b * Inverse( g_a );
                         fi;  
                     fi;
                 od;
@@ -1325,7 +1324,7 @@ InstallMethod( SkeletalGSets,
         
         pi := MapOfGSets( Source( phi ), D, I );
         
-        Assert( 3, IsEpimorphism( pi ) );
+        Assert( 4, IsEpimorphism( pi ) );
         
         SetIsEpimorphism( pi, true );
         
