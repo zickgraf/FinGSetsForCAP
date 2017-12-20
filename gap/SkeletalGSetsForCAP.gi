@@ -4,10 +4,6 @@
 # Implementations
 #
 
-
-
-#! BindGlobal( "SkeletalGSets", CreateCapCategory( "SkeletalGSets" ) );
-
 ##
 InstallMethod( GSet,
         "for a nonnegative integer",
@@ -87,7 +83,6 @@ InstallMethod( SkeletalGSets,
         IntZeroVector,
         RepresentativeOfSubgroupsUpToConjugation,
         PositionOfSubgroup,
-        IsEqualModSubgroup,
         OrbitsOfActionOnCartesianProduct,
         ProjectionOfASingleBinaryProduct,
         ProjectionInFactorOfBinaryDirectProduct,
@@ -117,14 +112,14 @@ InstallMethod( SkeletalGSets,
     
     RepresentativeOfSubgroupsUpToConjugation := function( i ) 
         
-        return RepresentativeTom( TableOfMarks( group ), i ) ;
+        return RepresentativeTom( TableOfMarks( group ), i );
         
     end;
     
     PositionOfSubgroup := function( U )
         local i;
 
-        for i in [ 1..k ] do
+        for i in [ 1 .. k ] do
             if U in ConjugateSubgroups( group, RepresentativeOfSubgroupsUpToConjugation( i ) ) then
                 return i;
             fi;
@@ -166,7 +161,7 @@ InstallMethod( SkeletalGSets,
     AddIsEqualForObjects( SkeletalGSets,
       function( Omega1, Omega2 )
         
-        #! groups have to be the same, because G is fixed
+        # groups have to be the same, because G is fixed
         return AsList( Omega1 ) = AsList( Omega2 );
         
     end );
@@ -183,7 +178,7 @@ InstallMethod( SkeletalGSets,
         
         T := Range( mor );
         
-        if not (group = UnderlyingGroup( S ) and group = UnderlyingGroup( T )) then
+        if not ( group = UnderlyingGroup( S ) and group = UnderlyingGroup( T ) ) then
             return false;
         fi;
         
@@ -198,8 +193,8 @@ InstallMethod( SkeletalGSets,
         s := AsList( S );
         t := AsList( T );
         
-        if not ForAll( [ 1 .. k ], i -> IsList( img[i] ) and Length( img[i] ) = s[i] and
-            ForAll( img[i], function( e )
+        if not ForAll( [ 1 .. k ], i -> IsList( img[ i ] ) and Length( img[ i ] ) = s[ i ] and
+            ForAll( img[ i ], function( e )
                                 local r, g, j;
                                 
                                 if not ( IsList( e ) and Length( e ) = 3 ) then
@@ -458,8 +453,8 @@ InstallMethod( SkeletalGSets,
         
         T := L[ pos ];
         
-        M := AsList( L[1] );
-        N := AsList( L[2] );
+        M := AsList( L[ 1 ] );
+        N := AsList( L[ 2 ] );
         
         D := [];
         tau := [];
@@ -764,7 +759,7 @@ InstallMethod( SkeletalGSets,
         sum := IntZeroVector( k );
         
         for l in L do
-            sum := sum + AsList(l);
+            sum := sum + AsList( l );
         od;
         
         return GSet( group, sum );
@@ -1216,7 +1211,7 @@ InstallMethod( SkeletalGSets,
         
         return MapOfGSets( GSet( group, Cq ), imgs, Range( tau ) );
         
-     end );
+    end );
     
     ImagePositions := function( phi )
         local S, M, imgs, L, i, l, r, j;
@@ -1231,14 +1226,14 @@ InstallMethod( SkeletalGSets,
         
         for i in [ 1 .. k ] do
             for l in [ 1 .. M[ i ] ] do
-                r := imgs[i][l][1];
-                j := imgs[i][l][3];
+                r := imgs[ i ][ l ][ 1 ];
+                j := imgs[ i ][ l ][ 3 ];
                 
-                Add(L[j], r);
+                Add( L[j], r );
             od;
         od;
         
-        L := List( L, l -> Set( l ));
+        L := List( L, l -> Set( l ) );
 
         return L;
         
@@ -1310,7 +1305,7 @@ InstallMethod( SkeletalGSets,
         
         I := ImageObject( phi );
         
-        imgs := AsList(phi);
+        imgs := AsList( phi );
         
         L := ImagePositions( phi );
         
