@@ -18,11 +18,31 @@ psi2 := MapOfGSets( s, [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], []
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( psi2 );
 #! true
-Eq := Equalizer( [ psi1, psi2 ] );
+D := [ psi1, psi2 ];;
+Eq := Equalizer( D );
 #! <An object in Skeletal Category of G-Sets>
 AsList( Eq );
 #! [ 0, 0, 2, 0 ]
-
+psi := EmbeddingOfEqualizer( D );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( psi );
+#! true
+Display( psi );
+#! [ [  ], [  ], [ [ 1, (), 3 ], [ 2, (), 3 ] ], [  ] ]
+t := GSet( S3, [ 1, 0, 1, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+tau := MapOfGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( tau );
+#! true
+phi := UniversalMorphismIntoEqualizer( D, tau );
+#! <A morphism in Skeletal Category of G-Sets>
+Display( phi );
+#! [ [ [ 2, (1,2), 3 ] ], [  ], [ [ 1, (1,2,3), 3 ] ], [  ] ]
+IsWellDefined( phi );
+#! true
+PreCompose( phi, psi ) = tau;
+#! true
 
 
 G := SymmetricGroup( 0 );;

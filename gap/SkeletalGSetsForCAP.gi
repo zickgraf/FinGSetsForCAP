@@ -695,7 +695,7 @@ InstallMethod( SkeletalGSets,
     ##
     AddUniversalMorphismIntoEqualizerWithGivenEqualizer( SkeletalGSets,
       function( D, tau, E )
-        local f1, M, L, i, l, S, imgs;
+        local f1, M, L, i, l, S, N, imgs, img, r, g, j;
         
         f1 := D[ 1 ];
         
@@ -714,17 +714,22 @@ InstallMethod( SkeletalGSets,
                 fi;
             od;
         od;
+
         
         S := Source( tau );
+        N := AsList( S );
         
         imgs := [];
         
         for i in [ 1 .. k ] do
             imgs[i] := []; 
-            for l in [ 1 .. M[ i ] ] do
-                if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
-                    Add( imgs[i], [ Position( L[i], l ), AsList( tau )[i][l][2], i ]  );
-                fi;
+            for l in [ 1 .. N[ i ] ] do
+                img := AsList( tau )[ i ][ l ];
+                r := img[ 1 ];
+                g := img[ 2 ];
+                j := img[ 3 ];
+
+                Add( imgs[i], [ Position( L[j], r ), g, j ]  );
             od;
         od;
 
