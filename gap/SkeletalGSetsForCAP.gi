@@ -81,6 +81,7 @@ InstallMethod( SkeletalGSets,
                
   function( group )
     local
+        CategoryName,
         SkeletalGSets,
         k,
         IntZeroVector,
@@ -96,7 +97,13 @@ InstallMethod( SkeletalGSets,
         CoequalizerOfAConnectedComponent,
         ImagePositions;
     
-    SkeletalGSets := CreateCapCategory( "Skeletal Category of G-Sets" );  # TODO
+    if HasName( group ) then
+        CategoryName := Concatenation( "Skeletal Category of ", Name( group ), "-Sets" );
+    else
+        CategoryName := "Skeletal Category of G-Sets";
+    fi;
+    
+    SkeletalGSets := CreateCapCategory( CategoryName );
     
     SkeletalGSets!.group_for_category := group;
     
