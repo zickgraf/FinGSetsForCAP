@@ -61,7 +61,7 @@ AsList( ImageObject( phi ) );
 #! [ 2 ]
 pi := ImageEmbedding( phi );
 #! <A monomorphism in Skeletal Category of G-Sets>
-AsList( pi );
+Display( pi );
 #! [ [ [ 5, (), 1 ], [ 7, (), 1 ] ] ]
 
 #! @EndExample

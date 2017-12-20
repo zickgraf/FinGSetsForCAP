@@ -13,16 +13,16 @@ InstallMethod( GSet,
         "for a nonnegative integer",
         [ IsGroup, IsList ],
         
-  function( G, L )
+  function( group, L )
     local Omega;
     
     Omega := rec( );
     
     ObjectifyWithAttributes( Omega, TheTypeOfSkeletalGSets,
             AsList, L,
-            UnderlyingGroup, G );
+            UnderlyingGroup, group );
     
-    Add( SkeletalGSets( G ), Omega );
+    Add( SkeletalGSets( group ), Omega );
     
     return Omega;
     
@@ -34,23 +34,42 @@ InstallMethod( MapOfGSets,
         [ IsSkeletalGSetRep, IsList, IsSkeletalGSetRep ],
         
   function( S, I, T )
-    local G, map;
+    local group, map, k, imgs, g, j, U_j;
     
-    G := UnderlyingGroup( S );
+    group := UnderlyingGroup( S );
 
-    if not IsIdenticalObj( G, UnderlyingGroup( T ) ) then
-        Error( "The underlying groups of the source and the range are not the same with respect to IsIdenticalObj" );
+    if not IsIdenticalObj( group, UnderlyingGroup( T ) ) then
+        Error( "The underlying groups of the source and the range are not the same with respect to IsIdenticalObj\n" );
     fi;
+    
+    k := Length( MatTom( TableOfMarks( group ) ) );
+    
+    imgs := List( I, x -> List( x, function( img )
+        if Length( img ) <> 3 then
+            Error("images must be triples\n");
+        fi;
+        
+        g := img[ 2 ];
+        if g in group then
+            j := img[ 3 ];
+            if not ( IsPosInt( j ) and j <= k ) then
+                Error("last entry of an image must be an integer j with 1 <= j <= k\n");
+            fi;
+            U_j := RepresentativeTom( TableOfMarks( group ), j );
+            img[ 2 ] := RightCoset( U_j, g );
+        fi;
+        return img;
+    end ) );
     
     map := rec( );
     
     ObjectifyWithAttributes( map, TheTypeOfMapsOfSkeletalGSets,
-        AsList, I,
+        AsList, imgs,
         Source, S,
         Range, T 
     );
     
-    Add( SkeletalGSets( G ), map );
+    Add( SkeletalGSets( group ), map );
      
     return map;
     
@@ -189,14 +208,19 @@ InstallMethod( SkeletalGSets,
                                 # g has to be an element of group
                                 # U_i has to be a subgroup of U_j up to conjugation, which can be read off the table of marks
                                 
-                                if not ( IsPosInt( j ) and j <= k and IsPosInt( r ) and r <= t[j] and g in group and tom[j][i] > 0 ) then
+                                if not ( IsPosInt( j ) and j <= k and IsPosInt( r ) and r <= t[ j ] ) then
+                                    return Error( "2\n" );
+                                fi;
+
+                                U_i := RepresentativeOfSubgroupsUpToConjugation( i );
+                                U_j := RepresentativeOfSubgroupsUpToConjugation( j );
+
+                                if not ( g in RightCosets( group, U_j ) and tom[ j ][ i ] > 0 ) then
                                     return Error( "3\n" );
                                 fi;
                                 
                                 # U_i has to be a subgroup of U_j up to conjugation with Inverse(g)
-                                U_i := RepresentativeOfSubgroupsUpToConjugation( i );
-                                U_j := RepresentativeOfSubgroupsUpToConjugation( j );
-                                if not IsSubset( U_j, ConjugateSubgroup( U_i, Inverse(g) ) ) then
+                                if not IsSubset( U_j, ConjugateSubgroup( U_i, Inverse( Representative( g ) ) ) ) then
                                     return Error( "4\n" );
                                 fi;
                                 
@@ -212,63 +236,10 @@ InstallMethod( SkeletalGSets,
     end );
 
     ##
-    InstallMethod( CallFuncList,
-            "for a CAP map of skeletal G-sets and a list",
-        [ IsSkeletalGSetMapRep, IsList ],
-            
-      function( phi, L )
-        local y, l, g, i;
-        
-        l := L[ 1 ][ 1 ];
-        g := L[ 1 ][ 2 ];
-        i := L[ 1 ][ 3 ];
-        
-        y := AsList( phi )[ i ][ l ];
-        
-        if IsWellDefined( phi ) then 
-            if not ( i in [ 1 .. k ] and l <= AsList( Source( phi ) )[ i ] ) then
-                Error( "the element ", [ l, g, i ], " is not in the source of the map\n" );
-            fi;
-        else
-            Error( "please check if the map is well-defined\n" );
-        fi;
-        
-        return  [ y[ 1 ], y[ 2 ] * g, y[ 3 ] ];
-        
-    end );
-    
-    IsEqualModSubgroup := function( g1, g2, U )
-        
-        return g1 * Inverse( g2 ) in U;
-        
-    end;
-
-    ##
     AddIsEqualForMorphisms( SkeletalGSets,
       function( mor1, mor2 )
-        local M, i, l, img1, img2, j, U;
         
-        M := AsList( Source( mor1 ) );
-        
-        for i in [ 1 .. k ] do 
-            if not Length( AsList( mor1 )[ i ] ) = Length( AsList( mor2 )[ i ] ) then
-                return false;
-            fi;
-             
-            for l in [ 1 .. M[ i ] ] do   
-                
-                img1 := AsList( mor1 )[ i ][ l ];
-                img2 := AsList( mor2 )[ i ][ l ];
-                j := img1[ 3 ];
-                U := RepresentativeOfSubgroupsUpToConjugation( j );
-                
-                if not ( img1[ 1 ] = img2[ 1 ] and IsEqualModSubgroup( img1[ 2 ], img2[ 2 ], U ) and img1[ 3 ] = img2[ 3 ] ) then 
-                    return false;
-                fi;
-            od;
-        od;
-         
-        return true; 
+        return AsList( mor1 ) = AsList( mor2 );
         
     end );
 
@@ -295,8 +266,9 @@ InstallMethod( SkeletalGSets,
     ##
     AddPreCompose( SkeletalGSets,
       function( map_pre, map_post )
-        local cmp, S, M, i, C, l;
+        local cmp, S, M, i, C, l, img_1, r_1, g_1, j_1, img_2, r_2, g_2, j_2;
         
+        # TODO
         if IsWellDefined( map_pre ) = false or IsWellDefined( map_post ) = false then
             Error( "Check if the maps are well defined\n" );
         fi;
@@ -310,7 +282,17 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do 
             C := [];
             for l in [ 1 .. M[ i ] ] do
-                Add( C, map_post( map_pre( [ l, Identity( group ), i ] ) ) );
+                img_1 := AsList( map_pre )[ i ] [ l ];
+                r_1 := img_1[ 1 ];
+                g_1 := img_1[ 2 ];
+                j_1 := img_1[ 3 ];
+        
+                img_2 := AsList( map_post )[ j_1 ][ r_1 ];
+                r_2 := img_2[ 1 ];
+                g_2 := img_2[ 2 ];
+                j_2 := img_2[ 3 ];
+        
+                Add( C, [ r_2, Representative( g_2 ) * Representative( g_1), j_2 ] );
             od;
             Add( cmp, C );
         od;
@@ -452,7 +434,7 @@ InstallMethod( SkeletalGSets,
                     target_index := j;
                 fi;
                 
-                Add( pi[ l ], [ copy_number, Representative( img[ pos ] ), target_index ] ); 
+                Add( pi[ l ], [ copy_number, img[ pos ], target_index ] ); 
             od;
         od;
         
@@ -546,7 +528,7 @@ InstallMethod( SkeletalGSets,
     end;
 
     UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct := function( D, tau, T ) # TODO: Frage: was ist D resp. wofür braucht man es??????
-        local S, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, U_j_1, U_j_2, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
+        local S, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
         
         # Assumption Length( D ) = 2
         
@@ -577,11 +559,8 @@ InstallMethod( SkeletalGSets,
                 # Stabilizers of Representatives of orbits
                 SRO := List( RoO, r -> Stabilizer( group, r, OnRight ) );
                 
-                U_j_1 := RepresentativeOfSubgroupsUpToConjugation( j_1 );
-                U_j_2 := RepresentativeOfSubgroupsUpToConjugation( j_2 );
-                
                 # image in the Cartesian product
-                img := [ RightCoset( U_j_1, g_1 ), RightCoset( U_j_2, g_2 ) ]; 
+                img := [ g_1, g_2 ]; 
                 
                 # find the orbit containing img
                 for o in [ 1 .. Length( Orbits ) ] do
@@ -673,7 +652,7 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             L[i] := 0; 
             for l in [ 1 .. M[ i ] ] do
-                if ForAll( D, fj -> AsList( f1 )[i][l][1] = AsList( fj )[i][l][1] and AsList( f1 )[i][l][3] = AsList( fj )[i][l][3] and IsEqualModSubgroup( AsList( f1 )[i][l][2], AsList( fj )[i][l][2], RepresentativeOfSubgroupsUpToConjugation( AsList( f1 )[i][l][3] ) ) ) then
+                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
                     L[i] := L[i] + 1;
                 fi;
             od;
@@ -701,6 +680,7 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             L[i] := []; 
             for l in [ 1 .. M[ i ] ] do
+                # TODO: is this right? Probably not......
                 if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
                     Add( L[i], [ l, Identity( group ), i ] );
                 fi;
@@ -727,6 +707,7 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             L[i] := []; 
             for l in [ 1 .. M[ i ] ] do
+                # TODO: is this right? Probably not......
                 if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
                     Add( L[i], l );
                 fi;
@@ -839,7 +820,16 @@ InstallMethod( SkeletalGSets,
 
     ##
     ExplicitCoequalizer :=  function( D )
-        local AsASet, A, B, ASet, BSet, AreEquivalent, equivalence_classes, b, first_equivalence_class, i, class, j, element, OurAction, external_set, orbits, RoO, Cq, r, s;
+    # TODO
+        local IsEqualModSubgroup, AsASet, A, B, ASet, BSet, AreEquivalent, equivalence_classes, b, first_equivalence_class, i, class, j, element, OurAction, external_set, orbits, RoO, Cq, r, s;
+        
+        
+        IsEqualModSubgroup := function( g1, g2, U )
+            
+            return g1 * Inverse( g2 ) in U;
+            
+        end;
+
         
         AsASet := function( M )
             local set, i, U, l, g;
@@ -987,8 +977,8 @@ InstallMethod( SkeletalGSets,
                     img_b := AsList( f_b )[ i ][ l ];
                     r_a := img_a[ 1 ];
                     r_b := img_b[ 1 ];
-                    g_a := img_a[ 2 ];
-                    g_b := img_b[ 2 ];
+                    g_a := Representative( img_a[ 2 ] );
+                    g_b := Representative( img_b[ 2 ] );
                     j_a := img_a[ 3 ];
                     j_b := img_b[ 3 ];
                     
@@ -1358,7 +1348,7 @@ InstallMethod( SkeletalGSets,
             [ IsSkeletalGSetMapRep ],
             
       function( mor )
-        Display( [ Source( mor ) , AsList( mor ), Range( mor ) ] );
+        Display( List( AsList( mor ), x -> List( x, y -> [ y[ 1 ], Representative( y[ 2 ] ), y[ 3 ] ] ) ) );
     end );
 
 

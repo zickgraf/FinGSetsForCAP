@@ -26,7 +26,7 @@ phi := PreCompose( psi1, psi2 );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( phi );
 #! true
-AsList( phi );
+Display( phi );
 #! [ [ [ 1, (2,3), 1 ] ], [  ], [  ], [  ] ]
 
 S3 := SymmetricGroup( 3 );
@@ -47,7 +47,7 @@ IsWellDefined( psi2 );
 #! true
 pi := PreCompose( psi1, psi2 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( pi );
+Display( pi );
 #! [ [ [ 1, (2,3), 3 ], [ 1, (1,2,3), 2 ] ], [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ], [  ], [  ] ]
 
 
@@ -64,7 +64,7 @@ phi := MapOfGSets( n, [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ]
 #! <A morphism in Skeletal Category of G-Sets>
 alpha := PreCompose( psi, phi );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( alpha );
+Display( alpha );
 #! [ [ [ 4, (), 1 ], [ 3, (), 1 ], [ 6, (), 1 ] ] ]
 
 

@@ -128,13 +128,13 @@ AsList( C );
 #! [ 3 ]
 pi := ProjectionOntoCoequalizer(D);
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( pi );
+Display( pi );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
 tau := MapOfGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], GSet( G, [ 2 ] ) );
 #! <A morphism in Skeletal Category of G-Sets>
 phi := UniversalMorphismFromCoequalizer( D, tau );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( phi );
+Display( phi );
 #! [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ]
 PreCompose( pi, phi ) = tau;
 #! true

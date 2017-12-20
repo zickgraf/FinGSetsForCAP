@@ -44,7 +44,7 @@ AsList( Eq );
 #! [ 2 ]
 psi := EmbeddingOfEqualizer( D );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( psi );
+Display( psi );
 #! [ [ [ 1, (), 1 ], [ 5, (), 1 ] ] ]
 D := [ f2, f3 ];
 #! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
@@ -54,7 +54,7 @@ AsList( Eq );
 #! [ 3 ]
 psi := EmbeddingOfEqualizer( D );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( psi );
+Display( psi );
 #! [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ] ] ]
 
 #! @EndExample

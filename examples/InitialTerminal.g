@@ -41,7 +41,7 @@ IsIdenticalObj( Range( pi ), t );
 #! true
 pi_t := UniversalMorphismIntoTerminalObjectWithGivenTerminalObject( m, t );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( pi_t );
+Display( pi_t );
 #! [ [ [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
 #!       [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ] ] ]
 pi = pi_t;

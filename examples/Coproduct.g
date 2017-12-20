@@ -69,11 +69,11 @@ iota1 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( iota1 );
 #! true
-AsList( iota1 );
+Display( iota1 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ], [ 6, (), 1 ], [ 7, (), 1 ] ] ]
 iota3 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 3 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( iota3 );
+Display( iota3 );
 #! [ [ [ 11, (), 1 ], [ 12, (), 1 ], [ 13, (), 1 ], [ 14, (), 1 ] ] ]
 
 #! @EndExample

@@ -26,7 +26,7 @@ pi := ProjectionInFactorOfDirectProduct( [ A, A ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
 #! true
-Display( AsList( pi ) );
+Display( pi );
 #! [ [ [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], 
 #!       [ 1, (), 3 ] ], [  ], [ [ 1, (), 3 ], [ 1, (), 3 ] ], [  ], 
 #!   [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
@@ -66,9 +66,9 @@ pi1 := ProjectionInFactorOfDirectProduct( [ A, B ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
 pi2 := ProjectionInFactorOfDirectProduct( [ A, B ], 2 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList(pi1);
+Display( pi1 );
 #! [ [ [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
-AsList(pi2);
+Display( pi2 );
 #! [ [ [ 1, (1,3), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
 
 
@@ -89,7 +89,7 @@ u := UniversalMorphismIntoDirectProduct( D, tau );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( u );
 #! true
-AsList( u );
+Display( u );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ], [ 6, (), 1 ], [ 7, (), 1 ], [ 8, (), 1 ],
 #!      [ 9, (), 1 ], [ 10, (), 1 ], [ 11, (), 1 ], [ 12, (), 1 ], [ 13, (), 1 ], [ 14, (), 1 ], [ 15, (), 1 ],
 #!      [ 16, (), 1 ], [ 17, (), 1 ], [ 18, (), 1 ] ], [ [ 1, (), 2 ], [ 2, (), 2 ], [ 3, (), 2 ], [ 4, (), 2 ] ],
@@ -121,7 +121,7 @@ AsList( d );
 #! [ 84 ]
 pi1 := ProjectionInFactorOfDirectProduct( [ m, n, p ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( pi1 );
+Display( pi1 );
 #! [ [ [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
 #!       [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
 #!       [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
@@ -145,7 +145,7 @@ AsList( pi1 );
 #!       [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ] ] ]
 pi3 := ProjectionInFactorOfDirectProduct( [ m, n, p ], 3 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( pi3 );
+Display( pi3 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
 #!       [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
 #!       [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 

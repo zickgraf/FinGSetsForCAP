@@ -27,7 +27,7 @@ pi2 := ProjectionInFactorOfFiberProduct( D, 2 );
 #! <A morphism in Skeletal Category of G-Sets>
 iota := UniversalMorphismFromPushout( [ pi1, pi2 ], [ tau1, tau2 ] );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( iota );
+Display( iota );
 #! [ [ [ 3, (), 1 ], [ 2, (), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 3 ] ], [  ] ]
 
 
@@ -57,11 +57,11 @@ AsList( Fib );
 #! [ 2 ]
 pi1 := ProjectionInFactorOfFiberProduct( D, 1 );
 #! <A monomorphism in Skeletal Category of G-Sets>
-AsList( pi1 );
+Display( pi1 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
 pi2 := ProjectionInFactorOfFiberProduct( D, 2 );
 #! <A monomorphism in Skeletal Category of G-Sets>
-AsList( pi2 );
+Display( pi2 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
 D := [ pi1, pi2 ];
 #! [ <A monomorphism in Skeletal Category of G-Sets>, <A monomorphism in Skeletal Category of G-Sets> ]
@@ -71,11 +71,11 @@ AsList( UU );
 #! [ 3 ]
 kappa1 := InjectionOfCofactorOfPushout( D, 1 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( kappa1 );
+Display( kappa1 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
 kappa2 := InjectionOfCofactorOfPushout( D, 2 );
 #! <A morphism in Skeletal Category of G-Sets>
-AsList( kappa2 );
+Display( kappa2 );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
 PreCompose( pi1, kappa1 ) = PreCompose( pi2, kappa2 );
 #! true
