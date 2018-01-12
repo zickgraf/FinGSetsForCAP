@@ -1,7 +1,18 @@
+# SetAssertionLevel( 4 );
+
+
 LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
 
 G := SymmetricGroup( 3 );
+
+#FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
+
+#IsWellDefined( FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) );
+#IsWellDefined( FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] ) );
+
+#quit;
+
 
 # TODO unabhängig von konkretem G?
 # TODO Asserts?
@@ -118,7 +129,7 @@ AddObjectFunction( ForgetfulFunctor, function( obj )
 		# TODO: erste Spalte immer Indizes?
 		for l in [ 1 .. M[ i ] ] do
 			# cosets must be indexed by l to distinguish different copies, also index by i to keep the notation similar to the notation of maps
-			UnderlyingSet := Union2( UnderlyingSet, List( RightCosets( group, U_i ), coset ->  [ l, coset, i ] ) );
+			Append( UnderlyingSet, List( RightCosets( group, U_i ), coset ->  [ l, coset, i ] ) );
 		od;
 	od;
 
@@ -150,7 +161,7 @@ AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 			j := imgs[ i ][ l ][ 3 ];
 			
 			for h in RightCosets( group, U_i ) do
-				graph := Union2( graph, [ [ [ l, h, i ], [ r, g * Representative( h ), j ] ] ] );
+				Add( graph, [ [ l, h, i ], [ r, g * Representative( h ), j ] ] );
 			od;
 		od;
 	od;
@@ -168,73 +179,207 @@ IsWellDefined( set_phi );
 
 
 
-HomFinSets := function ( M, N )
-	local m, n, homs;
+HomFinSets := function ( S, T )
+	local M, N, homs, Graphs, ImageLists, ImageList, graph, i;
 	
-	m := AsList( M );
-	n := AsList( N );
+	M := AsList( S );
+	N := AsList( T );
 	
 	homs := [];
 	
-	for m in AsList(M) do
-		for 
+	# DirectProduct vs. Cartesian: use Cartesian to make explicit, that this is a set theoretic construction which might not work in general
+	ImageLists := Cartesian( List( M, m -> N ) );
+	for ImageList in ImageLists do
+		Assert( 3, Size( ImageList ) = Size( M ) );
+		graph := [];
+		for i in [ 1 .. Size( M ) ] do
+			Add( graph, [ M[ i ], ImageList[ i ] ] );
+		od;
+		Add( homs, MapOfFinSets( S, graph, T ) );
+	od;
 	
 	return homs;
 end;
 
 
-
-
-GetRhoComponent := function( IndexSet, i_1, i_2 )
-	local Omega_1, Omega_2;
-	Omega_1 := IndexSet[ i_1 ];
-	Omega_2 := IndexSet[ i_2 ];
+HomGSets := function( S, T )
+	local M, N, group, k, homs, ImageLists, ImageList, graph, CurrentImageListPosition, i, U_i, l, img, r, g, j, U_j, WellDefined;
 	
-	S := HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
-	T := HomFinSets( HomGSets( Omega_1, Omega_2), HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
-
-	imgs := List( S, phi ->
-		List( HomGSets( Omega_1, Omega_2), f -> 
-			PreCompose( phi, ApplyFunctor( ForgetfulFunctor, f ) )
-		)
-	);
-
-	SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
+	M := AsList( S );
+	N := AsList( T );
 	
-	return PreCompose( ProjectionInFactorOfDirectProduct( SourceComponents, i_1 ), MapOfFinSets( S, imgs, T ) );
+	group := UnderlyingGroup( S );
+	k := Size( M );
+	
+	homs := [];
+	
+	# DirectProduct vs. Cartesian: use Cartesian to make explicit, that this is a set theoretic construction which might not work in general
+	ImageLists := Cartesian( List( [ 1 .. Sum( M ) ], x -> AsList( ApplyFunctor( ForgetfulFunctor, T ) ) ) );
+	for ImageList in ImageLists do
+		graph := List( [ 1 .. k ], x -> [] );
+		CurrentImageListPosition := 1;
+		WellDefined := true;
+		for i in [ 1 .. k ] do
+			U_i := RepresentativeTom( TableOfMarks( group ), i );
+			for l in [ 1 .. M[ i ] ] do
+				img := ImageList[ CurrentImageListPosition ];
+				r := img[ 1 ];
+				g := img[ 2 ];
+				j := img[ 3 ];
+				
+				U_j := RepresentativeTom( TableOfMarks( group ), j );
+
+				WellDefined := IsSubset( U_j, ConjugateSubgroup( U_i, Inverse( Representative( g ) ) ) );
+				
+				if not WellDefined then
+					break;
+				fi;
+				
+				Add( graph[ i ], img );
+				CurrentImageListPosition := CurrentImageListPosition + 1;
+			od;
+			if not WellDefined then
+				break;
+			fi;
+		od;
+		if WellDefined then
+			Add( homs, MapOfGSets( S, graph, T ) );
+		fi;
+	od;
+	
+	return homs;
 end;
 
 
-GetLambdaComponent := function( IndexSet, i_1, i_2 )
-	local Omega_1, Omega_2;
+GetRhoComponent := function( IndexSet, i_1, i_2 )
+	local Omega_1, Omega_2, S, T, Graph, SourceComponents, pi, RhoComponent;
+	Display("RhoComponent");
+	Display(i_1);
+	Display(i_2);
+	Display("started");
 	Omega_1 := IndexSet[ i_1 ];
 	Omega_2 := IndexSet[ i_2 ];
 	
-	S := HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
-	T := HomFinSets( HomGSets( Omega_1, Omega_2), HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
+	S := FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) );
+	T := FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
 
-	imgs := List( S, phi ->
-		List( HomGSets( Omega_1, Omega_2), f -> 
-			PreCompose( ApplyFunctor( ForgetfulFunctor, f ), phi )
-		)
+	Graph := List( S, phi -> 
+		[
+			phi,
+			MapOfFinSets(
+				FinSet( HomGSets( Omega_1, Omega_2) ),
+				List( HomGSets( Omega_1, Omega_2), f ->
+					[
+						f,
+						PreCompose( phi, ApplyFunctor( ForgetfulFunctor, f ) )
+					]
+				),
+				FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) )
+			)
+		]
 	);
+	
+	SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+	
+	Display("Graph");
+	
+	pi := ProjectionInFactorOfDirectProduct( SourceComponents, i_1 );
+	
+	Display("pi");
 
+	RhoComponent := PreCompose( pi, MapOfFinSets( S, Graph, T ) );
+
+	Display("finished");
+
+	return RhoComponent;
+end;
+
+
+
+
+
+#TODO: zu wenige G-morphismen
+
+
+
+GetLambdaComponent := function( IndexSet, i_1, i_2 )
+	local Omega_1, Omega_2, S, T, Graph, SourceComponents, pi, LambdaComponent;
+	Display("LambdaComponent");
+	Display(i_1);
+	Display(i_2);
+	Display("started");
+	Omega_1 := IndexSet[ i_1 ];
+	Omega_2 := IndexSet[ i_2 ];
 	
-	SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
+	S := FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
+	T := FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
+
+	Graph := List( S, phi -> 
+		[
+			phi,
+			MapOfFinSets(
+				FinSet( HomGSets( Omega_1, Omega_2) ),
+				List( HomGSets( Omega_1, Omega_2), f ->
+					[
+						f,
+						PreCompose( ApplyFunctor( ForgetfulFunctor, f ), phi )
+					]
+				),
+				FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) )
+			)
+		]
+	);
 	
-	return PreCompose( ProjectionInFactorOfDirectProduct( SourceComponents, i_1 ), MapOfFinSets( S, imgs, T ) );
+	SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+	
+	Display("Graph");
+	
+	pi := ProjectionInFactorOfDirectProduct( SourceComponents, i_2 );
+	
+	Display("pi");
+
+	LambdaComponent := PreCompose( pi, MapOfFinSets( S, Graph, T ) );
+
+	Display("finished");
+
+	return LambdaComponent;
 end;
 
 ToM := MatTom( TableOfMarks( G ) );
 k := Size( ToM );
 
-IndexSet := List( [ 1 .. k ], i ->  RepresentativeTom( ToM, i ) );
-SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
-Source := DirectProduct( SourceComponents );
-TargetComponents := Union( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> HomFinSets( HomGSets( Omega_1, Omega_2), HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) ) );
-Target := DirectProduct( TargetComponents );
-RhoComponents := Union( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetRhoComponent(IndexSet, i_1, i_2) ) ) );
-Rho := UniversalMorhpismIntoDirectProduct( RhoComponents );
-LambdaComponents := Union( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetLambdaComponent(IndexSet, i_1, i_2) ) ) );
-Lambda := UniversalMorhpismIntoDirectProduct( LambdaComponents );
-End := Equalizer( [ rho, lambda ] );
+IndexSet := [];
+
+for i in [ 2 .. k ] do
+	M := ListWithIdenticalEntries( k, 0 );
+	M[ i ] := 1;
+	Add( IndexSet, GSet( G, M ) );
+od;
+
+
+# TODO G-Sets
+
+# IsWellDefined( FinSet( HomGSets( IndexSet[ 1 ], IndexSet[ 1 ] ) ));
+#Display("hi");
+
+#IsWellDefined( FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) );
+#IsWellDefined( FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] ) );
+#quit;
+
+SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+Display("SourceComponents");
+S := DirectProduct( SourceComponents );
+Display("Source");
+TargetComponents := Concatenation( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2 ) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) ) ) ) );
+Display("TargetComponents");
+T := DirectProduct( TargetComponents );
+Display("Target");
+RhoComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetRhoComponent(IndexSet, i_1, i_2) ) ) );
+Display("RhoComponents");
+Rho := UniversalMorphismIntoDirectProduct( RhoComponents );
+Display("Rho");
+LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetLambdaComponent(IndexSet, i_1, i_2) ) ) );
+Display("LambdaComponents");
+Lambdaa := UniversalMorphismIntoDirectProduct( LambdaComponents );
+Display("Lambda");
+Enda := Equalizer( [ Rho, Lambdaa ] );
