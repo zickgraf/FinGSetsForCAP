@@ -5,6 +5,7 @@ LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
 
 G := SymmetricGroup( 3 );
+G := SmallGroup(4,2);
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -41,8 +42,8 @@ AddObjectFunction( ForgetfulFunctor, function( obj )
 	
 end );
 
-A := GSet( G, [ 1, 1, 1, 1 ] );
-Display(ApplyFunctor( ForgetfulFunctor, A ));
+#A := GSet( G, [ 1, 1, 1, 1 ] );
+#Display(ApplyFunctor( ForgetfulFunctor, A ));
 
 AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 	local S, T, imgs, M, N, group, ToM, k, OffsetOfCopyInTarget, OffsetOfElementInCopy, set_imgs, i, U_i, l, r, g, j, h;
@@ -100,11 +101,11 @@ AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 end );
 
 
-B := GSet( G, [ 2, 1, 0, 1 ] );
-phi := MapOfGSets( A, [ [ [ 2, (1,2), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 4 ] ], [ [ 1, (), 4 ] ] ], B );
-set_phi := ApplyFunctor( ForgetfulFunctor, phi );
-Display( set_phi );
-IsWellDefined( set_phi );
+#B := GSet( G, [ 2, 1, 0, 1 ] );
+#phi := MapOfGSets( A, [ [ [ 2, (1,2), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 4 ] ], [ [ 1, (), 4 ] ] ], B );
+#set_phi := ApplyFunctor( ForgetfulFunctor, phi );
+#Display( set_phi );
+#IsWellDefined( set_phi );
 
 
 ################################################################################################################################################
@@ -137,8 +138,8 @@ AddObjectFunction( ForgetfulFunctor, function( obj )
 	
 end );
 
-A := GSet( G, [ 1, 1, 1, 1 ] );
-Display(ApplyFunctor( ForgetfulFunctor, A ));
+#A := GSet( G, [ 1, 1, 1, 1 ] );
+#Display(ApplyFunctor( ForgetfulFunctor, A ));
 
 AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 	local S, T, imgs, M, N, group, ToM, k, graph, i, U_i, l, r, g, j, h;
@@ -171,11 +172,11 @@ AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 end );
 
 
-B := GSet( G, [ 2, 1, 0, 1 ] );
-phi := MapOfGSets( A, [ [ [ 2, (1,2), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 4 ] ], [ [ 1, (), 4 ] ] ], B );
-set_phi := ApplyFunctor( ForgetfulFunctor, phi );
-Display( set_phi );
-IsWellDefined( set_phi );
+#B := GSet( G, [ 2, 1, 0, 1 ] );
+#phi := MapOfGSets( A, [ [ [ 2, (1,2), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 4 ] ], [ [ 1, (), 4 ] ] ], B );
+#set_phi := ApplyFunctor( ForgetfulFunctor, phi );
+#Display( set_phi );
+#IsWellDefined( set_phi );
 
 
 
@@ -350,14 +351,12 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 2 .. k ] do
+for i in [ 2 .. ( k - 1 ) ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
 od;
 
-
-# TODO G-Sets
 
 # IsWellDefined( FinSet( HomGSets( IndexSet[ 1 ], IndexSet[ 1 ] ) ));
 #Display("hi");
@@ -383,3 +382,4 @@ Display("LambdaComponents");
 Lambdaa := UniversalMorphismIntoDirectProduct( LambdaComponents );
 Display("Lambda");
 Enda := Equalizer( [ Rho, Lambdaa ] );
+Display( Length( Enda ) );
