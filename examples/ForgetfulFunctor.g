@@ -1,11 +1,98 @@
 # SetAssertionLevel( 4 );
 
+LoadPackage("FinSets");
+# LoadPackage("Semigroups");
+
+# DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
+# TheTypeOfMyGroupElements := NewType( NewFamily( "TheFamilyOfMyGroupElements" ), IsMyGroupElement );
+# 
+# 
+# x := "x";
+# y := "y";
+# 
+# 
+# xElement := rec( );
+# ObjectifyWithAttributes( xElement, TheTypeOfMyGroupElements, AsList, x );
+# yElement := rec( );
+# ObjectifyWithAttributes( yElement, TheTypeOfMyGroupElements, AsList, y );
+# 
+# 
+# InstallMethod( \*,
+#   "for my group elements",
+#   [ IsMyGroupElement, IsMyGroupElement ],
+#         
+#   function( x1, y1 )
+#     
+# 	if IsIdenticalObj( x1, y1 ) then
+# 		return xElement;
+# 	else
+# 		return yElement;
+#     fi;
+# 
+# end );
+# 
+# InstallMethod( \=,
+#   "for my group elements",
+#   [ IsMyGroupElement, IsMyGroupElement ],
+#         IsIdenticalObj );
+# 
+# InstallMethod( \<,
+#   "for my group elements",
+#   [ IsMyGroupElement, IsMyGroupElement ],
+#      
+#   function( x1, y1 )
+#     
+# 	if IsIdenticalObj( x1, xElement ) and IsIdenticalObj( y1, yElement ) then
+# 		return true;
+# 	else
+# 		return false;
+#     fi;
+# 
+# end );
+# 
+# InstallMethod( One,
+#   "for my group elements",
+#   [ IsMyGroupElement ],
+#         
+#   function( x1 )
+#     
+# 	return xElement;
+# 	
+# end );
+# 
+# InstallMethod( InverseOp,
+#   "for my group elements",
+#   [ IsMyGroupElement ],
+#         
+#   function( x1 )
+#     
+# 	if IsIdenticalObj( x1, xElement ) then
+# 		return xElement;
+# 	fi;
+# 	
+# 	if IsIdenticalObj( x1, yElement ) then
+# 		return yElement;
+# 	fi;
+# 	
+# 	Error( "should not get here" );
+# 	
+# end );
+# 
+# MyMonoid := Group( [ xElement, yElement ] );
+# IsomorphicMonoidToBe := Group( [ (1,2) ] );
+# 
+# IsomorphismGroups(MyMonoid,IsomorphicMonoidToBe);
+
+
+
+
+
 
 LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
 
 G := SymmetricGroup( 3 );
-G := SmallGroup(4,2);
+# G := SmallGroup(4,2);
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -14,6 +101,8 @@ G := SmallGroup(4,2);
 
 #quit;
 
+CapCategorySwitchLogicOff(FinSets);
+CapCategorySwitchLogicOff(SkeletalFinSets);
 
 # TODO unabhängig von konkretem G?
 # TODO Asserts?
@@ -134,7 +223,7 @@ AddObjectFunction( ForgetfulFunctor, function( obj )
 		od;
 	od;
 
-	return FinSet( UnderlyingSet );
+	return FinSetNC( MakeImmutable( UnderlyingSet ) );
 	
 end );
 
@@ -189,17 +278,17 @@ HomFinSets := function ( S, T )
 	homs := [];
 	
 	# DirectProduct vs. Cartesian: use Cartesian to make explicit, that this is a set theoretic construction which might not work in general
-	ImageLists := Cartesian( List( M, m -> N ) );
+	ImageLists := MakeImmutable( Cartesian( List( M, m -> N ) ) );
 	for ImageList in ImageLists do
 		Assert( 3, Size( ImageList ) = Size( M ) );
 		graph := [];
 		for i in [ 1 .. Size( M ) ] do
 			Add( graph, [ M[ i ], ImageList[ i ] ] );
 		od;
-		Add( homs, MapOfFinSets( S, graph, T ) );
+		Add( homs, MapOfFinSetsNC( S, graph, T ) );
 	od;
 	
-	return homs;
+	return FinSetNC( homs );
 end;
 
 
@@ -248,7 +337,7 @@ HomGSets := function( S, T )
 		fi;
 	od;
 	
-	return homs;
+	return FinSetNC( homs );
 end;
 
 
@@ -261,26 +350,26 @@ GetRhoComponent := function( IndexSet, i_1, i_2 )
 	Omega_1 := IndexSet[ i_1 ];
 	Omega_2 := IndexSet[ i_2 ];
 	
-	S := FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) );
-	T := FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
+	S := HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
+	T := HomFinSets( HomGSets( Omega_1, Omega_2), HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
 
 	Graph := List( S, phi -> 
 		[
 			phi,
-			MapOfFinSets(
-				FinSet( HomGSets( Omega_1, Omega_2) ),
+			MapOfFinSetsNC(
+				HomGSets( Omega_1, Omega_2),
 				List( HomGSets( Omega_1, Omega_2), f ->
 					[
 						f,
 						PreCompose( phi, ApplyFunctor( ForgetfulFunctor, f ) )
 					]
 				),
-				FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) )
+				HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )
 			)
 		]
 	);
 	
-	SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+	SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
 	
 	Display("Graph");
 	
@@ -288,20 +377,12 @@ GetRhoComponent := function( IndexSet, i_1, i_2 )
 	
 	Display("pi");
 
-	RhoComponent := PreCompose( pi, MapOfFinSets( S, Graph, T ) );
+	RhoComponent := PreCompose( pi, MapOfFinSetsNC( S, Graph, T ) );
 
 	Display("finished");
 
 	return RhoComponent;
 end;
-
-
-
-
-
-#TODO: zu wenige G-morphismen
-
-
 
 GetLambdaComponent := function( IndexSet, i_1, i_2 )
 	local Omega_1, Omega_2, S, T, Graph, SourceComponents, pi, LambdaComponent;
@@ -312,26 +393,26 @@ GetLambdaComponent := function( IndexSet, i_1, i_2 )
 	Omega_1 := IndexSet[ i_1 ];
 	Omega_2 := IndexSet[ i_2 ];
 	
-	S := FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
-	T := FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
+	S := HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+	T := HomFinSets( HomGSets( Omega_1, Omega_2), HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
 
 	Graph := List( S, phi -> 
 		[
 			phi,
-			MapOfFinSets(
-				FinSet( HomGSets( Omega_1, Omega_2) ),
+			MapOfFinSetsNC(
+				HomGSets( Omega_1, Omega_2),
 				List( HomGSets( Omega_1, Omega_2), f ->
 					[
 						f,
 						PreCompose( ApplyFunctor( ForgetfulFunctor, f ), phi )
 					]
 				),
-				FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) )
+				HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )
 			)
 		]
 	);
 	
-	SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+	SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
 	
 	Display("Graph");
 	
@@ -339,7 +420,7 @@ GetLambdaComponent := function( IndexSet, i_1, i_2 )
 	
 	Display("pi");
 
-	LambdaComponent := PreCompose( pi, MapOfFinSets( S, Graph, T ) );
+	LambdaComponent := PreCompose( pi, MapOfFinSetsNC( S, Graph, T ) );
 
 	Display("finished");
 
@@ -351,7 +432,7 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 2 .. ( k - 1 ) ] do
+for i in [ 1 ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
@@ -365,11 +446,13 @@ od;
 #IsWellDefined( FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] ) );
 #quit;
 
-SourceComponents := List( IndexSet, Omega -> FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) ) );
+SourceComponents := List( IndexSet, Omega -> HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
 Display("SourceComponents");
 S := DirectProduct( SourceComponents );
 Display("Source");
-TargetComponents := Concatenation( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> FinSet( HomFinSets( FinSet( HomGSets( Omega_1, Omega_2 ) ), FinSet( HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) ) ) ) );
+Projections := List( [ 1 .. Length( IndexSet ) ], i -> ProjectionInFactorOfDirectProduct( SourceComponents, i ) );
+Display("Projections");
+TargetComponents := Concatenation( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> HomFinSets( HomGSets( Omega_1, Omega_2 ) , HomFinSets( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )  ) ) ) );
 Display("TargetComponents");
 T := DirectProduct( TargetComponents );
 Display("Target");
@@ -381,5 +464,93 @@ LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List(
 Display("LambdaComponents");
 Lambdaa := UniversalMorphismIntoDirectProduct( LambdaComponents );
 Display("Lambda");
-Enda := Equalizer( [ Rho, Lambdaa ] );
-Display( Length( Enda ) );
+
+emb := EmbeddingOfEqualizer( [ Rho, Lambdaa ] );
+Enda := Source( emb );
+
+NaturalTransformations := List( Enda, i -> List( Projections, pi -> PreCompose( emb, pi )( i ) ) );
+
+
+DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
+TheTypeOfMyGroupElements := NewType( NewFamily( "TheFamilyOfMyGroupElements" ), IsMyGroupElement );
+
+NaturalTransformationElements := List( NaturalTransformations, function(x)
+	local element;
+	element := rec( );
+	ObjectifyWithAttributes( element, TheTypeOfMyGroupElements, AsList, x );
+	return element;
+end );
+
+InstallMethod( \*,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+        
+  function( x, y )
+    local i, L, element;
+	
+	L := [];
+	for i in [ 1 .. Length( AsList( x ) ) ] do
+		L[i] := PreCompose( AsList(x)[ i ], AsList(y)[ i ] );
+	od;
+	
+	for element in NaturalTransformationElements do
+		if L = AsList( element ) then
+			return element;
+		fi;
+	od;
+
+	Error( "should never get here" );
+
+end );
+
+InstallMethod( \=,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+        IsIdenticalObj );
+
+InstallMethod( \<,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+     
+  function( x, y )
+    
+	return( Position( NaturalTransformations, x ) < Position( NaturalTransformations, y ) );
+
+end );
+
+MyOne := false;
+for element in NaturalTransformationElements do
+	if ForAll( AsList( element ), f -> f = IdentityMorphism( Source( f ) ) ) then
+		MyOne := element;
+		break;
+	fi;
+od;
+
+if MyOne = false then
+	Error( "MyOne not found" );
+fi;
+
+
+InstallMethod( One,
+  "for my group elements",
+  [ IsMyGroupElement ],
+        
+  function( x1 )
+    
+	return MyOne;
+	
+end );
+
+InstallMethod( InverseOp,
+  "for my group elements",
+  [ IsMyGroupElement ],
+        
+  function( x )
+    
+	return x^( Length( NaturalTransformationElements ) - 1 );
+	
+end );
+
+MyGroup := Group( NaturalTransformationElements );
+
+IsomorphismGroups( MyGroup, G );

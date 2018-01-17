@@ -4,13 +4,16 @@ SetAssertionLevel( 4 );
 LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
 
+CapCategorySwitchLogicOff(FinSets);
+CapCategorySwitchLogicOff(SkeletalFinSets);
 
 #S1 := FinSet( 0 );
 #T1 := FinSet( 0 );
+#L := [];
 
 #for phi in [ 1 .. 6^6 ] do
-#	# MapOfFinSets( S1, [], T1 );
-#	FinSet( 0 );
+#	MapOfFinSets( S1, L, T1 );
+#	# FinSet( 0 );
 #	Display( phi );
 #od;
 
@@ -135,7 +138,7 @@ AddObjectFunction( ForgetfulFunctorNonSkeletal, function( obj )
 		# TODO: erste Spalte immer Indizes?
 		for l in [ 1 .. M[ i ] ] do
 			# cosets must be indexed by l to distinguish different copies, also index by i to keep the notation similar to the notation of maps
-			Append( UnderlyingSet, List( RightCosets( group, U_i ), coset ->  [ l, coset, i ] ) );
+			Append( UnderlyingSet, Immutable( List( RightCosets( group, U_i ), coset ->  [ l, coset, i ] ) ) );
 		od;
 	od;
 
@@ -206,7 +209,7 @@ HomGSets := function( S, T )
 		fi;
 	od;
 	
-	return FinSet( homs );
+	return FinSetNC( homs );
 end;
 
 HomGSetsSkeletal := function( S, T )
@@ -216,6 +219,8 @@ HomGSetsSkeletal := function( S, T )
 	
 	return FinSet( Length( homs ) );
 end;
+
+counter := 0;
 
 IntToMorphism := function( S, int, T )
 	local s, t, L, pad, phi;
@@ -234,6 +239,10 @@ IntToMorphism := function( S, int, T )
 	# add back 1 again
 	L := List( L, l -> l + 1 );
 	phi := MapOfFinSets( S, L, T );
+
+	Display(counter);
+	counter := counter + 1;
+
 	return phi;
 end;
 
@@ -267,7 +276,6 @@ PseudoMorphismToInt := function( s, imgs, t )
 end;
 
 
-counter := 0;
 ComposeInts := function(s, int1, m, int2, t)
 	local int, i, img1, img2;
 	
@@ -319,7 +327,7 @@ GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
 		)
 	);
 
-	# Graph1 := List( [ 1 .. Length( S ) ], phi -> 
+	# Graph := List( [ 1 .. Length( S ) ], phi -> 
 	#  	MorphismToInt( MapOfFinSets(
 	#  		HomGSetsSkeletal( Omega_1, Omega_2),
 	#  		List( HomGSets( Omega_1, Omega_2), f ->
@@ -403,7 +411,7 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 1 .. k ] do
+for i in [ 3 ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
@@ -430,5 +438,92 @@ LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List(
 Display("LambdaComponents");
 Lambdaa := UniversalMorphismIntoDirectProduct( LambdaComponents );
 Display("Lambda");
-Enda := Equalizer( [ Rho, Lambdaa ] );
-Display( Length( Enda ) );
+emb := EmbeddingOfEqualizer( [ Rho, Lambdaa ] );
+Enda := Source( emb );
+
+NaturalTransformations := List( Enda, i -> List( Projections, pi -> IntToMorphism( Range( pi ), PreCompose( emb, pi )( i ), Range( pi ) ) ) );
+
+
+DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
+TheTypeOfMyGroupElements := NewType( NewFamily( "TheFamilyOfMyGroupElements" ), IsMyGroupElement );
+
+NaturalTransformationElements := List( NaturalTransformations, function(x)
+	local element;
+	element := rec( );
+	ObjectifyWithAttributes( element, TheTypeOfMyGroupElements, AsList, x );
+	return element;
+end );
+
+InstallMethod( \*,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+        
+  function( x, y )
+    local i, L, element;
+	
+	L := [];
+	for i in [ 1 .. Length( AsList( x ) ) ] do
+		L[i] := PreCompose( AsList(x)[ i ], AsList(y)[ i ] );
+	od;
+	
+	for element in NaturalTransformationElements do
+		if L = AsList( element ) then
+			return element;
+		fi;
+	od;
+
+	Error( "should never get here" );
+
+end );
+
+InstallMethod( \=,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+        IsIdenticalObj );
+
+InstallMethod( \<,
+  "for my group elements",
+  [ IsMyGroupElement, IsMyGroupElement ],
+     
+  function( x, y )
+    
+	return( Position( NaturalTransformations, x ) < Position( NaturalTransformations, y ) );
+
+end );
+
+MyOne := false;
+for element in NaturalTransformationElements do
+	if ForAll( AsList( element ), f -> f = IdentityMorphism( Source( f ) ) ) then
+		MyOne := element;
+		break;
+	fi;
+od;
+
+if MyOne = false then
+	Error( "MyOne not found" );
+fi;
+
+
+InstallMethod( One,
+  "for my group elements",
+  [ IsMyGroupElement ],
+        
+  function( x1 )
+    
+	return MyOne;
+	
+end );
+
+InstallMethod( InverseOp,
+  "for my group elements",
+  [ IsMyGroupElement ],
+        
+  function( x )
+    
+	return x^( Length( NaturalTransformationElements ) - 1 );
+	
+end );
+
+MyGroup := Group( NaturalTransformationElements );
+
+IsomorphismGroups( MyGroup, G );
