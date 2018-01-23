@@ -103,6 +103,7 @@ G := SymmetricGroup( 3 );
 
 CapCategorySwitchLogicOff(FinSets);
 CapCategorySwitchLogicOff(SkeletalFinSets);
+CapCategorySwitchLogicOff(SkeletalGSets( G ));
 
 # TODO unabhängig von konkretem G?
 # TODO Asserts?
@@ -432,7 +433,7 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 1 ] do
+for i in [ 1, 2, 3, 4 ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
@@ -490,7 +491,7 @@ InstallMethod( \*,
 	
 	L := [];
 	for i in [ 1 .. Length( AsList( x ) ) ] do
-		L[i] := PreCompose( AsList(x)[ i ], AsList(y)[ i ] );
+		L[i] := PreCompose( AsList( x )[ i ], AsList( y )[ i ] );
 	od;
 	
 	for element in NaturalTransformationElements do

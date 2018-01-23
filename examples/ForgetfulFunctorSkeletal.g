@@ -4,8 +4,10 @@ SetAssertionLevel( 4 );
 LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
 
-CapCategorySwitchLogicOff(FinSets);
-CapCategorySwitchLogicOff(SkeletalFinSets);
+CapCategorySwitchLogicOff( FinSets );
+CapCategorySwitchLogicOff( SkeletalFinSets );
+DeactivateCachingOfCategory( FinSets );
+DeactivateCachingOfCategory( SkeletalFinSets );
 
 #S1 := FinSet( 0 );
 #T1 := FinSet( 0 );
@@ -20,7 +22,11 @@ CapCategorySwitchLogicOff(SkeletalFinSets);
 #quit;
 
 G := SymmetricGroup( 3 );
-#G := SmallGroup(4,2);
+F := FreeGroup("x");
+G := F / [F.1^6];
+#G := CyclicGroup( 6 );
+# G := SmallGroup(4,2);
+# G := SmallGroup(8,1);
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -29,6 +35,8 @@ G := SymmetricGroup( 3 );
 
 #quit;
 
+CapCategorySwitchLogicOff( SkeletalGSets( G ) );
+DeactivateCachingOfCategory( SkeletalGSets( G ) );
 
 # TODO unabhängig von konkretem G?
 # TODO Asserts?
@@ -223,25 +231,19 @@ end;
 counter := 0;
 
 IntToMorphism := function( S, int, T )
-	local s, t, L, pad, phi;
+	local s, t, L, i, phi;
 	s := Length( S );
 	t := Length( T );
-	L := [];
+	L := ListWithIdenticalEntries( s, 1 );
 	# lists start with entry 1, we want to start at 0 and add back 1 later
 	int := int - 1;
+	i := 1;
 	while int <> 0 do
-		Add( L, int mod t );
-		int := Int( int / t );
+		L[ i ] := ( int mod t ) + 1;
+		int := QuoInt( int, t );
+		i := i + 1;
 	od;
-	# pad L to length s by adding zeros
-	pad := ListWithIdenticalEntries( s - Length( L ), 0 );
-	L := Concatenation( L, pad );
-	# add back 1 again
-	L := List( L, l -> l + 1 );
 	phi := MapOfFinSets( S, L, T );
-
-	Display(counter);
-	counter := counter + 1;
 
 	return phi;
 end;
@@ -285,21 +287,18 @@ ComposeInts := function(s, int1, m, int2, t)
 	int := 0;
 	for i in [ 0 .. ( s - 1 ) ] do
 		# get i-th digit of int1 w.r.t to base m
-		img1 := Int( int1 / m^i ) mod m;
+		img1 := QuoInt( int1, m^i ) mod m;
 		# get img1-th digit of int2 w.r.t to base t
-		img2 := Int( int2 / t^img1 ) mod t;
+		img2 := QuoInt( int2, t^img1 ) mod t;
 		int := int + img2 * t^i;
 	od;
-
-	Display(counter);
-	counter := counter + 1;
 
 	return int + 1;
 end;
 
 
 GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
-	local Omega_1, Omega_2, S, T, Graph, Graph1, pi, RhoComponent, IntsHomGSets, Length_HomGSetsSkeletal_Omega_1_Omega_2, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2;
+	local Omega_1, Omega_2, S, T, Graph, Graph1, pi, RhoComponent, IntsHomGSets, Length_HomGSetsSkeletal_Omega_1_Omega_2, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2, ApplyFunctor_ForgetfulFunctor_Omega_1, Forgetful_HomGSets, HomGSetsSkeletal_Omega_1_Omega_2, HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2;
 	Display("RhoComponent");
 	Display(i_1);
 	Display(i_2);
@@ -309,6 +308,7 @@ GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
 	
 	S := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
 	T := HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
+	counter := 0;
 
 	# this code is equal to the commented code below, but much faster since it only deals with integers and avoids polluting the GAP and CAP caches
 	IntsHomGSets := List( HomGSets( Omega_1, Omega_2), f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
@@ -316,29 +316,153 @@ GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
 	Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
-
+	
 	Graph := List( [ 1 .. Length( S ) ], phi ->
 		PseudoMorphismToInt(
 			Length_HomGSetsSkeletal_Omega_1_Omega_2,
-			List( IntsHomGSets, f ->
-				ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 )
-			),
+			List( IntsHomGSets, function( f )
+				Display( counter );
+				counter := counter + 1;
+				
+				return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+			end ),
 			Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2
 		)
 	);
 
-	# Graph := List( [ 1 .. Length( S ) ], phi -> 
+	# ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+	# Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	# HomGSetsSkeletal_Omega_1_Omega_2 := HomGSetsSkeletal( Omega_1, Omega_2 );
+	# HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+
+	# if true then
+	# Graph := List( [ 0 .. Length( S ) - 1 ], phi -> 
 	#  	MorphismToInt( MapOfFinSets(
-	#  		HomGSetsSkeletal( Omega_1, Omega_2),
-	#  		List( HomGSets( Omega_1, Omega_2), f ->
-	#  			MorphismToInt( PreCompose( IntToMorphism( ApplyFunctor( ForgetfulFunctor, Omega_1 ), phi, ApplyFunctor( ForgetfulFunctor, Omega_1 ) ), ApplyFunctor( ForgetfulFunctor, f ) ) )
-	#  		),
-	#  		HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )
+	#  		HomGSetsSkeletal_Omega_1_Omega_2,
+	#  		List( IntsHomGSets, function( f )
+	# 			local x, category;
+	# 			Display( counter );
+	# 			counter := counter + 1;
+
+	# 			# x := IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, phi, ApplyFunctor_ForgetfulFunctor_Omega_1 );
+	# 			
+	# 			morphism := rec( );
+	# 			
+	# 			ObjectifyWithAttributes( morphism, TheTypeOfMapsOfSkeletalFiniteSets,
+	# 					AsList, [],
+	# 					Source, ApplyFunctor_ForgetfulFunctor_Omega_1,
+	# 					Range, ApplyFunctor_ForgetfulFunctor_Omega_1 
+	# 				);
+
+	# 				
+	# 				morphism2 := rec( );
+	# 			
+	# 			ObjectifyWithAttributes( morphism2, TheTypeOfMapsOfSkeletalFiniteSets,
+	# 					AsList, [],
+	# 					Source, ApplyFunctor_ForgetfulFunctor_Omega_1,
+	# 					Range, ApplyFunctor_ForgetfulFunctor_Omega_1 
+	# 				);
+	# 				
+	# 				Error();
+
+	# 			SetFilterObj( morphism, IsCapCategoryMorphism );
+
+	# 			category := SkeletalFinSets;
+
+	# 			if HasCapCategory( morphism ) then
+    #     
+	# 				if IsIdenticalObj( CapCategory( morphism ), category ) then
+	# 					
+	# 					return;
+	# 					
+	# 				else
+	# 					
+	# 					Error( "this morphism already has a category" );
+	# 					
+	# 				fi;
+	# 				
+	# 			fi;
+
+	# 			# Error();
+	# 			
+	# 			# AddObject( category, Source( morphism ) );
+	# 			
+	# 			# AddObject( category, Range( morphism ) );
+	# 			
+	# 			filter := MorphismFilter( category );
+	# 			
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			# if filter( morphism ) then
+	# 			# 	SetFilterObj( morphism, filter );
+	# 			# fi;
+	# 			
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			SetFilterObj( morphism, filter );
+	# 			
+	# 			#SetCapCategory( morphism, category );
+	# 			#SetAsList( morphism, category );
+	# 			
+	# 			#Add( SkeletalFinSets, map );
+	# 			
+	# 			
+	# 			# MapOfFinSets( ApplyFunctor_ForgetfulFunctor_Omega_1, [], ApplyFunctor_ForgetfulFunctor_Omega_1 );
+	# 			
+	# 			return 0;
+	# 			
+	# 			return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+
+	# 			return MorphismToInt( PreCompose( x, f ) );
+	#  		end ),
+	#  		HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2
 	#  	) )
 	# );
+	# fi;
 	# Assert( 4, Graph = Graph1 );
 
 	Display("Graph");
+	Display(Runtimes());
 	
 	pi := Projections[ i_1 ];
 	
@@ -411,7 +535,7 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 3 ] do
+for i in [ 1 ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
@@ -424,13 +548,16 @@ SourceComponents := List( IndexSet, Omega -> HomFinSetsSkeletal( ApplyFunctor( F
 Display("SourceComponents");
 S := DirectProduct( SourceComponents );
 Display("Source");
+# Projections := [];
 Projections := List( [ 1 .. Length( IndexSet ) ], i -> ProjectionInFactorOfDirectProduct( SourceComponents, i ) );
 Display("Projections");
 TargetComponents := Concatenation( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) ) );
 Display("TargetComponents");
 T := DirectProduct( TargetComponents );
 Display("Target");
+Display(Runtimes());
 RhoComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetRhoComponent(IndexSet, Projections, i_1, i_2) ) ) );
+Display(Runtimes());
 Display("RhoComponents");
 Rho := UniversalMorphismIntoDirectProduct( RhoComponents );
 Display("Rho");
@@ -441,29 +568,48 @@ Display("Lambda");
 emb := EmbeddingOfEqualizer( [ Rho, Lambdaa ] );
 Enda := Source( emb );
 
-NaturalTransformations := List( Enda, i -> List( Projections, pi -> IntToMorphism( Range( pi ), PreCompose( emb, pi )( i ), Range( pi ) ) ) );
+
+
+NaturalTransformations := List( Enda, i -> List( [ 1 .. Length( Projections ) ], j -> IntToMorphism( ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ), PreCompose( emb, Projections[ j ] )( i ), ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ) ) ) );
 
 
 DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
 TheTypeOfMyGroupElements := NewType( NewFamily( "TheFamilyOfMyGroupElements" ), IsMyGroupElement );
 
-NaturalTransformationElements := List( NaturalTransformations, function(x)
+
+DeclareAttribute( "AsList", IsMyGroupElement );
+DeclareAttribute( "MyIndex", IsMyGroupElement );
+
+
+NaturalTransformationElements := List( [ 1 .. Length( NaturalTransformations ) ], function( i )
 	local element;
 	element := rec( );
-	ObjectifyWithAttributes( element, TheTypeOfMyGroupElements, AsList, x );
+	ObjectifyWithAttributes( element, TheTypeOfMyGroupElements, AsList, NaturalTransformations[ i ], MyIndex, i );
 	return element;
 end );
 
-InstallMethod( \*,
+InstallMethodWithCache( String,
+  "for my group elements",
+  [ IsMyGroupElement ],
+        
+  function( x )
+    
+	return Concatenation( "<My group element with index ", String( MyIndex( x ) ), ">" );
+	
+end );
+
+InstallMethodWithCache( \*,
   "for my group elements",
   [ IsMyGroupElement, IsMyGroupElement ],
         
   function( x, y )
     local i, L, element;
 	
+	Display("multiplying");
+	
 	L := [];
 	for i in [ 1 .. Length( AsList( x ) ) ] do
-		L[i] := PreCompose( AsList(x)[ i ], AsList(y)[ i ] );
+		L[i] := PreCompose( AsList(y)[ i ], AsList(x)[ i ] );
 	od;
 	
 	for element in NaturalTransformationElements do
@@ -476,18 +622,25 @@ InstallMethod( \*,
 
 end );
 
-InstallMethod( \=,
+InstallMethodWithCache( \=,
   "for my group elements",
   [ IsMyGroupElement, IsMyGroupElement ],
-        IsIdenticalObj );
+	function( x, y )
+	
+		return MyIndex( x ) = MyIndex( y );
+	
+	end );
 
-InstallMethod( \<,
+InstallMethodWithCache( \<,
   "for my group elements",
   [ IsMyGroupElement, IsMyGroupElement ],
      
   function( x, y )
     
-	return( Position( NaturalTransformations, x ) < Position( NaturalTransformations, y ) );
+	if MyIndex( x ) <> Position( NaturalTransformationElements, x ) then
+		Error( "hi" );
+	fi;
+	return( MyIndex( x ) < MyIndex( y ) );
 
 end );
 
@@ -503,22 +656,26 @@ if MyOne = false then
 	Error( "MyOne not found" );
 fi;
 
+Display( MyOne );
 
-InstallMethod( One,
+
+InstallMethodWithCache( One,
   "for my group elements",
   [ IsMyGroupElement ],
         
-  function( x1 )
+  function( x )
     
 	return MyOne;
 	
 end );
 
-InstallMethod( InverseOp,
+InstallMethodWithCache( InverseOp,
   "for my group elements",
   [ IsMyGroupElement ],
         
   function( x )
+
+    Display("inverting");
     
 	return x^( Length( NaturalTransformationElements ) - 1 );
 	
@@ -526,4 +683,4 @@ end );
 
 MyGroup := Group( NaturalTransformationElements );
 
-IsomorphismGroups( MyGroup, G );
+Display( IsomorphismGroups( MyGroup, G ) );
