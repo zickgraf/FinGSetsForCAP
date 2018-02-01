@@ -8,6 +8,9 @@ CapCategorySwitchLogicOff( FinSets );
 CapCategorySwitchLogicOff( SkeletalFinSets );
 DeactivateCachingOfCategory( FinSets );
 DeactivateCachingOfCategory( SkeletalFinSets );
+DisableBasicOperationTypeCheck( FinSets );
+DisableBasicOperationTypeCheck( SkeletalFinSets );
+DeactivateToDoList();
 
 #S1 := FinSet( 0 );
 #T1 := FinSet( 0 );
@@ -22,11 +25,14 @@ DeactivateCachingOfCategory( SkeletalFinSets );
 #quit;
 
 G := SymmetricGroup( 3 );
-F := FreeGroup("x");
-G := F / [F.1^6];
+#F := FreeGroup( "x" );
+#G := F / [ F.1^6 ];
 #G := CyclicGroup( 6 );
-# G := SmallGroup(4,2);
-# G := SmallGroup(8,1);
+# G := SmallGroup( 4, 2 );
+#G := SmallGroup( 8, 1 );
+#G := DihedralGroup( 8 );
+#F := FreeGroup( "a", "x" );
+#G := F / [ F.1^4, F.2^2, F.1*F.2*F.1*F.2^(-1) ];
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -35,8 +41,18 @@ G := F / [F.1^6];
 
 #quit;
 
+
+filter := MorphismFilter( SkeletalFinSets );
+# MyNewType := NewType( TheFamilyOfCapCategoryObjects, IsSkeletalGSetMapRep and filter );
+
+BindGlobal( "MyNewType",
+         NewType( TheFamilyOfCapCategoryMorphisms,
+                 IsSkeletalFiniteSetRep and filter ) );
+
+
 CapCategorySwitchLogicOff( SkeletalGSets( G ) );
 DeactivateCachingOfCategory( SkeletalGSets( G ) );
+DisableBasicOperationTypeCheck( SkeletalGSets( G ) );
 
 # TODO unabhängig von konkretem G?
 # TODO Asserts?
@@ -113,12 +129,12 @@ AddMorphismFunction( ForgetfulFunctor, function( obj1, mor, obj2 )
 			g := imgs[ i ][ l ][ 2 ];
 			j := imgs[ i ][ l ][ 3 ];
 			
-			for h in RightTransversal( group, U_i ) do
-				Add( set_imgs, OffsetOfCopyInTarget( r, j ) + OffsetOfElementInCopy( g * h, j ) );
+			for h in RightCosets( group, U_i ) do
+				Add( set_imgs, OffsetOfCopyInTarget( r, j ) + OffsetOfElementInCopy( g * Representative( h ), j ) );
 			od;
 		od;
 	od;
-	
+
 	return MapOfFinSets( obj1, set_imgs, obj2 );
 	
 end );
@@ -300,19 +316,18 @@ end;
 GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
 	local Omega_1, Omega_2, S, T, Graph, Graph1, pi, RhoComponent, IntsHomGSets, Length_HomGSetsSkeletal_Omega_1_Omega_2, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2, ApplyFunctor_ForgetfulFunctor_Omega_1, Forgetful_HomGSets, HomGSetsSkeletal_Omega_1_Omega_2, HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2;
 	Display("RhoComponent");
-	Display(i_1);
-	Display(i_2);
+	Display( i_1 );
+	Display( i_2 );
 	Display("started");
 	Omega_1 := IndexSet[ i_1 ];
 	Omega_2 := IndexSet[ i_2 ];
 	
 	S := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
-	T := HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
-	counter := 0;
+	T := HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
 
 	# this code is equal to the commented code below, but much faster since it only deals with integers and avoids polluting the GAP and CAP caches
-	IntsHomGSets := List( HomGSets( Omega_1, Omega_2), f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
-	Length_HomGSetsSkeletal_Omega_1_Omega_2 := Length( HomGSetsSkeletal( Omega_1, Omega_2) );
+	IntsHomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
+	Length_HomGSetsSkeletal_Omega_1_Omega_2 := Length( HomGSetsSkeletal( Omega_1, Omega_2 ) );
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
 	Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
@@ -330,136 +345,28 @@ GetRhoComponent := function( IndexSet, Projections, i_1, i_2 )
 		)
 	);
 
-	# ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
-	# Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-	# HomGSetsSkeletal_Omega_1_Omega_2 := HomGSetsSkeletal( Omega_1, Omega_2 );
-	# HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+	ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	HomGSetsSkeletal_Omega_1_Omega_2 := HomGSetsSkeletal( Omega_1, Omega_2 );
+	HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
 
-	# if true then
-	# Graph := List( [ 0 .. Length( S ) - 1 ], phi -> 
-	#  	MorphismToInt( MapOfFinSets(
-	#  		HomGSetsSkeletal_Omega_1_Omega_2,
-	#  		List( IntsHomGSets, function( f )
-	# 			local x, category;
-	# 			Display( counter );
-	# 			counter := counter + 1;
+	Graph1 := List( [ 1 .. Length( S ) ], phi -> 
+	 	MorphismToInt( MapOfFinSets(
+	 		HomGSetsSkeletal_Omega_1_Omega_2,
+	 		List( Forgetful_HomGSets, function( f )
+				local x, category, L;
+				Display( counter );
+				counter := counter + 1;
 
-	# 			# x := IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, phi, ApplyFunctor_ForgetfulFunctor_Omega_1 );
-	# 			
-	# 			morphism := rec( );
-	# 			
-	# 			ObjectifyWithAttributes( morphism, TheTypeOfMapsOfSkeletalFiniteSets,
-	# 					AsList, [],
-	# 					Source, ApplyFunctor_ForgetfulFunctor_Omega_1,
-	# 					Range, ApplyFunctor_ForgetfulFunctor_Omega_1 
-	# 				);
+				# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
 
-	# 				
-	# 				morphism2 := rec( );
-	# 			
-	# 			ObjectifyWithAttributes( morphism2, TheTypeOfMapsOfSkeletalFiniteSets,
-	# 					AsList, [],
-	# 					Source, ApplyFunctor_ForgetfulFunctor_Omega_1,
-	# 					Range, ApplyFunctor_ForgetfulFunctor_Omega_1 
-	# 				);
-	# 				
-	# 				Error();
-
-	# 			SetFilterObj( morphism, IsCapCategoryMorphism );
-
-	# 			category := SkeletalFinSets;
-
-	# 			if HasCapCategory( morphism ) then
-    #     
-	# 				if IsIdenticalObj( CapCategory( morphism ), category ) then
-	# 					
-	# 					return;
-	# 					
-	# 				else
-	# 					
-	# 					Error( "this morphism already has a category" );
-	# 					
-	# 				fi;
-	# 				
-	# 			fi;
-
-	# 			# Error();
-	# 			
-	# 			# AddObject( category, Source( morphism ) );
-	# 			
-	# 			# AddObject( category, Range( morphism ) );
-	# 			
-	# 			filter := MorphismFilter( category );
-	# 			
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			# if filter( morphism ) then
-	# 			# 	SetFilterObj( morphism, filter );
-	# 			# fi;
-	# 			
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			SetFilterObj( morphism, filter );
-	# 			
-	# 			#SetCapCategory( morphism, category );
-	# 			#SetAsList( morphism, category );
-	# 			
-	# 			#Add( SkeletalFinSets, map );
-	# 			
-	# 			
-	# 			# MapOfFinSets( ApplyFunctor_ForgetfulFunctor_Omega_1, [], ApplyFunctor_ForgetfulFunctor_Omega_1 );
-	# 			
-	# 			return 0;
-	# 			
-	# 			return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
-
-	# 			return MorphismToInt( PreCompose( x, f ) );
-	#  		end ),
-	#  		HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2
-	#  	) )
-	# );
-	# fi;
-	# Assert( 4, Graph = Graph1 );
+				x := IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, phi, ApplyFunctor_ForgetfulFunctor_Omega_1 );
+				return MorphismToInt( PreCompose( x, f ) );
+	 		end ),
+	 		HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2
+	 	) )
+	);
+	Assert( 4, Graph = Graph1 );
 
 	Display("Graph");
 	Display(Runtimes());
@@ -479,18 +386,18 @@ end;
 GetLambdaComponent := function( IndexSet, Projections, i_1, i_2 )
 	local Omega_1, Omega_2, S, T, Graph, Graph1, pi, LambdaComponent, IntsHomGSets, Length_HomGSetsSkeletal_Omega_1_Omega_2, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2;
 	Display("LambdaComponent");
-	Display(i_1);
-	Display(i_2);
+	Display( i_1 );
+	Display( i_2 );
 	Display("started");
 	Omega_1 := IndexSet[ i_1 ];
 	Omega_2 := IndexSet[ i_2 ];
 	
 	S := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
-	T := HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
+	T := HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
 
 	# this code is equal to the commented code below, but much faster since it only deals with integers and avoids polluting the GAP and CAP caches
-	IntsHomGSets := List( HomGSets( Omega_1, Omega_2), f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
-	Length_HomGSetsSkeletal_Omega_1_Omega_2 := Length( HomGSetsSkeletal( Omega_1, Omega_2) );
+	IntsHomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
+	Length_HomGSetsSkeletal_Omega_1_Omega_2 := Length( HomGSetsSkeletal( Omega_1, Omega_2 ) );
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
 	Length_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
 	Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
@@ -507,8 +414,8 @@ GetLambdaComponent := function( IndexSet, Projections, i_1, i_2 )
 
 	# Graph1 := List( [ 1 .. Length( S ) ], phi -> 
 	#  	MorphismToInt( MapOfFinSets(
-	#  		HomGSetsSkeletal( Omega_1, Omega_2),
-	#  		List( HomGSets( Omega_1, Omega_2), f ->
+	#  		HomGSetsSkeletal( Omega_1, Omega_2 ),
+	#  		List( HomGSets( Omega_1, Omega_2 ), f ->
 	#  			MorphismToInt( PreCompose( ApplyFunctor( ForgetfulFunctor, f ), IntToMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ), phi, ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) )
 	#  		),
 	#  		HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )
@@ -529,7 +436,13 @@ GetLambdaComponent := function( IndexSet, Projections, i_1, i_2 )
 	return LambdaComponent;
 end;
 
-#G := SmallGroup(4,2);
+
+
+#################################################################################################################################################################
+# IndexSet
+
+
+
 ToM := MatTom( TableOfMarks( G ) );
 k := Size( ToM );
 
@@ -541,14 +454,99 @@ for i in [ 1 ] do
 	Add( IndexSet, GSet( G, M ) );
 od;
 
-# Error();
+version := 1;
+
+#################################################################################################################################################################
+# third version
+
+
+LiftMaps := function( S, T, maps )
+	M := AsList( S );
+	N := AsList( T );
+	
+	lifts := [];
+	
+	for f in maps do
+		new_lifts := [];
+		for phi in HomGSets( S, T ) do
+			
+		od;
+		if IsEmptyList( lifts ) then
+			lifts := new_lifts;
+		else
+			lifts := Intersection( lifts, new_lifts );
+		fi;
+	od;
+fi;
+
+Enda := LiftMaps( IndexSet[ 1 ], IndexSet[ 1 ],  );
+
+#################################################################################################################################################################
+# second version
+
+if version = 2 then
+
+counter := 0;
+Omega_1 := IndexSet[ 1 ];
+Omega_2 := Omega_1;
+
+
+HomGSetsWithoutId := Filtered( HomGSets( Omega_1, Omega_2 ), f -> f <> IdentityMorphism( Omega_1 ) );
+
+IntsHomGSets := List( HomGSetsWithoutId, f -> MorphismToInt( ApplyFunctor( ForgetfulFunctor, f ) ) );
+Length_HomGSetsSkeletal_Omega_1_Omega_2 := Length( HomGSetsSkeletal( Omega_1, Omega_2 ) );
+Length_ApplyFunctor_ForgetfulFunctor_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
+Length_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+Length_HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) );
+
+
+ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+ApplyFunctor_ForgetfulFunctor_Omega_2 := ApplyFunctor( ForgetfulFunctor, Omega_2 );
+Forgetful_HomGSets := List( HomGSetsWithoutId, f -> ApplyFunctor( ForgetfulFunctor, f ) );
+Display(Forgetful_HomGSets);
+HomGSetsSkeletal_Omega_1_Omega_2 := HomGSetsSkeletal( Omega_1, Omega_2 );
+HomFinSetsSkeletal_ApplyFunctor_ForgetfulFunctor_Omega_1_ApplyFunctor_ForgetfulFunctor_Omega_2 := HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+
+
+Enda := Filtered( [ 1 .. Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) ) ], function( phi )
+	local x;
+	x := IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, phi, ApplyFunctor_ForgetfulFunctor_Omega_1 );
+	# if not IsMonomorphism( x ) then
+	# 	return false;
+	# fi;
+
+	# if not IsEpimorphism( x ) then
+	# 	return false;
+	# fi;
+	
+	return ForAll( Forgetful_HomGSets, function(f)
+		Display(counter);
+		counter := counter + 1;
+
+		return AsList( PreCompose( x, f ) ) = AsList( PreCompose( f, x ) );
+		# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
+		ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+	end );
+end );
+
+Display(Runtimes());
+Display(Enda);
+
+NaturalTransformations := List( [ 1 .. Length( Enda ) ], i -> List( [ 1 .. Length( IndexSet ) ], j -> IntToMorphism( ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ), Enda[ i ], ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ) ) ) );
+
+fi;
+
+
+#################################################################################################################################################################
+# first version
+
+if version = 1 then
 
 Display("start");
 SourceComponents := List( IndexSet, Omega -> HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega ), ApplyFunctor( ForgetfulFunctor, Omega ) ) );
 Display("SourceComponents");
 S := DirectProduct( SourceComponents );
 Display("Source");
-# Projections := [];
 Projections := List( [ 1 .. Length( IndexSet ) ], i -> ProjectionInFactorOfDirectProduct( SourceComponents, i ) );
 Display("Projections");
 TargetComponents := Concatenation( List( IndexSet, Omega_1 -> List( IndexSet, Omega_2 -> HomFinSetsSkeletal( HomGSets( Omega_1, Omega_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_1 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) ) );
@@ -556,21 +554,25 @@ Display("TargetComponents");
 T := DirectProduct( TargetComponents );
 Display("Target");
 Display(Runtimes());
-RhoComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetRhoComponent(IndexSet, Projections, i_1, i_2) ) ) );
+RhoComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetRhoComponent( IndexSet, Projections, i_1, i_2 ) ) ) );
 Display(Runtimes());
 Display("RhoComponents");
 Rho := UniversalMorphismIntoDirectProduct( RhoComponents );
 Display("Rho");
-LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetLambdaComponent(IndexSet, Projections, i_1, i_2) ) ) );
+LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], i_1 -> List( [ 1 .. Size( IndexSet ) ], i_2 -> GetLambdaComponent( IndexSet, Projections, i_1, i_2 ) ) ) );
 Display("LambdaComponents");
 Lambdaa := UniversalMorphismIntoDirectProduct( LambdaComponents );
 Display("Lambda");
 emb := EmbeddingOfEqualizer( [ Rho, Lambdaa ] );
 Enda := Source( emb );
 
-
-
 NaturalTransformations := List( Enda, i -> List( [ 1 .. Length( Projections ) ], j -> IntToMorphism( ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ), PreCompose( emb, Projections[ j ] )( i ), ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] ) ) ) );
+
+fi;
+
+#################################################################################################################################################################
+# group stuff
+
 
 
 DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
