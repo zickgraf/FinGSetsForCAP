@@ -24,15 +24,22 @@ DeactivateToDoList();
 
 #quit;
 
-G := SymmetricGroup( 3 );
+# G := SymmetricGroup( 3 );
 #F := FreeGroup( "x" );
 #G := F / [ F.1^6 ];
 #G := CyclicGroup( 6 );
-# G := SmallGroup( 4, 2 );
+#G := SmallGroup( 4, 2 );
 #G := SmallGroup( 8, 1 );
-#G := DihedralGroup( 8 );
+# TODO give errors
+G := DihedralGroup( 8 );
+# G := SmallGroup( 9, 1 );
+# G := SmallGroup( 9, 2 );
+# G := SmallGroup( 16, 7 );
 #F := FreeGroup( "a", "x" );
 #G := F / [ F.1^4, F.2^2, F.1*F.2*F.1*F.2^(-1) ];
+
+
+G := SmallGroup( 16, 1 );
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -448,38 +455,174 @@ k := Size( ToM );
 
 IndexSet := [];
 
-for i in [ 1 ] do
+for i in [ 1 .. k ] do
 	M := ListWithIdenticalEntries( k, 0 );
 	M[ i ] := 1;
 	Add( IndexSet, GSet( G, M ) );
 od;
 
-version := 1;
+version := 3;
 
 #################################################################################################################################################################
 # third version
 
+if version = 3 then
 
-LiftMaps := function( S, T, maps )
-	M := AsList( S );
-	N := AsList( T );
+LiftsAlongEpi := function( map, epi )
+	local S, T, D, i, C;
+	Assert( 4, IsEpimorphism( epi ) );
+	
+	S := Source( map );
+	T := Source( epi );
+	s := Length( S );
+	t := Length( T );
+	
+	D := [];
+	for i in [ 1 .. Length( S ) ] do
+		Add( D, Preimage( epi, [ map( i ) ] ) );
+	od;
+
+	C := Cartesian( D );
+
+	bij := Filtered( C, function ( imgs )
+		local testList, img;
+		
+		testList := ListWithIdenticalEntries( Length( imgs ), 0 );
+		
+		for img in imgs do
+			if testList[ img ] = 1 then
+				return false;
+			fi;
+			testList[ img ] := 1;
+		od;
+
+		return true;
+    
+	end );
+	
+	maps := List( bij, imgs -> PseudoMorphismToInt( s, imgs, t ) );
+	
+	return maps;
+end;
+
+LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
+	local lifts, Forgetful_HomGSets, phi, new_lifts, new_lifts_defined, f, new_new_lifts, Length_maps, Size_Omega_1, Size_Omega_2, LiftCount, comp_counter;
 	
 	lifts := [];
 	
-	for f in maps do
-		new_lifts := [];
-		for phi in HomGSets( S, T ) do
-			
+	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	counter := 0;
+	Length_maps := Length( maps );
+
+	Size_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
+	Size_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+	LiftCount := ( Size_Omega_1 / Size_Omega_2 )^Size_Omega_1;
+	
+	for phi in maps do
+		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
+		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times ", String( LiftCount ) , " new_lifts" ) );
+		counter := counter + 1;
+		new_lifts_defined := false;
+		for f in Forgetful_HomGSets do
+			new_new_lifts := LiftsAlongEpi( PreCompose( f, phi ), f );
+			if not new_lifts_defined then
+				new_lifts := new_new_lifts;
+				new_lifts_defined := true;
+			else
+				# "Intersection" of lists
+				new_lifts := Intersection( new_lifts, new_new_lifts );
+				# comp_counter := 0;
+				# new_lifts := Filtered( new_lifts, function( new_lift )
+				# 	Display( Concatenation( String( comp_counter ), " of ", String( Length( new_lifts ) ) ) );
+				# 	comp_counter := comp_counter + 1;
+				# 	for new_new_lift in new_new_lifts do
+				# 		if new_lift = new_new_lift then
+				# 			return true;
+				# 		fi;
+				# 	od;
+				# 	return false;
+				# end );
+			fi;
+			if IsEmpty( new_lifts ) then
+				# we always intersect, so once the set is empty it cannot get non-empty anymore
+				break;
+			fi;
 		od;
-		if IsEmptyList( lifts ) then
-			lifts := new_lifts;
-		else
-			lifts := Intersection( lifts, new_lifts );
+		Display(new_lifts);
+		lifts := Concatenation( lifts, new_lifts );
+		Display( Concatenation( "found ", String( Length( lifts ) ) ," lifts" ) );
+	od;
+
+	return List( lifts, lift -> IntToMorphism( ApplyFunctor( ForgetfulFunctor, Omega_1 ), lift, ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) );
+end;
+
+LiftEfficiently := function( IndexSet, pos_1, pos_2 )
+	local Omega_1, Omega_2, pos_3, Omega_3, maps;
+	
+	Display( Concatenation( "lift along ", String( pos_1 ), " -> ", String( pos_2 ) ) );
+	
+	Omega_1 := IndexSet[ pos_1 ];
+	Omega_2 := IndexSet[ pos_2 ];
+
+	if pos_2 = Length( IndexSet ) then
+		Display( "lift from trivial G-set" );
+		return LiftMapsAlongEpis( Omega_1, Omega_2, [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ] );
+	fi;
+	
+	# look for an Omega_3 which can be lifted to Omega_2
+	for pos_3 in [ ( pos_2 + 1 ) .. Length( IndexSet ) ] do
+		Omega_3 := IndexSet[ pos_3 ];
+		if Length( HomGSets( Omega_2, Omega_3 ) ) > 0 then
+			break;
 		fi;
 	od;
-fi;
 
-Enda := LiftMaps( IndexSet[ 1 ], IndexSet[ 1 ],  );
+	Display( "recurse" );
+	maps := LiftEfficiently( IndexSet, pos_2, pos_3 );
+
+	return LiftMapsAlongEpis( Omega_1, Omega_2, maps );
+
+end;
+
+Enda := LiftEfficiently( IndexSet, 1, 1 );
+
+
+# Omega_1 := IndexSet[ 2 ];
+# Omega_2 := IndexSet[ 3 ];
+# 
+# ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+# ApplyFunctor_ForgetfulFunctor_Omega_2 := ApplyFunctor( ForgetfulFunctor, Omega_2 );
+# 
+# Enda1 := LiftMapsAlongEpis( Omega_1, Omega_2, List( [ 1 .. Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )  ) ], i -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_2, i, ApplyFunctor_ForgetfulFunctor_Omega_2 ) ) );
+# Display( Enda1 );
+# 
+# Omega_1 := IndexSet[ 1 ];
+# Omega_2 := IndexSet[ 2 ];
+# 
+# ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+# ApplyFunctor_ForgetfulFunctor_Omega_2 := ApplyFunctor( ForgetfulFunctor, Omega_2 );
+# 
+# #Enda2 := LiftMapsAlongEpis( Omega_1, Omega_2, List( [ 1 .. Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )  ) ], i -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_2, i, ApplyFunctor_ForgetfulFunctor_Omega_2 ) ) );
+# Enda2 := LiftMapsAlongEpis( Omega_1, Omega_2, Enda1 );
+# Display( Enda2 );
+
+# Omega_1 := IndexSet[ 1 ];
+# Omega_2 := IndexSet[ 1 ];
+# 
+# ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+# ApplyFunctor_ForgetfulFunctor_Omega_2 := ApplyFunctor( ForgetfulFunctor, Omega_2 );
+# 
+# Enda3 := LiftMapsAlongEpis( Omega_1, Omega_2, List( [ 1 .. Length( HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, Omega_2 ), ApplyFunctor( ForgetfulFunctor, Omega_2 ) )  ) ], i -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_2, i, ApplyFunctor_ForgetfulFunctor_Omega_2 ) ) );
+# # Enda3 := LiftMapsAlongEpis( Omega_1, Omega_2, Enda2 );
+# Display( Enda3 );
+
+Display( Runtimes() );
+
+# Enda := Filtered( Enda1, morphism -> morphism in Enda2 );
+
+NaturalTransformations := List( Enda, morphism -> [ morphism ] );
+
+fi;
 
 #################################################################################################################################################################
 # second version
@@ -573,6 +716,7 @@ fi;
 #################################################################################################################################################################
 # group stuff
 
+Display( NaturalTransformations );
 
 
 DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
@@ -600,6 +744,7 @@ InstallMethodWithCache( String,
 	
 end );
 
+multiplying_counter := 0;
 InstallMethodWithCache( \*,
   "for my group elements",
   [ IsMyGroupElement, IsMyGroupElement ],
@@ -607,7 +752,8 @@ InstallMethodWithCache( \*,
   function( x, y )
     local i, L, element;
 	
-	Display("multiplying");
+	Display( Concatenation( "multiplying ", String( multiplying_counter ) ) );
+	multiplying_counter := multiplying_counter + 1;
 	
 	L := [];
 	for i in [ 1 .. Length( AsList( x ) ) ] do
