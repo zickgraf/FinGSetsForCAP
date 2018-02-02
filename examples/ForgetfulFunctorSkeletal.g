@@ -1,4 +1,4 @@
-SetAssertionLevel( 4 );
+# SetAssertionLevel( 4 );
 
 
 LoadPackage("FinSets");
@@ -39,7 +39,7 @@ G := DihedralGroup( 8 );
 #G := F / [ F.1^4, F.2^2, F.1*F.2*F.1*F.2^(-1) ];
 
 
-G := SmallGroup( 16, 1 );
+G := SmallGroup( 32, 1 );
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -469,7 +469,7 @@ version := 3;
 if version = 3 then
 
 LiftsAlongEpi := function( map, epi )
-	local S, T, D, i, C;
+	local S, T, s, t, preimages, list_of_list_of_permutations, j, preimage, tuples_of_permutations, maps, tuple_of_permutations, imgs, img, pos;
 	Assert( 4, IsEpimorphism( epi ) );
 	
 	S := Source( map );
@@ -477,30 +477,56 @@ LiftsAlongEpi := function( map, epi )
 	s := Length( S );
 	t := Length( T );
 	
-	D := [];
-	for i in [ 1 .. Length( S ) ] do
-		Add( D, Preimage( epi, [ map( i ) ] ) );
+	# here we assume that map is the composition of epi with a bijective map
+	preimages := [];
+	list_of_list_of_permutations := [];
+	for j in [ 1 .. Length( Range( epi ) ) ] do
+		preimage := Preimage( epi, [ j ] );
+		Add( preimages, preimage );
+		Add( list_of_list_of_permutations, PermutationsList( preimage ) );
+	od;
+	tuples_of_permutations := Cartesian( list_of_list_of_permutations );
+	maps := [];
+	for tuple_of_permutations in tuples_of_permutations do
+		imgs := [];
+		for i in [ 1 .. s ] do
+			Assert( 4, Length( Preimage( epi, [ i ] ) ) = Length( Preimage( map, [ i ] ) ) );
+			pos := Position( preimages[ epi( i ) ], i );
+			Assert( 4, pos <> fail );
+			img := map( i );
+			Add( imgs, tuple_of_permutations[ img ][ pos ] );
+		od;
+		Add( maps, PseudoMorphismToInt( s, imgs, t ) );
 	od;
 
-	C := Cartesian( D );
+	# D := [];
+	# for i in [ 1 .. s ] do
+	# 	Add( D, Preimage( epi, [ map( i ) ] ) );
+	# od;
+	# 
+	# Display( "start Cartesian" );
+	# C := Cartesian( D );
+	# Display( "end Cartesian" );
 
-	bij := Filtered( C, function ( imgs )
-		local testList, img;
-		
-		testList := ListWithIdenticalEntries( Length( imgs ), 0 );
-		
-		for img in imgs do
-			if testList[ img ] = 1 then
-				return false;
-			fi;
-			testList[ img ] := 1;
-		od;
+	# bij1 := Filtered( C, function ( imgs )
+	# 	local testList, img;
+	# 	
+	# 	testList := ListWithIdenticalEntries( Length( imgs ), 0 );
+	# 	
+	# 	for img in imgs do
+	# 		if testList[ img ] = 1 then
+	# 			return false;
+	# 		fi;
+	# 		testList[ img ] := 1;
+	# 	od;
 
-		return true;
-    
-	end );
-	
-	maps := List( bij, imgs -> PseudoMorphismToInt( s, imgs, t ) );
+	# 	return true;
+    # 
+	# end );
+	# 
+	# maps1 := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
+
+	# Assert( 4, Set( maps ) = Set( maps1 ) );
 	
 	return maps;
 end;
@@ -520,7 +546,7 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 	
 	for phi in maps do
 		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
-		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times ", String( LiftCount ) , " new_lifts" ) );
+		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
 		counter := counter + 1;
 		new_lifts_defined := false;
 		for f in Forgetful_HomGSets do
@@ -832,3 +858,5 @@ end );
 MyGroup := Group( NaturalTransformationElements );
 
 Display( IsomorphismGroups( MyGroup, G ) );
+
+Display( Runtimes() );
