@@ -3,6 +3,7 @@
 
 LoadPackage("FinSets");
 LoadPackage("SkeletalGSets");
+LoadPackage( "profiling" );
 
 CapCategorySwitchLogicOff( FinSets );
 CapCategorySwitchLogicOff( SkeletalFinSets );
@@ -39,7 +40,10 @@ G := DihedralGroup( 8 );
 #G := F / [ F.1^4, F.2^2, F.1*F.2*F.1*F.2^(-1) ];
 
 
-G := SmallGroup( 32, 1 );
+G := SmallGroup( 30, 1 );
+# G := SymmetricGroup( 3 );
+# G := SmallGroup( 8, 1 );
+# G := SmallGroup( 4, 2 );
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -466,6 +470,22 @@ version := 3;
 #################################################################################################################################################################
 # third version
 
+if version = 4 then
+
+Omega_1 := IndexSet[ 1 ];
+Omega_2 := IndexSet[ 1 ];
+
+Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+
+NaturalTransformations := List( Forgetful_HomGSets, morphism -> [ morphism ] );
+
+Display( "NaturalTransformations" );
+
+fi;
+
+#################################################################################################################################################################
+# third version
+
 if version = 3 then
 
 LiftsAlongEpi := function( map, epi )
@@ -476,6 +496,8 @@ LiftsAlongEpi := function( map, epi )
 	T := Source( epi );
 	s := Length( S );
 	t := Length( T );
+	
+	
 	
 	# here we assume that map is the composition of epi with a bijective map
 	preimages := [];
@@ -491,9 +513,9 @@ LiftsAlongEpi := function( map, epi )
 		imgs := [];
 		for i in [ 1 .. s ] do
 			Assert( 4, Length( Preimage( epi, [ i ] ) ) = Length( Preimage( map, [ i ] ) ) );
-			pos := Position( preimages[ epi( i ) ], i );
+			pos := Position( preimages[ AsList( epi )[ i ] ], i );
 			Assert( 4, pos <> fail );
-			img := map( i );
+			img := AsList( map )[ i ];
 			Add( imgs, tuple_of_permutations[ img ][ pos ] );
 		od;
 		Add( maps, PseudoMorphismToInt( s, imgs, t ) );
@@ -501,7 +523,7 @@ LiftsAlongEpi := function( map, epi )
 
 	# D := [];
 	# for i in [ 1 .. s ] do
-	# 	Add( D, Preimage( epi, [ map( i ) ] ) );
+	# 	Add( D, Preimage( epi, [ AsList( map )[ i ] ] ) );
 	# od;
 	# 
 	# Display( "start Cartesian" );
@@ -524,7 +546,127 @@ LiftsAlongEpi := function( map, epi )
     # 
 	# end );
 	# 
-	# maps1 := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
+	# maps := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
+
+	# Assert( 4, Set( maps ) = Set( maps1 ) );
+	
+	return maps;
+end;
+
+LiftsAlongEpis := function( phi, epis, epis2, Omega_1, Omega_2 )
+	local S, T, s, t, preimages, list_of_list_of_permutations, j, preimage, tuples_of_permutations, maps, tuple_of_permutations, imgs, img, pos;
+	Assert( 4, IsEpimorphism( epi ) );
+	
+	S := Source( epis[ 1 ] );
+	T := Source( epis[ 1 ] );
+	s := Length( S );
+	t := Length( T );
+	
+	D := [];
+	first_size := -1;
+	for i in [ 1 .. s ] do
+		map := PreCompose( epis[ 1 ], phi );
+		preimage := Preimage( epis[ 1 ], [ AsList( map )[ i ] ] );
+		orig_preimage := preimage;
+		for j in [ 2 .. Length( epis ) ] do
+			map := PreCompose( epis[ j ], phi );
+			preimage := Intersection( preimage, Preimage( epis[ j ], [ AsList( map )[ i ] ] ) );
+			# for tau in epis2 do
+			# 	map := PreCompose( tau, PreCompose( epis[ j ], phi ) );
+			# 	preimage := Intersection( preimage, Preimage( tau, Preimage( epis[ j ], [ AsList( map )[ i ] ] ) ) );
+			# od;
+		od;
+		if IsEmpty( preimage ) then
+			return [];
+		fi;
+		Add( D, preimage );
+		if first_size = -1 then
+			first_size := Length( preimage );
+		else
+			if first_size <> Length( preimage ) then
+				Error( "preimages with different lengths" );
+			fi;
+		fi;
+	od;
+
+	# Display( D );
+	
+	epi := epis[ 1 ];
+	map := PreCompose( epis[ 1 ], phi );
+	# here we assume that map is the composition of epi with a bijective map
+	preimages := [];
+	list_of_list_of_permutations := [];
+	for j in [ 1 .. Length( Range( epi ) ) ] do
+		preimage := Preimage( epi, [ j ] );
+		Add( preimages, preimage );
+		Add( list_of_list_of_permutations, PermutationsList( preimage ) );
+	od;
+	tuples_of_permutations := Cartesian( list_of_list_of_permutations );
+
+	Display( Concatenation( String( s ), " times ", String( Length( tuples_of_permutations ) ), " permutations" ) );
+	
+	maps := [];
+	for tuple_of_permutations in tuples_of_permutations do
+		imgs := [];
+		bail_out := false;
+		for i in [ 1 .. s ] do
+			Assert( 4, Length( Preimage( epi, [ i ] ) ) = Length( Preimage( map, [ i ] ) ) );
+			pos := Position( preimages[ AsList( epi )[ i ] ], i );
+			Assert( 4, pos <> fail );
+			img := AsList( map )[ i ];
+			if tuple_of_permutations[ img ][ pos ] in D[ i ] then
+				Add( imgs, tuple_of_permutations[ img ][ pos ] );
+			else
+				bail_out := true;
+				break;
+			fi;
+		od;
+		if not bail_out then
+			Add( maps, PseudoMorphismToInt( s, imgs, t ) );
+		fi;
+	od;
+
+	
+	# Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+
+	# counter := 0;
+	# maps1 := Filtered( maps, function( int )
+	# 	x := IntToMorphism( S, int, T );
+	# 	Display(counter);
+	# 	counter := counter + 1;
+	# 	return ForAll( Forgetful_HomGSets, function(f)
+	# 		return AsList( PreCompose( x, f ) ) = AsList( PreCompose( f, phi ) );
+	# 		# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
+	# 		ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+	# 	end );
+	# end );
+	# 
+	# Assert( 4, Length( maps ) = Length( maps1 ) );
+	
+
+	# Display( D );
+	# 
+	# Display( "start Cartesian" );
+	# C := Cartesian( D );
+	# Display( "end Cartesian" );
+
+	# bij1 := Filtered( C, function ( imgs )
+	# 	local testList, img;
+	# 	
+	# 	testList := ListWithIdenticalEntries( Length( imgs ), 0 );
+	# 	
+	# 	for img in imgs do
+	# 		if testList[ img ] = 1 then
+	# 			return false;
+	# 		fi;
+	# 		testList[ img ] := 1;
+	# 	od;
+
+	# 	return true;
+    # 
+	# end );
+	# 
+	# maps := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
 
 	# Assert( 4, Set( maps ) = Set( maps1 ) );
 	
@@ -537,7 +679,8 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 	lifts := [];
 	
 	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-	counter := 0;
+	Forgetful_HomGSets2 := List( HomGSets( Omega_1, Omega_1 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	counter := 1;
 	Length_maps := Length( maps );
 
 	Size_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
@@ -548,51 +691,59 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
 		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
 		counter := counter + 1;
-		new_lifts_defined := false;
-		for f in Forgetful_HomGSets do
-			new_new_lifts := LiftsAlongEpi( PreCompose( f, phi ), f );
-			if not new_lifts_defined then
-				new_lifts := new_new_lifts;
-				new_lifts_defined := true;
-			else
-				# "Intersection" of lists
-				new_lifts := Intersection( new_lifts, new_new_lifts );
-				# comp_counter := 0;
-				# new_lifts := Filtered( new_lifts, function( new_lift )
-				# 	Display( Concatenation( String( comp_counter ), " of ", String( Length( new_lifts ) ) ) );
-				# 	comp_counter := comp_counter + 1;
-				# 	for new_new_lift in new_new_lifts do
-				# 		if new_lift = new_new_lift then
-				# 			return true;
-				# 		fi;
-				# 	od;
-				# 	return false;
-				# end );
-			fi;
-			if IsEmpty( new_lifts ) then
-				# we always intersect, so once the set is empty it cannot get non-empty anymore
-				break;
-			fi;
-		od;
-		Display(new_lifts);
-		lifts := Concatenation( lifts, new_lifts );
-		Display( Concatenation( "found ", String( Length( lifts ) ) ," lifts" ) );
+		# new_lifts_defined := false;
+		# for f in Forgetful_HomGSets do
+		# 	new_new_lifts := LiftsAlongEpi( PreCompose( f, phi ), f );
+		# 	if not new_lifts_defined then
+		# 		new_lifts := new_new_lifts;
+		# 		new_lifts_defined := true;
+		# 	else
+		# 		# "Intersection" of lists
+		# 		new_lifts := Intersection( new_lifts, new_new_lifts );
+		# 		# comp_counter := 0;
+		# 		# new_lifts := Filtered( new_lifts, function( new_lift )
+		# 		# 	Display( Concatenation( String( comp_counter ), " of ", String( Length( new_lifts ) ) ) );
+		# 		# 	comp_counter := comp_counter + 1;
+		# 		# 	for new_new_lift in new_new_lifts do
+		# 		# 		if new_lift = new_new_lift then
+		# 		# 			return true;
+		# 		# 		fi;
+		# 		# 	od;
+		# 		# 	return false;
+		# 		# end );
+		# 	fi;
+		# 	if IsEmpty( new_lifts ) then
+		# 		# we always intersect, so once the set is empty it cannot get non-empty anymore
+		# 		break;
+		# 	fi;
+		# od;
+		new_lifts := LiftsAlongEpis( phi, Forgetful_HomGSets, Forgetful_HomGSets2, Omega_1, Omega_2 );
+		# Display(new_lifts);
+		lifts := Union2( lifts, new_lifts );
 	od;
 
-	return List( lifts, lift -> IntToMorphism( ApplyFunctor( ForgetfulFunctor, Omega_1 ), lift, ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) );
+	Display( Concatenation( "found ", String( Length( lifts ) ) ," lifts" ) );
+
+	ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
+
+	return List( lifts, lift -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, lift, ApplyFunctor_ForgetfulFunctor_Omega_1 ) );
 end;
 
 LiftEfficiently := function( IndexSet, pos_1, pos_2 )
 	local Omega_1, Omega_2, pos_3, Omega_3, maps;
 	
-	Display( Concatenation( "lift along ", String( pos_1 ), " -> ", String( pos_2 ) ) );
-	
 	Omega_1 := IndexSet[ pos_1 ];
 	Omega_2 := IndexSet[ pos_2 ];
 
+	Display( Concatenation( "lift along ", String( pos_1 ), " -> ", String( pos_2 ), ", index ", String( Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) / Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
+
 	if pos_2 = Length( IndexSet ) then
 		Display( "lift from trivial G-set" );
-		return LiftMapsAlongEpis( Omega_1, Omega_2, [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ] );
+		maps := LiftMapsAlongEpis( Omega_1, Omega_2, [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ] );
+		Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
+		# check compatibility with Omega_1
+		# maps := LiftMapsAlongEpis( Omega_1, Omega_1, maps );
+		return maps;
 	fi;
 	
 	# look for an Omega_3 which can be lifted to Omega_2
@@ -605,12 +756,39 @@ LiftEfficiently := function( IndexSet, pos_1, pos_2 )
 
 	Display( "recurse" );
 	maps := LiftEfficiently( IndexSet, pos_2, pos_3 );
+	# maps := [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ];
+	maps := LiftMapsAlongEpis( Omega_1, Omega_2, maps );
+	Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
+	# check compatibility with Omega_1
+	# maps1 := LiftMapsAlongEpis( Omega_1, Omega_1, maps );
 
-	return LiftMapsAlongEpis( Omega_1, Omega_2, maps );
+	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_1 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	
+	if Length( maps ) <> 1048576 then
+	counter := 0;
+	maps := Filtered( maps, function( phi )
+		if counter mod 10000 = 0 then
+			Display(counter);
+		fi;
+		counter := counter + 1;
+		return ForAll( Forgetful_HomGSets, function(f)
+			return AsList( PreCompose( phi, f ) ) = AsList( PreCompose( f, phi ) );
+			# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
+			ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+		end );
+	end );
+	fi;
+
+	Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
+	return maps;
 
 end;
 
-Enda := LiftEfficiently( IndexSet, 1, 1 );
+ProfileLineByLine( "profile.gz" );
+Enda := LiftEfficiently( IndexSet, 1, 2 );
+UnprofileLineByLine();
+parsed := ReadLineByLineProfile( "profile.gz" );;
+OutputAnnotatedCodeCoverageFiles( parsed, "profile_dir" );
 
 
 # Omega_1 := IndexSet[ 2 ];
@@ -743,6 +921,8 @@ fi;
 # group stuff
 
 Display( NaturalTransformations );
+Display( Runtimes() );
+quit;
 
 
 DeclareRepresentation( "IsMyGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [] );
