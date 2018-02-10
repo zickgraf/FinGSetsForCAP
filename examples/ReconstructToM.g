@@ -49,8 +49,18 @@ end;
 
 ## setup
 
-G := SymmetricGroup( 3 );
-# G := SmallGroup( 100, 1 );
+
+
+for a in [ 1 .. 100 ] do
+	Display( a );
+	nr := NumberSmallGroups( a );
+	for b in [ 1 .. nr ] do
+		G := SmallGroup( a, b );
+
+
+
+# G := SymmetricGroup( 3 );
+G := SmallGroup( 8, 1 );
 
 ToM := MatTom( TableOfMarks( G ) );
 k := Size( ToM );
@@ -104,9 +114,8 @@ Assert( 4, ForAll( Sizes, size -> size > 0 ) );
 
 
 ## sort by sizes
-SortParallel( Sizes, MyMinimalGeneratingSet );
-Sizes := Reversed( Sizes );
-MyMinimalGeneratingSet := Reversed( MyMinimalGeneratingSet );
+#Sizes := Reversed( Sizes );
+#MyMinimalGeneratingSet := Reversed( MyMinimalGeneratingSet );
 
 
 MyEquations := [];
@@ -186,6 +195,10 @@ end;
 
 SetValue := function( ToM, index, value )
 	if IsList( index ) then
+		# we should never set a value to zero which is in NonZeroValues
+		Assert( 4, value <> 0 or ( not index in NonZeroValues ) );
+		# we should never set a value which is already set
+		Assert( 4, ToM[ index[ 1 ] ][ index[ 2 ] ] = -1 );
 		ToM[ index[ 1 ] ][ index[ 2 ] ] := value;
 	else
 		# if index is already is a value, then is has to be the value to set
@@ -194,7 +207,7 @@ SetValue := function( ToM, index, value )
 end;
 
 WasSolved := function( e, NonZeroValues, ToM )
-	local lhs, rhs, a, b, c, sum;
+	local lhs, rhs, a, b, c, sum, s, d;
 	lhs := e[ 1 ];
 	rhs := e[ 2 ];
 	a := lhs[ 1 ];
@@ -234,12 +247,26 @@ WasSolved := function( e, NonZeroValues, ToM )
 		Assert( 4, a * b = c );
 		return true;
 	fi;
+
+	if IsEmpty( sum ) then
+		if IsInt( a ) then
+			Assert( 4, a <> 0 or c = 0 );
+			if a <> 0 then
+				SetValue( ToM, b, c / a );
+			fi;
+			return true;
+		fi;
+		if IsInt( b ) then
+			Assert( 4, b <> 0 or c = 0 );
+			if b <> 0 then
+				SetValue( ToM, a, c / b );
+			fi;
+			return true;
+		fi;
+	fi;
 	
 	return false;
 end;
-
-Display( MyToM );
-Display( MyEquations[ 1 ] );
 
 while not IsEmpty( MyEquations ) do
 	updated := false;
@@ -264,3 +291,8 @@ od;
 
 
 Display( MyToM );
+Display( ToM = MyToM );
+Assert( 4, ToM = MyToM );
+
+od;
+od;
