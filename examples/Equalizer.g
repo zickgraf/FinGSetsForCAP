@@ -29,6 +29,8 @@ IsWellDefined( psi );
 #! true
 Display( psi );
 #! [ [  ], [  ], [ [ 1, (), 3 ], [ 2, (), 3 ] ], [  ] ]
+PreCompose( psi, psi1 ) = PreCompose( psi, psi2 );
+#! true
 t := GSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 tau := MapOfGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
@@ -66,6 +68,10 @@ psi := EmbeddingOfEqualizer( D );
 #! <A monomorphism in Skeletal Category of G-Sets>
 Display( psi );
 #! [ [ [ 1, (), 1 ], [ 5, (), 1 ] ] ]
+PreCompose( psi, f1 ) = PreCompose( psi, f2 );
+#! true
+PreCompose( psi, f1 ) = PreCompose( psi, f3 );
+#! true
 D := [ f2, f3 ];
 #! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
 Eq := Equalizer( D );
