@@ -571,122 +571,57 @@ LiftsAlongEpi := function( map, epi )
 	return maps;
 end;
 
-LiftsAlongEpis := function( phi, epis, epis2, Omega_1, Omega_2 )
+# adapted from PermutationsListK
+PermutationsListKWithRestrictions := function ( mset, m, n, k, perm, i, restrictions )
+    local  perms, l;
+    if k = 0  then
+        perm := ShallowCopy( perm );
+        perms := [ perm ];
+    else
+        perms := [  ];
+        for l  in [ 1 .. n ]  do
+            if m[l] and (l = 1 or m[l - 1] = false or mset[l] <> mset[l - 1]) and (mset[l] in restrictions[i]) then
+                perm[i] := mset[l];
+                m[l] := false;
+                Append( perms, PermutationsListKWithRestrictions( mset, m, n, k - 1, perm, i + 1, restrictions ) );
+                m[l] := true;
+            fi;
+        od;
+    fi;
+    return perms;
+end;
+
+# adapted from PermutationsList
+PermutationsListWithRestrictions := function ( mset, restrictions )
+    local  m;
+    mset := ShallowCopy( mset );
+    Sort( mset );
+    m := List( mset, function ( i )
+            return true;
+        end );
+    return PermutationsListKWithRestrictions( mset, m, Length( mset ), Length( mset ), [  ], 1, restrictions );
+end;
+
+LiftsAlongEpis := function( f, epis )
 	local S, T, s, t, preimages, list_of_list_of_permutations, j, preimage, tuples_of_permutations, maps, tuple_of_permutations, imgs, img, pos;
-	Assert( 4, IsEpimorphism( epi ) );
-	
+
 	S := Source( epis[ 1 ] );
-	T := Source( epis[ 1 ] );
+	T := S;
 	s := Length( S );
-	t := Length( T );
+	t := s;
 	
-	D := [];
-	first_size := -1;
+	preimages := [];
 	for i in [ 1 .. s ] do
-		map := PreCompose( epis[ 1 ], phi );
-		preimage := Preimage( epis[ 1 ], [ AsList( map )[ i ] ] );
-		orig_preimage := preimage;
-		for j in [ 2 .. Length( epis ) ] do
-			map := PreCompose( epis[ j ], phi );
-			preimage := Intersection( preimage, Preimage( epis[ j ], [ AsList( map )[ i ] ] ) );
-			# for tau in epis2 do
-			# 	map := PreCompose( tau, PreCompose( epis[ j ], phi ) );
-			# 	preimage := Intersection( preimage, Preimage( tau, Preimage( epis[ j ], [ AsList( map )[ i ] ] ) ) );
-			# od;
-		od;
+		preimage := Intersection( List( epis, epi -> Preimage( epi, [ AsList( PreCompose( epi, f ) )[ i ] ] ) ) );
 		if IsEmpty( preimage ) then
 			return [];
 		fi;
-		Add( D, preimage );
-		if first_size = -1 then
-			first_size := Length( preimage );
-		else
-			if first_size <> Length( preimage ) then
-				Error( "preimages with different lengths" );
-			fi;
-		fi;
+		preimages[ i ] := preimage;
 	od;
-
-	# Display( D );
 	
-	epi := epis[ 1 ];
-	map := PreCompose( epis[ 1 ], phi );
-	# here we assume that map is the composition of epi with a bijective map
-	preimages := [];
-	list_of_list_of_permutations := [];
-	for j in [ 1 .. Length( Range( epi ) ) ] do
-		preimage := Preimage( epi, [ j ] );
-		Add( preimages, preimage );
-		Add( list_of_list_of_permutations, PermutationsList( preimage ) );
-	od;
-	tuples_of_permutations := Cartesian( list_of_list_of_permutations );
-
-	Display( Concatenation( String( s ), " times ", String( Length( tuples_of_permutations ) ), " permutations" ) );
+	lifts := PermutationsListWithRestrictions( [ 1 .. s ], preimages );
 	
-	maps := [];
-	for tuple_of_permutations in tuples_of_permutations do
-		imgs := [];
-		bail_out := false;
-		for i in [ 1 .. s ] do
-			Assert( 4, Length( Preimage( epi, [ i ] ) ) = Length( Preimage( map, [ i ] ) ) );
-			pos := Position( preimages[ AsList( epi )[ i ] ], i );
-			Assert( 4, pos <> fail );
-			img := AsList( map )[ i ];
-			if tuple_of_permutations[ img ][ pos ] in D[ i ] then
-				Add( imgs, tuple_of_permutations[ img ][ pos ] );
-			else
-				bail_out := true;
-				break;
-			fi;
-		od;
-		if not bail_out then
-			Add( maps, PseudoMorphismToInt( s, imgs, t ) );
-		fi;
-	od;
-
-	
-	# Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-
-	# counter := 0;
-	# maps1 := Filtered( maps, function( int )
-	# 	x := IntToMorphism( S, int, T );
-	# 	Display(counter);
-	# 	counter := counter + 1;
-	# 	return ForAll( Forgetful_HomGSets, function(f)
-	# 		return AsList( PreCompose( x, f ) ) = AsList( PreCompose( f, phi ) );
-	# 		# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
-	# 		ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
-	# 	end );
-	# end );
-	# 
-	# Assert( 4, Length( maps ) = Length( maps1 ) );
-	
-
-	# Display( D );
-	# 
-	# Display( "start Cartesian" );
-	# C := Cartesian( D );
-	# Display( "end Cartesian" );
-
-	# bij1 := Filtered( C, function ( imgs )
-	# 	local testList, img;
-	# 	
-	# 	testList := ListWithIdenticalEntries( Length( imgs ), 0 );
-	# 	
-	# 	for img in imgs do
-	# 		if testList[ img ] = 1 then
-	# 			return false;
-	# 		fi;
-	# 		testList[ img ] := 1;
-	# 	od;
-
-	# 	return true;
-    # 
-	# end );
-	# 
-	# maps := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
-
-	# Assert( 4, Set( maps ) = Set( maps1 ) );
+	maps := List( lifts, imgs -> PseudoMorphismToInt( s, imgs, t ) );
 	
 	return maps;
 end;
@@ -705,7 +640,7 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 	Size_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
 	LiftCount := ( Size_Omega_1 / Size_Omega_2 )^Size_Omega_1;
 	
-	for phi in maps do
+	for f in maps do
 		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
 		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
 		counter := counter + 1;
@@ -735,7 +670,7 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 		# 		break;
 		# 	fi;
 		# od;
-		new_lifts := LiftsAlongEpis( phi, Forgetful_HomGSets, Forgetful_HomGSets2, Omega_1, Omega_2 );
+		new_lifts := LiftsAlongEpis( f, Forgetful_HomGSets );
 		# Display(new_lifts);
 		lifts := Union2( lifts, new_lifts );
 	od;
