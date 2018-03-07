@@ -467,8 +467,26 @@ od;
 
 version := 3;
 
+
 #################################################################################################################################################################
-# third version
+# continuity test
+
+if version = 5 then
+
+D := [ GSet( G, [ 1, 0, 3, 0 ] ), GSet( G, [ 1, 3, 0, 0 ] ) ];
+
+pi_G_set := ProjectionInFactorOfDirectProduct( D, 1 );
+pi_set := ProjectionInFactorOfDirectProduct( List( D, d -> ApplyFunctor( ForgetfulFunctor, d )), 1 );
+
+Display( ApplyFunctor( ForgetfulFunctor, pi_G_set ) );
+Display( pi_set );
+
+quit;
+
+fi;
+
+#################################################################################################################################################################
+# fourth version
 
 if version = 4 then
 
