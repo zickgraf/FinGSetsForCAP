@@ -506,71 +506,6 @@ fi;
 
 if version = 3 then
 
-LiftsAlongEpi := function( map, epi )
-	local S, T, s, t, preimages, list_of_list_of_permutations, j, preimage, tuples_of_permutations, maps, tuple_of_permutations, imgs, img, pos;
-	Assert( 4, IsEpimorphism( epi ) );
-	
-	S := Source( map );
-	T := Source( epi );
-	s := Length( S );
-	t := Length( T );
-	
-	
-	
-	# here we assume that map is the composition of epi with a bijective map
-	preimages := [];
-	list_of_list_of_permutations := [];
-	for j in [ 1 .. Length( Range( epi ) ) ] do
-		preimage := Preimage( epi, [ j ] );
-		Add( preimages, preimage );
-		Add( list_of_list_of_permutations, PermutationsList( preimage ) );
-	od;
-	tuples_of_permutations := Cartesian( list_of_list_of_permutations );
-	maps := [];
-	for tuple_of_permutations in tuples_of_permutations do
-		imgs := [];
-		for i in [ 1 .. s ] do
-			Assert( 4, Length( Preimage( epi, [ i ] ) ) = Length( Preimage( map, [ i ] ) ) );
-			pos := Position( preimages[ AsList( epi )[ i ] ], i );
-			Assert( 4, pos <> fail );
-			img := AsList( map )[ i ];
-			Add( imgs, tuple_of_permutations[ img ][ pos ] );
-		od;
-		Add( maps, PseudoMorphismToInt( s, imgs, t ) );
-	od;
-
-	# D := [];
-	# for i in [ 1 .. s ] do
-	# 	Add( D, Preimage( epi, [ AsList( map )[ i ] ] ) );
-	# od;
-	# 
-	# Display( "start Cartesian" );
-	# C := Cartesian( D );
-	# Display( "end Cartesian" );
-
-	# bij1 := Filtered( C, function ( imgs )
-	# 	local testList, img;
-	# 	
-	# 	testList := ListWithIdenticalEntries( Length( imgs ), 0 );
-	# 	
-	# 	for img in imgs do
-	# 		if testList[ img ] = 1 then
-	# 			return false;
-	# 		fi;
-	# 		testList[ img ] := 1;
-	# 	od;
-
-	# 	return true;
-    # 
-	# end );
-	# 
-	# maps := List( bij1, imgs -> PseudoMorphismToInt( s, imgs, t ) );
-
-	# Assert( 4, Set( maps ) = Set( maps1 ) );
-	
-	return maps;
-end;
-
 # adapted from PermutationsListK
 PermutationsListKWithRestrictions := function ( mset, m, n, k, perm, i, restrictions )
     local  perms, l;
@@ -644,34 +579,7 @@ LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
 		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
 		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
 		counter := counter + 1;
-		# new_lifts_defined := false;
-		# for f in Forgetful_HomGSets do
-		# 	new_new_lifts := LiftsAlongEpi( PreCompose( f, phi ), f );
-		# 	if not new_lifts_defined then
-		# 		new_lifts := new_new_lifts;
-		# 		new_lifts_defined := true;
-		# 	else
-		# 		# "Intersection" of lists
-		# 		new_lifts := Intersection( new_lifts, new_new_lifts );
-		# 		# comp_counter := 0;
-		# 		# new_lifts := Filtered( new_lifts, function( new_lift )
-		# 		# 	Display( Concatenation( String( comp_counter ), " of ", String( Length( new_lifts ) ) ) );
-		# 		# 	comp_counter := comp_counter + 1;
-		# 		# 	for new_new_lift in new_new_lifts do
-		# 		# 		if new_lift = new_new_lift then
-		# 		# 			return true;
-		# 		# 		fi;
-		# 		# 	od;
-		# 		# 	return false;
-		# 		# end );
-		# 	fi;
-		# 	if IsEmpty( new_lifts ) then
-		# 		# we always intersect, so once the set is empty it cannot get non-empty anymore
-		# 		break;
-		# 	fi;
-		# od;
 		new_lifts := LiftsAlongEpis( f, Forgetful_HomGSets );
-		# Display(new_lifts);
 		lifts := Union2( lifts, new_lifts );
 	od;
 
