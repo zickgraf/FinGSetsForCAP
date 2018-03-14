@@ -537,22 +537,26 @@ PermutationsListWithRestrictions := function ( mset, restrictions )
     return PermutationsListKWithRestrictions( mset, m, Length( mset ), Length( mset ), [  ], 1, restrictions );
 end;
 
-LiftsAlongEpis := function( f, epis )
-	local S, T, s, t, preimages, list_of_list_of_permutations, j, preimage, tuples_of_permutations, maps, tuple_of_permutations, imgs, img, pos;
+LiftsAlongEpis := function( f_1, epis_1, f_2, epis_2 )
+	local S, T, s, t, preimages, i, preimage_1, preimage_2, preimage, lifts, maps;
 
-	S := Source( epis[ 1 ] );
+	S := Source( epis_1[ 1 ] );
 	T := S;
 	s := Length( S );
 	t := s;
 	
 	preimages := [];
 	for i in [ 1 .. s ] do
-		preimage := Intersection( List( epis, epi -> Preimage( epi, [ AsList( PreCompose( epi, f ) )[ i ] ] ) ) );
+		preimage_1 := Intersection( List( epis_1, epi -> Preimage( epi, [ AsList( PreCompose( epi, f_1 ) )[ i ] ] ) ) );
+		preimage_2 := Intersection( List( epis_2, epi -> Preimage( epi, [ AsList( PreCompose( epi, f_2 ) )[ i ] ] ) ) );
+		preimage := Intersection( preimage_1, preimage_2 );
 		if IsEmpty( preimage ) then
 			return [];
 		fi;
 		preimages[ i ] := preimage;
 	od;
+
+	# Display( preimages );
 	
 	lifts := PermutationsListWithRestrictions( [ 1 .. s ], preimages );
 	
@@ -561,95 +565,134 @@ LiftsAlongEpis := function( f, epis )
 	return maps;
 end;
 
-LiftMapsAlongEpis := function( Omega_1, Omega_2, maps )
-	local lifts, Forgetful_HomGSets, phi, new_lifts, new_lifts_defined, f, new_new_lifts, Length_maps, Size_Omega_1, Size_Omega_2, LiftCount, comp_counter;
+knownLifts := [];
+
+LiftMapsAlongEpis := function( Omega, Delta_1, maps_1, Delta_2, maps_2 )
+  	local lifts, Forgetful_HomGSets_1, Forgetful_HomGSets_2, counter, Length_maps_1, Length_maps_2, Length_maps, f_1, f_2, new_lifts, ApplyFunctor_ForgetfulFunctor_Omega;
 	
 	lifts := [];
-	
-	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-	Forgetful_HomGSets2 := List( HomGSets( Omega_1, Omega_1 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-	counter := 1;
-	Length_maps := Length( maps );
 
-	Size_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
-	Size_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
-	LiftCount := ( Size_Omega_1 / Size_Omega_2 )^Size_Omega_1;
+	Display( "compute HomGSets" );
 	
-	for f in maps do
+	Forgetful_HomGSets_1 := List( HomGSets( Omega, Delta_1 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	Forgetful_HomGSets_2 := List( HomGSets( Omega, Delta_2 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+	counter := 1;
+	Length_maps_1 := Length( maps_1 );
+	Length_maps_2 := Length( maps_2 );
+	Length_maps := Length_maps_1 * Length_maps_2;
+
+	# Size_Omega_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) );
+	# Size_Omega_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) );
+	# LiftCount := ( Size_Omega_1 / Size_Omega_2 )^Size_Omega_1;
+	
+	for f_1 in maps_1 do
 		Display( Concatenation( String( counter ), " of ", String( Length_maps ) ) );
-		Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
-		counter := counter + 1;
-		new_lifts := LiftsAlongEpis( f, Forgetful_HomGSets );
-		lifts := Union2( lifts, new_lifts );
+		for f_2 in maps_2 do
+			# Display( Concatenation( "Expecting ", String( Length( Forgetful_HomGSets ) ), " times <= ", String( LiftCount ) , " new_lifts" ) );
+			counter := counter + 1;
+			new_lifts := LiftsAlongEpis( f_1, Forgetful_HomGSets_1, f_2, Forgetful_HomGSets_2 );
+			lifts := Union2( lifts, new_lifts );
+	    od;
 	od;
 
-	Display( Concatenation( "found ", String( Length( lifts ) ) ," lifts" ) );
+	ApplyFunctor_ForgetfulFunctor_Omega := ApplyFunctor( ForgetfulFunctor, Omega );
 
-	ApplyFunctor_ForgetfulFunctor_Omega_1 := ApplyFunctor( ForgetfulFunctor, Omega_1 );
-
-	return List( lifts, lift -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega_1, lift, ApplyFunctor_ForgetfulFunctor_Omega_1 ) );
+	return List( lifts, lift -> IntToMorphism( ApplyFunctor_ForgetfulFunctor_Omega, lift, ApplyFunctor_ForgetfulFunctor_Omega ) );
 end;
 
-LiftEfficiently := function( IndexSet, pos_1, pos_2 )
-	local Omega_1, Omega_2, pos_3, Omega_3, maps;
+LiftEfficiently := function( IndexSet, pos )
+    local Omega, pos_1, Delta_1, pos_2, Delta_2, factor_1, factor_2, maps_1, maps_2, lifts, Forgetful_HomGSets, group_order, counter;
 	
-	Omega_1 := IndexSet[ pos_1 ];
-	Omega_2 := IndexSet[ pos_2 ];
+	Omega := IndexSet[ pos ];
 
-	Display( Concatenation( "lift along ", String( pos_1 ), " -> ", String( pos_2 ), ", index ", String( Length( ApplyFunctor( ForgetfulFunctor, Omega_1 ) ) / Length( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ) ) );
 
-	if pos_2 = Length( IndexSet ) then
+	if pos = Length( IndexSet ) then
 		Display( "lift from trivial G-set" );
-		maps := LiftMapsAlongEpis( Omega_1, Omega_2, [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ] );
-		Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
-		# check compatibility with Omega_1
-		# maps := LiftMapsAlongEpis( Omega_1, Omega_1, maps );
-		return maps;
+		return [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega ) ) ];
 	fi;
 	
-	# look for an Omega_3 which can be lifted to Omega_2
-	for pos_3 in [ ( pos_2 + 1 ) .. Length( IndexSet ) ] do
-		Omega_3 := IndexSet[ pos_3 ];
-		if Length( HomGSets( Omega_2, Omega_3 ) ) > 0 then
+	# look for Delta_1 and Delta_2 which can be lifted to Delta
+	for pos_1 in [ ( pos + 1 ) .. Length( IndexSet ) ] do
+		Delta_1 := IndexSet[ pos_1 ];
+		if Length( HomGSets( Omega, Delta_1 ) ) > 0 then
 			break;
 		fi;
 	od;
 
-	Display( "recurse" );
-	maps := LiftEfficiently( IndexSet, pos_2, pos_3 );
-	# maps := [ IdentityMorphism( ApplyFunctor( ForgetfulFunctor, Omega_2 ) ) ];
-	maps := LiftMapsAlongEpis( Omega_1, Omega_2, maps );
-	Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
-	# check compatibility with Omega_1
-	# maps1 := LiftMapsAlongEpis( Omega_1, Omega_1, maps );
-
-	Forgetful_HomGSets := List( HomGSets( Omega_1, Omega_1 ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
-	
-	if Length( maps ) <> 1048576 then
-	counter := 0;
-	maps := Filtered( maps, function( phi )
-		if counter mod 10000 = 0 then
-			Display(counter);
+	pos_2 := Length( IndexSet );
+	Delta_2 := IndexSet[ pos_2 ];
+	for pos_2 in [ ( pos_1 + 1 ) .. Length( IndexSet ) ] do
+		Delta_2 := IndexSet[ pos_2 ];
+		# IDEA
+		if Length( HomGSets( Delta_1, Delta_2 ) ) = 0 and Length( HomGSets( Omega, Delta_2 ) ) > 0 then
+		# if Length( HomGSets( Omega, Delta_2 ) ) > 0 then
+		 	break;
 		fi;
-		counter := counter + 1;
-		return ForAll( Forgetful_HomGSets, function(f)
-			return AsList( PreCompose( phi, f ) ) = AsList( PreCompose( f, phi ) );
-			# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
-			ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
-		end );
-	end );
+	od;
+
+	factor_1 := Length( ApplyFunctor( ForgetfulFunctor, Omega ) ) / Length( ApplyFunctor( ForgetfulFunctor, Delta_1 ) );
+	factor_2 := Length( ApplyFunctor( ForgetfulFunctor, Omega ) ) / Length( ApplyFunctor( ForgetfulFunctor, Delta_2 ) ); 
+	
+	if factor_1 >= 11 then
+	  Error( "Stopping, this would never terminate anyway..." );
 	fi;
 
-	Display( Concatenation( "################################### ", String( Length( maps ) ), " lifts" ) );
-	return maps;
+	Display( Concatenation( "lift along ", String( pos ), " -> ", String( pos_1 ), ", factor ", String( factor_1 ) ) );
+
+	if IsBound( knownLifts[ pos_1 ] ) then
+	  maps_1 := knownLifts[ pos_1 ];
+	else
+	  maps_1 := LiftEfficiently( IndexSet, pos_1 );
+	fi;
+
+	Display( Concatenation( "lift along ", String( pos ), " -> ", String( pos_2 ), ", factor ", String( factor_2 ) ) );
+	
+	if IsBound( knownLifts[ pos_2 ] ) then
+	  maps_2 := knownLifts[ pos_2 ];
+	else
+	  maps_2 := LiftEfficiently( IndexSet, pos_2 );
+	fi;
+	
+	lifts := LiftMapsAlongEpis( Omega, Delta_1, maps_1, Delta_2, maps_2 );
+	
+	# if pos = 1 and we have found exactly as many lifts as the group order we do not have to filter anymore
+	group_order := Length( ApplyFunctor( ForgetfulFunctor, IndexSet[ 1 ] ) );
+	if not (pos = 1 and Length( lifts ) = group_order ) then
+		# check compatibility with Omega
+		Display( Concatenation( "filter ", String( Length( lifts ) ), " lifts" ) );
+
+		# IDEA exclude id
+		Forgetful_HomGSets := List( HomGSets( Omega, Omega ), f -> ApplyFunctor( ForgetfulFunctor, f ) );
+		
+		counter := 0;
+		lifts := Filtered( lifts, function( phi )
+			if counter mod 10000 = 0 then
+				Display(counter);
+			fi;
+			counter := counter + 1;
+			return ForAll( Forgetful_HomGSets, function( f )
+				return AsList( PreCompose( phi, f ) ) = AsList( PreCompose( f, phi ) );
+				# return ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 ) =
+				# ComposeInts( Length_ApplyFunctor_ForgetfulFunctor_Omega_1, f, Length_ApplyFunctor_ForgetfulFunctor_Omega_2, phi, Length_ApplyFunctor_ForgetfulFunctor_Omega_2 );
+			end );
+		end );
+  	fi;
+
+	Display( Concatenation( "################################### ", String( Length( lifts ) ), " lifts for position " , String( pos ) ) );
+	
+	knownLifts[ pos ] := lifts;
+
+	return lifts;
 
 end;
 
-ProfileLineByLine( "profile.gz" );
-Enda := LiftEfficiently( IndexSet, 1, 2 );
-UnprofileLineByLine();
-parsed := ReadLineByLineProfile( "profile.gz" );;
-OutputAnnotatedCodeCoverageFiles( parsed, "profile_dir" );
+#ProfileLineByLine( "profile.gz" );
+Enda := LiftEfficiently( IndexSet, 1 );
+# Display(Runtimes());
+# quit;
+#UnprofileLineByLine();
+#parsed := ReadLineByLineProfile( "profile.gz" );;
+#OutputAnnotatedCodeCoverageFiles( parsed, "profile_dir" );
 
 
 # Omega_1 := IndexSet[ 2 ];
