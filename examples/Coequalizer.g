@@ -139,4 +139,30 @@ Display( phi );
 PreCompose( pi, phi ) = tau;
 #! true
 
+
+
+
+G := SymmetricGroup( 0 );;
+A := GSet( G, [ 2 ] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( G, [ 3 ] );
+#! <An object in Skeletal Category of G-Sets>
+f := MapOfGSets( A, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], B );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( f );
+#! true
+g := MapOfGSets( A, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ] ], B );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( g );
+#! true
+D := [ f, g ];;
+Cq := Coequalizer( [ f, g ] );;
+Display( Cq );
+#! [ Group( () ), [ 1 ] ]
+pi := ProjectionOntoCoequalizer( D );;
+IsWellDefined( pi );
+#! true
+PreCompose( f, pi ) = PreCompose( g, pi );
+#! true
+
 #! @EndExample
