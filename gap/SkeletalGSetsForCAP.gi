@@ -88,6 +88,7 @@ InstallMethod( SkeletalGSets,
         RepresentativeOfSubgroupsUpToConjugation,
         PositionOfSubgroup,
         OrbitsOfActionOnCartesianProduct,
+		SingleBinaryProduct,
         ProjectionOfASingleBinaryProduct,
         ProjectionInFactorOfBinaryDirectProduct,
         OffsetInCartesianProduct,
@@ -385,9 +386,23 @@ InstallMethod( SkeletalGSets,
         return o;
         
     end;
-
+    
+    SingleBinaryProduct := function( i, j )
+        local G_i, G_j;
+        
+        # G/U_i
+        G_i := IntZeroVector( k );
+        G_i[ i ] := 1;
+        # G/U_j
+        G_j := IntZeroVector( k );
+        G_j[ j ] := 1;
+        
+        return DirectProduct( [ GSet( group, G_i ), GSet( group, G_j ) ] );
+        
+    end;    
+    
     ProjectionOfASingleBinaryProduct := function( i, j, pos, copy_number, target )
-        local o, RoO, imgs, r, s, a, found_g, U_a, g, G_i, G_j, P, pi, l, img, target_index;
+        local o, RoO, imgs, r, s, a, found_g, U_a, g, P, pi, l, img, target_index;
         
         o := OrbitsOfActionOnCartesianProduct( [ i, j ] );
         
@@ -416,15 +431,9 @@ InstallMethod( SkeletalGSets,
             Add( imgs[ a ], r * Inverse( g ) );
         od;
         
-        # G/U_i
-        G_i := IntZeroVector( k );
-        G_i[ i ] := 1;
-        # G/U_j
-        G_j := IntZeroVector( k );
-        G_j[ j ] := 1;
-        
         # take the direct product of G/U_i and G/U_j and construct the projection pi
-        P := DirectProduct( [ GSet( group, G_i), GSet( group, G_j) ] );
+        P := SingleBinaryProduct( i, j );
+        
         pi := [];
         for l in [ 1 .. k ] do
             pi [ l ] := [];
@@ -517,10 +526,8 @@ InstallMethod( SkeletalGSets,
                             return result;
                         fi;
                         
-                        # TODO replace dummy values 1, 1 and TerminalObject
-                        pi := ProjectionOfASingleBinaryProduct( i, j, 1, 1, TerminalObject( GSet( group, M ) ) );
+                        result := result + AsList( SingleBinaryProduct( i, j ) );
                         
-                        result := result + List( AsList( pi ), x -> Length( x ) );
                     od;
                 od;
             od;
