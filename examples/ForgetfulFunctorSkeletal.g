@@ -40,10 +40,30 @@ G := DihedralGroup( 8 );
 #G := F / [ F.1^4, F.2^2, F.1*F.2*F.1*F.2^(-1) ];
 
 
-G := SmallGroup( 30, 1 );
+#G := SmallGroup( 30, 1 );
 # G := SymmetricGroup( 3 );
 # G := SmallGroup( 8, 1 );
 # G := SmallGroup( 4, 2 );
+
+
+G := SmallGroup( 105, 2 );
+
+G := SymmetricGroup( 3 );
+G := SmallGroup( 32, 1 ); # 2^5
+G := SmallGroup( 40, 1 ); # 2^3 * 5
+G := SmallGroup( 144, 1 ); # 2^4 * 3^2
+G := SmallGroup( 30, 1 ); # 2^5
+G := SmallGroup( 56, 1 ); # 2^5
+G := SmallGroup( 90, 1 ); # 2^5
+G := SmallGroup( 96, 1 ); # 2^5
+G := SmallGroup( 98, 1 ); # 2^5
+G := SmallGroup( 100, 1 ); # 2^5
+G := SmallGroup( 140, 1 ); # 2^5
+#G := SmallGroup( 125, 1 ); # 2^5
+#G := SmallGroup( 140, 1 ); # 2^5
+G := SmallGroup( 216, 52 ); # 2^5
+
+blacklist := [ 11, 13, 17, 19, 22, 23, 26, 27, 29, 31, 33, 34, 37, 38, 39, 41, 42, 43, 44, 46, 47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 65, 66, 67, 68, 69, 71, 73, 74, 75, 76, 77, 78, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 97, 98, 99, 100,  ];
 
 #FinSet( [ MapOfGSets( GSet( G, [] ), [ ], GSet( G, [] ) ) ] ) = FinSet( [ MapOfFinSets( FinSet( [] ), [ ], FinSet( [] ) ) ] );
 
@@ -467,6 +487,23 @@ od;
 
 version := 3;
 
+
+#################################################################################################################################################################
+# version 6
+
+if version = 6 then
+
+LiftIteratively := function( IndexSet )
+  
+  lifts := [];
+  
+  for s in Reversed( [ 1 .. Length( IndexSet ) ] ) do
+	
+  od;
+  
+end;
+
+fi;
 
 #################################################################################################################################################################
 # continuity test
@@ -940,6 +977,8 @@ InstallMethodWithCache( InverseOp,
 end );
 
 MyGroup := Group( NaturalTransformationElements );
+
+IdGroup( MyGroup );
 
 Display( IsomorphismGroups( MyGroup, G ) );
 

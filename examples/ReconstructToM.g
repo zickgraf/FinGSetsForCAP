@@ -50,6 +50,13 @@ end;
 ## setup
 
 
+# G := SymmetricGroup( 3 );
+G := SmallGroup( 8, 1 );
+G := SmallGroup( 2^8, 1734 );
+# G := SmallGroup( 2^8, 1735 );
+
+# G := SmallGroup( 80, 1 );
+G := SymmetricGroup( 3 );
 
 for a in [ 1 .. 100 ] do
 	Display( a );
@@ -59,8 +66,6 @@ for a in [ 1 .. 100 ] do
 
 
 
-# G := SymmetricGroup( 3 );
-G := SmallGroup( 8, 1 );
 
 ToM := MatTom( TableOfMarks( G ) );
 k := Size( ToM );
@@ -166,6 +171,7 @@ od;
 
 # diagonal values cannot be zero
 NonZeroValues := List( [ 2 .. ( k - 1 ) ], i -> [i,i] );
+# NonZeroValues := [];
 
 GetValue := function( ToM, index )
 	return ToM[ index[ 1 ] ][ index[ 2 ] ];
@@ -269,6 +275,7 @@ WasSolved := function( e, NonZeroValues, ToM )
 end;
 
 while not IsEmpty( MyEquations ) do
+	Display( Length( MyEquations ) );
 	updated := false;
 	for i in [ 1 .. Length( MyEquations ) ] do
 		if IsBound( MyEquations[ i ] ) then
