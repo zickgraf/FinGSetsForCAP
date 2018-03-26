@@ -1,4 +1,4 @@
-EndAsEqualizer := function( C, HomC, ForgetfulFunctor, GeneratingSet )
+EndAsEqualizer := function( C, HomC, ForgetfulFunctor, IndexSet )
     local IntToMorphism, MorphismToInt, PseudoMorphismToInt, HomFinSetsSkeletal, GetRhoComponent, GetLambdaComponent, SourceComponents, S, Projections, TargetComponents, T, RhoComponents, Rho, LambdaComponents, Lambda, iota, EndSkeletal, End;
 
 	IntToMorphism := function( S, int, T )
@@ -51,11 +51,11 @@ EndAsEqualizer := function( C, HomC, ForgetfulFunctor, GeneratingSet )
 		return FinSet( N^M );
 	end;
 
-	GetRhoComponent := function( GeneratingSet, Projections, c_1, c_2 )
+	GetRhoComponent := function( IndexSet, Projections, c_1, c_2 )
         local C_1, C_2, Set_C_1, Set_C_2, HomSets_C_1_C_2, HomC_C_1_C_2, HomC_C_1_C_2_as_maps, S_C_1, T_C_1_C_2, graph, pi, rhoComponent;
 	    
-		C_1 := GeneratingSet[ c_1 ];
-		C_2 := GeneratingSet[ c_2 ];
+		C_1 := IndexSet[ c_1 ];
+		C_2 := IndexSet[ c_2 ];
 
 		Set_C_1 := ApplyFunctor( ForgetfulFunctor, C_1 );
 		Set_C_2 := ApplyFunctor( ForgetfulFunctor, C_2 );
@@ -86,11 +86,11 @@ EndAsEqualizer := function( C, HomC, ForgetfulFunctor, GeneratingSet )
 		return rhoComponent;
 	end;
 	
-	GetLambdaComponent := function( GeneratingSet, Projections, c_1, c_2 )
+	GetLambdaComponent := function( IndexSet, Projections, c_1, c_2 )
         local C_1, C_2, Set_C_1, Set_C_2, HomSets_C_1_C_2, HomC_C_1_C_2, HomC_C_1_C_2_as_maps, S_C_2, T_C_1_C_2, graph, pi, lambdaComponent;
 	    
-		C_1 := GeneratingSet[ c_1 ];
-		C_2 := GeneratingSet[ c_2 ];
+		C_1 := IndexSet[ c_1 ];
+		C_2 := IndexSet[ c_2 ];
 
 		Set_C_1 := ApplyFunctor( ForgetfulFunctor, C_1 );
 		Set_C_2 := ApplyFunctor( ForgetfulFunctor, C_2 );
@@ -121,17 +121,17 @@ EndAsEqualizer := function( C, HomC, ForgetfulFunctor, GeneratingSet )
 		return lambdaComponent;
 	end;
 
-	SourceComponents := List( GeneratingSet, C -> HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, C ), ApplyFunctor( ForgetfulFunctor, C ) ) );
+	SourceComponents := List( IndexSet, C -> HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, C ), ApplyFunctor( ForgetfulFunctor, C ) ) );
 	S := DirectProduct( SourceComponents );
-	Projections := List( [ 1 .. Length( GeneratingSet ) ], i -> ProjectionInFactorOfDirectProduct( SourceComponents, i ) );
+	Projections := List( [ 1 .. Length( IndexSet ) ], i -> ProjectionInFactorOfDirectProduct( SourceComponents, i ) );
 
-	TargetComponents := Concatenation( List( GeneratingSet, C_1 -> List( GeneratingSet, C_2 -> HomFinSetsSkeletal( HomC( C_1, C_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, C_1 ), ApplyFunctor( ForgetfulFunctor, C_2 ) ) ) ) ) );
+	TargetComponents := Concatenation( List( IndexSet, C_1 -> List( IndexSet, C_2 -> HomFinSetsSkeletal( HomC( C_1, C_2 ), HomFinSetsSkeletal( ApplyFunctor( ForgetfulFunctor, C_1 ), ApplyFunctor( ForgetfulFunctor, C_2 ) ) ) ) ) );
 	T := DirectProduct( TargetComponents );
 
-	RhoComponents := Concatenation( List( [ 1 .. Size( GeneratingSet ) ], c_1 -> List( [ 1 .. Size( GeneratingSet ) ], c_2 -> GetRhoComponent( GeneratingSet, Projections, c_1, c_2 ) ) ) );
+	RhoComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], c_1 -> List( [ 1 .. Size( IndexSet ) ], c_2 -> GetRhoComponent( IndexSet, Projections, c_1, c_2 ) ) ) );
 	Rho := UniversalMorphismIntoDirectProduct( RhoComponents );
 
-	LambdaComponents := Concatenation( List( [ 1 .. Size( GeneratingSet ) ], c_1 -> List( [ 1 .. Size( GeneratingSet ) ], c_2 -> GetLambdaComponent( GeneratingSet, Projections, c_1, c_2 ) ) ) );
+	LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], c_1 -> List( [ 1 .. Size( IndexSet ) ], c_2 -> GetLambdaComponent( IndexSet, Projections, c_1, c_2 ) ) ) );
 	Lambda := UniversalMorphismIntoDirectProduct( LambdaComponents );
 
 	iota := EmbeddingOfEqualizer( [ Rho, Lambda ] );
@@ -142,7 +142,7 @@ EndAsEqualizer := function( C, HomC, ForgetfulFunctor, GeneratingSet )
 	End := List( EndSkeletal, x -> List( [ 1 .. Length( Projections ) ], function( j )
 	    local Set_C_j;
 		
-	    Set_C_j := ApplyFunctor( ForgetfulFunctor, GeneratingSet[ j ] );
+	    Set_C_j := ApplyFunctor( ForgetfulFunctor, IndexSet[ j ] );
 		
 	    return IntToMorphism(
 		    Set_C_j,
