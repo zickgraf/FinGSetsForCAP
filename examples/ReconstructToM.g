@@ -91,6 +91,7 @@ ReconstructTableOfMarks := function( C, MinimalGeneratingSet, Decompose )
 
 	sizes := ListWithIdenticalEntries( k, 0 );
 
+	# determine the objects with C x C = m_C C
 	for i in [ 1 .. k ] do
 		C_i := MinimalGeneratingSet[ i ];
 		Square := DirectProduct( [ C_i, C_i ] );
@@ -101,10 +102,12 @@ ReconstructTableOfMarks := function( C, MinimalGeneratingSet, Decompose )
 			sizes[ i ] := L[ i ];
 		fi;
 	od;
-
+	
+	# identify the object correspoding with the role of G
 	i_1 := ArgMax( sizes );
 	C_1 := MinimalGeneratingSet[ i_1 ];
 
+	# determine the sizes of the remaining objects
 	for i in [ 1 .. k ] do
 		if sizes[ i ] = 0 then
 			C_i := MinimalGeneratingSet[ i ];
@@ -120,13 +123,14 @@ ReconstructTableOfMarks := function( C, MinimalGeneratingSet, Decompose )
 	Assert( 4, ForAll( sizes, size -> size > 0 ) );
 
 
-	## sort by sizes
+	# sort by sizes
+	#SortParallel( Sizes, MyMinimalGeneratingSet );
 	#sizes := Reversed( sizes );
 	#MinimalGeneratingSet := Reversed( MinimalGeneratingSet );
 
 
 	equations := [];
-	# take product of all pairs of non-trivial generators
+	# take product of all pairs of non-trivial generators and generate the corresponding equations
 	for i in [ 2 .. ( k - 1 ) ] do
 		for j in [ 2 .. i ] do
 			C_i := MinimalGeneratingSet[ i ];
@@ -172,12 +176,11 @@ ReconstructTableOfMarks := function( C, MinimalGeneratingSet, Decompose )
 
 	# diagonal values cannot be zero
 	nonZeroValues := List( [ 2 .. ( k - 1 ) ], i -> [i,i] );
-	# NonZeroValues := [];
 
 	GetValue := function( ToM, index )
 		return ToM[ index[ 1 ] ][ index[ 2 ] ];
 	end;
-
+	
 	Simplify := function( e, ToM )
 		local lhs, rhs, sum, i, s;
 		lhs := e[ 1 ];
