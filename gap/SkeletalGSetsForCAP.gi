@@ -6,7 +6,7 @@
 
 ##
 InstallMethod( GSet,
-        "for a nonnegative integer",
+        "for a group and a list of nonnegative integers",
         [ IsGroup, IsList ],
         
   function( group, L )
@@ -88,7 +88,7 @@ InstallMethod( SkeletalGSets,
         RepresentativeOfSubgroupsUpToConjugation,
         PositionOfSubgroup,
         OrbitsOfActionOnCartesianProduct,
-		SingleBinaryProduct,
+        SingleBinaryProduct,
         ProjectionOfASingleBinaryProduct,
         ProjectionInFactorOfBinaryDirectProduct,
         OffsetInCartesianProduct,
@@ -131,17 +131,6 @@ InstallMethod( SkeletalGSets,
         od;
          
     end;
-    
-    ##
-    InstallMethod( TableOfMarks,
-            "for a finite skeletal G-set",
-            [ IsSkeletalGSetRep ],
-            
-      function( Omega )
-        
-        return TableOfMarks( UnderlyingGroup( Omega ) );
-        
-    end );
 
     ##
     AddIsWellDefinedForObjects( SkeletalGSets,
@@ -288,12 +277,12 @@ InstallMethod( SkeletalGSets,
                 r_1 := img_1[ 1 ];
                 g_1 := img_1[ 2 ];
                 j_1 := img_1[ 3 ];
-        
+                
                 img_2 := AsList( map_post )[ j_1 ][ r_1 ];
                 r_2 := img_2[ 1 ];
                 g_2 := img_2[ 2 ];
                 j_2 := img_2[ 3 ];
-        
+                
                 Add( C, [ r_2, Representative( g_2 ) * Representative( g_1), j_2 ] );
             od;
             Add( cmp, C );
