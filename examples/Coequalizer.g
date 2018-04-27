@@ -40,7 +40,7 @@ Cq := Coequalizer( D );
 AsList( Cq );
 #! [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
 #! true
 
@@ -72,7 +72,7 @@ Cq := Coequalizer( D );
 AsList( Cq );
 #! [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
 #! true
 
@@ -105,7 +105,7 @@ Cq := Coequalizer( D );
 AsList( Cq );
 #! [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 pi := ProjectionOntoCoequalizer( D );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
 #! true
 
@@ -126,8 +126,8 @@ C := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
 AsList( C );
 #! [ 3 ]
-pi := ProjectionOntoCoequalizer(D);
-#! <A morphism in Skeletal Category of G-Sets>
+pi := ProjectionOntoCoequalizer( D );
+#! <An epimorphism in Skeletal Category of G-Sets>
 Display( pi );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
 tau := MapOfGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], GSet( G, [ 2 ] ) );
