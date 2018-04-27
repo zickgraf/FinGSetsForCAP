@@ -612,7 +612,7 @@ InstallMethod( SkeletalGSets,
     ProjectionInFactorOfBinaryDirectProduct := function( L, pos )
         local S, T, M, N, D, tau, i, j, l, imgs, img, m, n, target, copy_number, pi, P;
         
-        # here: Size( L ) = 2
+        Assert( 4, Size( L ) = 2 );
         
         S := DirectProduct( L );
         
