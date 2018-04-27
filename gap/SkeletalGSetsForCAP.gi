@@ -15,7 +15,7 @@ InstallMethod( GSet,
     Omega := rec( );
     
     ObjectifyObjectForCAPWithAttributes( Omega, SkeletalGSets( group ),
-            AsList, L,
+            AsList, ShallowCopy( L ),
             UnderlyingGroup, group );
     
     Assert( 4, IsWellDefined( Omega ) );
@@ -44,10 +44,12 @@ InstallMethod( MapOfGSets,
         Error( "I has the wrong format\n" );
     fi;
     
-    imgs := List( I, x -> List( x, function( img )
+    imgs := List( ShallowCopy( I ), x -> List( ShallowCopy( x ), function( img )
         if ( not IsList( img ) ) or Length( img ) <> 3 then
             Error( "images must be triples\n" );
         fi;
+
+        img := ShallowCopy( img );
         
         g := img[ 2 ];
         if g in group then
