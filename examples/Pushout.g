@@ -41,14 +41,12 @@ iota1 := MapOfGSets( N1, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsMonomorphism( iota1 );
 #! true
-SetIsMonomorphism( iota1, true );
 N2 := GSet( G, [ 2 ] );
 #! <An object in Skeletal Category of G-Sets>
 iota2 := MapOfGSets( N2, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsMonomorphism( iota2 );
 #! true
-SetIsMonomorphism( iota2, true );
 D := [ iota1, iota2 ];
 #! [ <A monomorphism in Skeletal Category of G-Sets>, <A monomorphism in Skeletal Category of G-Sets> ]
 Fib := FiberProduct( D );
