@@ -20,8 +20,6 @@ InstallMethod( GSet,
     
     Assert( 4, IsWellDefined( Omega ) );
     
-    Add( SkeletalGSets( group ), Omega );
-    
     return Omega;
     
 end );
@@ -68,8 +66,6 @@ InstallMethod( MapOfGSets,
     );
     
     Assert( 4, IsWellDefined( map ) );
-
-    Add( SkeletalGSets( group ), map );
      
     return map;
     
