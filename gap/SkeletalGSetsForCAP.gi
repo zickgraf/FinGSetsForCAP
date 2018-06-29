@@ -14,7 +14,7 @@ InstallMethod( GSet,
     
     Omega := rec( );
     
-    ObjectifyWithAttributes( Omega, TheTypeOfSkeletalGSets,
+    ObjectifyObjectForCAPWithAttributes( Omega, SkeletalGSets( group ),
             AsList, L,
             UnderlyingGroup, group );
     
@@ -29,7 +29,7 @@ end );
 ##
 InstallMethod( MapOfGSets,
         "for two CAP skeletal G sets and a list",
-        [ IsSkeletalGSetRep, IsList, IsSkeletalGSetRep ],
+        [ IsSkeletalGSet, IsList, IsSkeletalGSet ],
         
   function( S, I, T )
     local group, map, k, imgs, g, j, U_j;
@@ -61,7 +61,7 @@ InstallMethod( MapOfGSets,
     
     map := rec( );
     
-    ObjectifyWithAttributes( map, TheTypeOfMapsOfSkeletalGSets,
+    ObjectifyMorphismForCAPWithAttributes( map, SkeletalGSets( group ),
         AsList, imgs,
         Source, S,
         Range, T 
@@ -106,6 +106,10 @@ InstallMethod( SkeletalGSets,
     SkeletalGSets := CreateCapCategory( CategoryName );
     
     SkeletalGSets!.group_for_category := group;
+    
+    AddObjectRepresentation( SkeletalGSets, IsSkeletalGSet );
+    
+    AddMorphismRepresentation( SkeletalGSets, IsSkeletalGSetMap );
     
     k := Length( MatTom( TableOfMarks( group ) ) );
     
@@ -1338,7 +1342,7 @@ InstallMethod( SkeletalGSets,
     ##
     InstallMethod( Display,
             "for a CAP skeletal G set",
-            [ IsSkeletalGSetRep ],
+            [ IsSkeletalGSet ],
             
       function( N )
         Display( [ UnderlyingGroup( N ), AsList( N ) ] );
@@ -1347,7 +1351,7 @@ InstallMethod( SkeletalGSets,
     ##
     InstallMethod( Display,
             "for a CAP map of CAP skeletal G sets",
-            [ IsSkeletalGSetMapRep ],
+            [ IsSkeletalGSetMap ],
             
       function( mor )
         Display( List( AsList( mor ), x -> List( x, y -> [ y[ 1 ], Representative( y[ 2 ] ), y[ 3 ] ] ) ) );

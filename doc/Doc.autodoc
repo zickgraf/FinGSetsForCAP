@@ -1,5 +1,6 @@
 @Chapter The category of skeletal finite G-sets
 
+@Section GAP Categories
 @Section Attributes
 @Section Constructors
 @Section Tools

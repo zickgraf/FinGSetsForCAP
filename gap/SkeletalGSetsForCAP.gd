@@ -6,25 +6,21 @@
 
 #! @Chapter The category of skeletal finite G-sets
 
-DeclareRepresentation( "IsSkeletalGSetRep",
-        IsAttributeStoringRep and
-        IsCapCategoryObjectRep and
-	IsCellOfSkeletalCategory,
-        [ ] );
+#! @Section GAP Categories
 
-BindGlobal( "TheTypeOfSkeletalGSets",
-         NewType( TheFamilyOfCapCategoryObjects,
-                 IsSkeletalGSetRep ) );
+#! @Description
+#! The GAP category of objects in the category
+#! of skeletal finite G-sets.
+#! @Arguments object
+DeclareCategory( "IsSkeletalGSet",
+                 IsCapCategoryObject and IsCellOfSkeletalCategory );
 
-DeclareRepresentation( "IsSkeletalGSetMapRep",
-        IsAttributeStoringRep and
-        IsCapCategoryMorphismRep,
-        [ ] );
-
-BindGlobal( "TheTypeOfMapsOfSkeletalGSets",
-         NewType( TheFamilyOfCapCategoryMorphisms,
-                 IsSkeletalGSetMapRep ) );
-
+#! @Description
+#! The GAP category of morphisms in the category
+#! of skeletal finite G-sets.
+#! @Arguments object
+DeclareCategory( "IsSkeletalGSetMap",
+                 IsCapCategoryMorphism and IsCellOfSkeletalCategory );
 
 #! @Section Attributes
 
@@ -34,28 +30,28 @@ BindGlobal( "TheTypeOfMapsOfSkeletalGSets",
 #! @Arguments Omega
 #! @Returns a &GAP; set
 DeclareAttribute( "AsList",
-        IsSkeletalGSetRep );
+        IsSkeletalGSet );
 
 #! @Description
 #!  The group $G$ underlying the $G$-set <A>Omega</A>.
 #! @Arguments Omega
 #! @Returns a group
 DeclareAttribute( "UnderlyingGroup",
-        IsSkeletalGSetRep );
+        IsSkeletalGSet );
 
 #! @Description
 #!  The table of marks of the group $G$ underlying the $G$-set <A>Omega</A>.
 #! @Arguments Omega
 #! @Returns a table of marks
 DeclareAttribute( "TableOfMarks",
-        IsSkeletalGSetRep );
+        IsSkeletalGSet );
 
 #! @Description
 #!  The number of conjugacy classes of subgroups of the group underlying the $G$-set <A>Omega</A>.
 #! @Arguments Omega
 #! @Returns a positive integer
 DeclareAttribute( "NrConjugacyClassesOfSubgroups",
-        IsSkeletalGSetRep );
+        IsSkeletalGSet );
 
 #! @Section Constructors
 
@@ -76,7 +72,7 @@ DeclareOperation( "GSet",
 #! @Arguments s, G, t
 #! @Returns a &CAP; morphism
 DeclareOperation( "MapOfGSets",
-        [ IsSkeletalGSetRep, IsList, IsSkeletalGSetRep ] );
+        [ IsSkeletalGSet, IsList, IsSkeletalGSet ] );
 #! @InsertSystem  MapOfGSets
 
 #! @Description
