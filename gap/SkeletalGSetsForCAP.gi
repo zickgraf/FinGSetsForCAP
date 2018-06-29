@@ -794,34 +794,6 @@ InstallMethod( SkeletalGSets,
     end );
 
     ##
-    AddEqualizer(SkeletalGSets,
-      function( D )
-        local f1, s, M, L, i, l;
-        
-        f1 := D[ 1 ];
-        
-        s := Source( f1 );
-        
-        D := D{ [ 2 .. Length( D ) ] };
-        
-        M := AsList( s );
-        
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := 0;
-            for l in [ 1 .. M[ i ] ] do
-                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
-                    L[i] := L[i] + 1;
-                fi;
-            od;
-        od;
-        
-        return GSet( group, L );
-        
-    end);
-
-    ##
     AddEmbeddingOfEqualizer( SkeletalGSets,
       function( D )
         local phi_1, S, positions;
@@ -1169,14 +1141,6 @@ InstallMethod( SkeletalGSets,
         od;
         
     end;
-
-    ##
-    AddCoequalizer( SkeletalGSets,
-      function( D )
-        
-        return Range( ProjectionOntoCoequalizer( D ) );
-       
-    end );
 
     ##
     AddProjectionOntoCoequalizer( SkeletalGSets,
