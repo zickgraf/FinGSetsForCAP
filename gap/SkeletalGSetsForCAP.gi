@@ -19,7 +19,7 @@ InstallMethod( GSet,
             UnderlyingGroup, group );
     
     Assert( 4, IsWellDefined( Omega ) );
-
+    
     Add( SkeletalGSets( group ), Omega );
     
     return Omega;
@@ -64,7 +64,7 @@ InstallMethod( MapOfGSets,
     ObjectifyMorphismForCAPWithAttributes( map, SkeletalGSets( group ),
         AsList, imgs,
         Source, S,
-        Range, T 
+        Range, T
     );
     
     Assert( 4, IsWellDefined( map ) );
@@ -121,7 +121,7 @@ InstallMethod( SkeletalGSets,
         
     end;
     
-    RepresentativeOfSubgroupsUpToConjugation := function( i ) 
+    RepresentativeOfSubgroupsUpToConjugation := function( i )
         
         return RepresentativeTom( TableOfMarks( group ), i );
         
@@ -251,9 +251,9 @@ InstallMethod( SkeletalGSets,
         local L, M, i, C, l;
         
         L := [];
-        M := AsList( Omega );  
+        M := AsList( Omega );
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 Add( C, [ l, Identity( group ), i ] );
@@ -274,9 +274,9 @@ InstallMethod( SkeletalGSets,
         
         S := Source( map_pre );
         
-        M := AsList( S );  
+        M := AsList( S );
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 img_1 := AsList( map_pre )[ i ] [ l ];
@@ -315,14 +315,14 @@ InstallMethod( SkeletalGSets,
 
     ##
     AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( SkeletalGSets,
-      function( Omega, T ) 
+      function( Omega, T )
         local L, M, i, C, l;
         
         L := [];
         
-        M := AsList( Omega );  
+        M := AsList( Omega );
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 Add( C, [ 1, Identity( group ), k ] );
@@ -358,12 +358,12 @@ InstallMethod( SkeletalGSets,
         
         C := Coefficients( B, prod );
         
-        return GSet( group, C );  
+        return GSet( group, C );
         
     end );
     
     OrbitsOfActionOnCartesianProduct := function( L )
-        local LoS, LoF, C, e, o; 
+        local LoS, LoF, C, e, o;
         
         # ListOfSubgroups
         LoS := List( L, i -> RepresentativeOfSubgroupsUpToConjugation( i ) );
@@ -373,7 +373,7 @@ InstallMethod( SkeletalGSets,
         
         C := Cartesian( LoF );
         
-        #Action of G on C by rightmultiplication 
+        # Action of G on C by rightmultiplication
         e := ExternalSet( group, C, OnRight );
         
         o := Orbits( e );
@@ -394,7 +394,7 @@ InstallMethod( SkeletalGSets,
         
         return DirectProduct( [ GSet( group, G_i ), GSet( group, G_j ) ] );
         
-    end;    
+    end;
     
     ProjectionOfASingleBinaryProduct := function( i, j, pos, copy_number, target )
         local o, RoO, imgs, r, s, a, found_g, U_a, g, P, pi, l, img, target_index;
@@ -439,7 +439,7 @@ InstallMethod( SkeletalGSets,
                     target_index := j;
                 fi;
                 
-                Add( pi[ l ], [ copy_number, img[ pos ], target_index ] ); 
+                Add( pi[ l ], [ copy_number, img[ pos ], target_index ] );
             od;
         od;
         
@@ -535,7 +535,7 @@ InstallMethod( SkeletalGSets,
         
         # Assumption Length( D ) = 2
         
-        S := Source( tau[ 1 ] ); 
+        S := Source( tau[ 1 ] );
         
         M := AsList( Range( tau[ 1 ] ) );
         N := AsList( Range( tau[ 2 ] ) );
@@ -549,12 +549,12 @@ InstallMethod( SkeletalGSets,
                 r_2 := AsList( tau[ 2 ] )[ i ][ l ][ 1 ];
                 g_1 := AsList( tau[ 1 ] )[ i ][ l ][ 2 ];
                 g_2 := AsList( tau[ 2 ] )[ i ][ l ][ 2 ];
-                j_1 := AsList( tau[ 1 ] )[ i ][ l ][ 3 ]; 
+                j_1 := AsList( tau[ 1 ] )[ i ][ l ][ 3 ];
                 j_2 := AsList( tau[ 2 ] )[ i ][ l ][ 3 ];
                 
                 Offset := OffsetInCartesianProduct( M, N, j_1, j_2, r_1, r_2 );
                 
-                Orbits := OrbitsOfActionOnCartesianProduct( [ j_1, j_2 ] ); 
+                Orbits := OrbitsOfActionOnCartesianProduct( [ j_1, j_2 ] );
                 
                 # Representatives Of Orbits
                 RoO := List( Orbits, x -> x[ 1 ] );
@@ -563,7 +563,7 @@ InstallMethod( SkeletalGSets,
                 SRO := List( RoO, r -> Stabilizer( group, r, OnRight ) );
                 
                 # image in the Cartesian product
-                img := [ g_1, g_2 ]; 
+                img := [ g_1, g_2 ];
                 
                 # find the orbit containing img
                 for o in [ 1 .. Length( Orbits ) ] do
@@ -616,7 +616,7 @@ InstallMethod( SkeletalGSets,
         
     end;
 
-    ##  
+    ##
     AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( SkeletalGSets,
       function( D, tau, T ) # TODO: Frage: was ist D resp. wofür braucht man es??????
         local D2, tau2, sigma;
@@ -653,7 +653,7 @@ InstallMethod( SkeletalGSets,
         L := [];
         
         for i in [ 1 .. k ] do
-            L[i] := 0; 
+            L[i] := 0;
             for l in [ 1 .. M[ i ] ] do
                 if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
                     L[i] := L[i] + 1;
@@ -681,7 +681,7 @@ InstallMethod( SkeletalGSets,
         L := [];
         
         for i in [ 1 .. k ] do
-            L[i] := []; 
+            L[i] := [];
             for l in [ 1 .. M[ i ] ] do
                 # TODO: is this right? Probably not......
                 if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
@@ -708,7 +708,7 @@ InstallMethod( SkeletalGSets,
         L := [];
         
         for i in [ 1 .. k ] do
-            L[i] := []; 
+            L[i] := [];
             for l in [ 1 .. M[ i ] ] do
                 # TODO: is this right? Probably not......
                 if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
@@ -724,7 +724,7 @@ InstallMethod( SkeletalGSets,
         imgs := [];
         
         for i in [ 1 .. k ] do
-            imgs[i] := []; 
+            imgs[i] := [];
             for l in [ 1 .. N[ i ] ] do
                 img := AsList( tau )[ i ][ l ];
                 r := img[ 1 ];
@@ -751,7 +751,7 @@ InstallMethod( SkeletalGSets,
 
     ##
     AddUniversalMorphismFromInitialObject( SkeletalGSets,
-      function( Omega )    
+      function( Omega )
         
         return MapOfGSets( GSet( group, IntZeroVector( k ) ), List( AsList( Omega ), x -> [] ), Omega );
         
@@ -791,7 +791,7 @@ InstallMethod( SkeletalGSets,
         
         imgs := [];
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 Add( C, [ sum[i] + l, Identity( group ), i ] );
@@ -814,7 +814,7 @@ InstallMethod( SkeletalGSets,
         
         imgs := [];
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for j in [ 1 .. Length(tau) ] do
                 C := Concatenation( C, AsList(tau[ j ])[ i ] );
@@ -979,9 +979,9 @@ InstallMethod( SkeletalGSets,
                 for s in SourcePositions do
                     i := s[ 2 ];
                     l := s[ 1 ];
-                    f_a := D[ a ];  
+                    f_a := D[ a ];
                     f_b := D[ b ];
-                    img_a := AsList( f_a )[ i ][ l ];  
+                    img_a := AsList( f_a )[ i ][ l ];
                     img_b := AsList( f_b )[ i ][ l ];
                     r_a := img_a[ 1 ];
                     r_b := img_b[ 1 ];
@@ -990,14 +990,14 @@ InstallMethod( SkeletalGSets,
                     j_a := img_a[ 3 ];
                     j_b := img_b[ 3 ];
                     
-                    Add( Equations, [ g_a, r_a, j_a, g_b, r_b, j_b ] ); 
-                od;  
+                    Add( Equations, [ g_a, r_a, j_a, g_b, r_b, j_b ] );
+                od;
             od;
         od;
 
         Solutions[ RangePositions[ 1 ][ 2 ] ] [ RangePositions[ 1 ][ 1 ] ] := Identity( group );
         
-        repeat 
+        repeat
             # search for new solutions
             for p in RangePositions do
                 r := p[ 1 ];
@@ -1024,7 +1024,7 @@ InstallMethod( SkeletalGSets,
                         fi;
                         if Solutions[ j ][ r ] <> false and Solutions[ j_a ][ r_a ] = false then
                             Solutions[ j_a ][ r_a ] := Solutions[ j ][ r ] * g_b * Inverse( g_a );
-                        fi;  
+                        fi;
                     fi;
                 od;
             od;
@@ -1062,7 +1062,7 @@ InstallMethod( SkeletalGSets,
                     for p in RangePositions do
                         r := p[ 1 ];
                         j := p[ 2 ];
-                        Solutions[ j ][ r ] := g * Solutions[ j ][ r ]; 
+                        Solutions[ j ][ r ] := g * Solutions[ j ][ r ];
                     od;
                     return [ i, Solutions, g ];
                 fi;
@@ -1097,7 +1097,7 @@ InstallMethod( SkeletalGSets,
         imgs := List( [ 1 .. k ], x -> [] );
         
         for j in [ 1 .. k ] do
-            for r in [ 1 .. N[ j ] ] do 
+            for r in [ 1 .. N[ j ] ] do
                 if [ r, j ] in ProcessedImagePositions then
                     continue;
                 fi;
@@ -1110,7 +1110,7 @@ InstallMethod( SkeletalGSets,
                             if AsList( f )[ i ][ l ][ 1 ] = r and AsList( f )[ i ][ l ][ 3 ] = j then
                                 Add( PreimagePositions, [ l, i ] );
                             fi;
-                        od; 
+                        od;
                     od;
                 
                 od;
@@ -1136,12 +1136,12 @@ InstallMethod( SkeletalGSets,
                 Cq[ pos ] := Cq[ pos ] + 1;
                 
                 for p in ImagePositions do
-                    imgs[ p[ 2 ] ][ p[ 1 ] ] := [ Cq[ pos ], Solutions[ p[ 2 ] ][ p[ 1 ] ] , pos ]; 
+                    imgs[ p[ 2 ] ][ p[ 1 ] ] := [ Cq[ pos ], Solutions[ p[ 2 ] ][ p[ 1 ] ] , pos ];
                 od;
                 
                 ProcessedImagePositions := Union2( ProcessedImagePositions, ImagePositions );
             od;
-        od; 
+        od;
         
         return MapOfGSets( Range( D[ 1 ] ), imgs , GSet( group, Cq ) );
         
@@ -1167,20 +1167,20 @@ InstallMethod( SkeletalGSets,
         imgs := List( [ 1 .. k ], x -> [] );
         
         for j in [ 1 .. k ] do
-            for r in [ 1 .. N[ j ] ] do 
+            for r in [ 1 .. N[ j ] ] do
                 if [ r, j ] in ProcessedImagePositions then
                     continue;
                 fi;
                 
                 PreimagePositions := [];
                 
-                for f in D do  
+                for f in D do
                     for i in [ 1 .. k ] do
                         for l in [ 1 .. M[ i ] ] do
                             if AsList( f )[ i ][ l ][ 1 ] = r and AsList( f )[ i ][ l ][ 3 ] = j then
                                 Add( PreimagePositions, [ l, i ] );
                             fi;
-                        od; 
+                        od;
                     od;
                 
                 od;
@@ -1265,11 +1265,11 @@ InstallMethod( SkeletalGSets,
     AddIsMonomorphism( SkeletalGSets,
       function( phi )
         
-        # Assume phi is a monomorphism mapping a generator of G/U_i to an element of G/U_j. Since phi is well-defined we have that U_i is contained in U_j 
+        # Assume phi is a monomorphism mapping a generator of G/U_i to an element of G/U_j. Since phi is well-defined we have that U_i is contained in U_j
         # up to conjugation. Since phi is injective we must have |U_j| <= |U_i|.
-        # Thus, U_i and U_j are equal up to conjugation and since the U_i are representatives of conjugacy classes of subgroups of G, we get i = j. 
+        # Thus, U_i and U_j are equal up to conjugation and since the U_i are representatives of conjugacy classes of subgroups of G, we get i = j.
         # Additionally, the multiplicity of G/U_i in the source must be the same as in the image, since otherwise phi cannot be injective.
-        # Conversely, if a morphism phi maps the generator of any G/U_i to an element of G/U_i and the multiplicity of any G/U_i in the source is the 
+        # Conversely, if a morphism phi maps the generator of any G/U_i to an element of G/U_i and the multiplicity of any G/U_i in the source is the
         # same as its multiplicity in the image, then phi is monomorphism.
         # Conclusion: we only have to compare the multiplicities of the G/U_i in the source and the image.
         
@@ -1290,7 +1290,7 @@ InstallMethod( SkeletalGSets,
         
         D := [];
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 Add( C, [ L[ i ][ l ], Identity( group ), i ] );
@@ -1317,7 +1317,7 @@ InstallMethod( SkeletalGSets,
         
         D := [];
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 r := imgs[ i ][ l ][ 1 ];
