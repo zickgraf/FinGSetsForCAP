@@ -1236,8 +1236,6 @@ InstallMethod( SkeletalGSets,
                 Add( L[j], r );
             od;
         od;
-        
-        L := List( L, l -> Set( l ) );
 
         return L;
         
@@ -1247,7 +1245,7 @@ InstallMethod( SkeletalGSets,
     AddImageObject( SkeletalGSets,
       function( phi )
         
-        return GSet( group, List( ImagePositions( phi ), x -> Length( x ) ) );
+        return GSet( group, List( ImagePositions( phi ), x -> Length( Set( x ) ) ) );
         
     end );
 
@@ -1276,7 +1274,7 @@ InstallMethod( SkeletalGSets,
         
         M := AsList( I );
         
-        L := ImagePositions( phi );
+        L := List( ImagePositions( phi ), x -> Set( x ) );
         
         D := [];
         
