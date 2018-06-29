@@ -297,12 +297,12 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
-                img_1 := AsList( map_pre )[ i ] [ l ];
+                img_1 := Component( map_pre, [ i, l ] );
                 r_1 := img_1[ 1 ];
                 g_1 := img_1[ 2 ];
                 j_1 := img_1[ 3 ];
                 
-                img_2 := AsList( map_post )[ j_1 ][ r_1 ];
+                img_2 := Component( map_post, [ j_1 , r_1 ] );
                 r_2 := img_2[ 1 ];
                 g_2 := img_2[ 2 ];
                 j_2 := img_2[ 3 ];
@@ -386,44 +386,32 @@ InstallMethod( SkeletalGSets,
     
     ##
     AddLiftAlongMonomorphism( SkeletalGSets,
-      function( iota, tau )
-        local S, T, M, N, D, i, C, l, img, r, g, j, found_preimage, s, t, img2, r2, g2, j2;
+      function( iota, phi )
+        local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
       
-        S := Source( tau );
+        S := Source( phi );
         T := Source( iota );
         
         M := AsList( S );
-        N := AsList( T );
         
         D := [];
         
         for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
-                img := AsList( tau )[ i ][ l ];
+                img := Component( phi, [ i , l ] );
                 r := img[ 1 ];
-                g := img[ 2 ];
+                g := Representative( img[ 2 ] );
                 j := img[ 3 ];
                 
-                # find the preimage of img
-                found_preimage := false;
-                for s in [ 1 .. k ] do
-                    for t in [ 1 .. N[ s ] ] do
-                        img2 := AsList( iota )[ s ][ t ];
-                        r2 := img2[ 1 ];
-                        g2 := img2[ 2 ];
-                        j2 := img2[ 3 ];
-                        if r = r2 and j = j2 then
-                            found_preimage := true;
-                            break;
-                        fi;
-                    od;
-                    if found_preimage then
-                        break;
-                    fi;
-                od;
+                # get the unique preimage position under iota
+                preimagePosition := PreimagePositions( iota, [ [ j, r ] ] )[ 1 ];
                 
-                Add( C, [ t, Inverse( g2 ) * g, s ] );
+                t := preimagePosition[ 2 ];
+                h := Representative( Component( iota, preimagePosition )[ 2 ] );
+                s := preimagePosition[ 1 ];
+                
+                Add( C, [ t, Inverse( h ) * g, s ] );
             od;
             Add( D, C );
         od;
@@ -834,30 +822,19 @@ InstallMethod( SkeletalGSets,
     end);
 
     ##
-    AddEmbeddingOfEqualizerWithGivenEqualizer( SkeletalGSets,
-      function( D, E )
-        local f1, S, M, L, i, l;
+    AddEmbeddingOfEqualizer( SkeletalGSets,
+      function( D )
+        local phi_1, S, positions;
         
-        f1 := D[ 1 ];
+        phi_1 := D[ 1 ];
         
-        S := Source( f1 );
+        S := Source( phi_1 );
         
         D := D{ [ 2 .. Length( D ) ] };
         
-        M := AsList( S );
+        positions := Filtered( Positions( S ), p -> ForAll( D, phi -> Component( phi_1, p ) = Component( phi, p ) ) );
         
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := [];
-            for l in [ 1 .. M[ i ] ] do
-                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
-                    Add( L[i], [ l, Identity( group ), i ] );
-                fi;
-            od;
-        od;
-        
-        return MapOfGSets( E, L, S );
+        return EmbeddingOfPositions( positions, S );
         
     end );
 
