@@ -28,7 +28,7 @@
 @InsertSystem Coproduct
 
 @Subsection Image
-@InsertSystem ImageObject
+@InsertSystem Image
 
 @Subsection Equalizer
 @InsertSystem Equalizer

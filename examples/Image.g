@@ -1,4 +1,4 @@
-#! @System ImageObject
+#! @System Image
 
 LoadPackage( "SkeletalGSets" );
 
