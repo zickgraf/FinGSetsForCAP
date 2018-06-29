@@ -1308,6 +1308,14 @@ InstallMethod( SkeletalGSets,
     end );
     
     ##
+    AddImageEmbedding( SkeletalGSets,
+      function( phi )
+        
+        return EmbeddingOfPositions( ImagePositions( phi ), Range( phi ) );
+        
+    end );
+
+    ##
     AddIsEpimorphism( SkeletalGSets,
       function( phi )
         
@@ -1320,14 +1328,6 @@ InstallMethod( SkeletalGSets,
       function( phi )
         
         return AsList( ImageObject( phi ) ) = AsList( Source( phi ) );
-        
-    end );
-
-    ##
-    AddImageEmbedding( SkeletalGSets,
-      function( phi )
-        
-        return EmbeddingOfPositions( ImagePositions( phi ), Range( phi ) );
         
     end );
 
