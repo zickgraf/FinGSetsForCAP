@@ -46,14 +46,14 @@ InstallMethod( MapOfGSets,
     
     imgs := List( I, x -> List( x, function( img )
         if ( not IsList( img ) ) or Length( img ) <> 3 then
-            Error("images must be triples\n");
+            Error( "images must be triples\n" );
         fi;
         
         g := img[ 2 ];
         if g in group then
             j := img[ 3 ];
             if not ( IsPosInt( j ) and j <= k ) then
-                Error("last entry of an image must be an integer j with 1 <= j <= k\n");
+                Error( "last entry of an image must be an integer j with 1 <= j <= k\n" );
             fi;
             U_j := RepresentativeTom( TableOfMarks( group ), j );
             img[ 2 ] := RightCoset( U_j, g );
@@ -311,7 +311,7 @@ InstallMethod( SkeletalGSets,
                 g_2 := img_2[ 2 ];
                 j_2 := img_2[ 3 ];
                 
-                Add( C, [ r_2, Representative( g_2 ) * Representative( g_1), j_2 ] );
+                Add( C, [ r_2, Representative( g_2 ) * Representative( g_1 ), j_2 ] );
             od;
             Add( cmp, C );
         od;
