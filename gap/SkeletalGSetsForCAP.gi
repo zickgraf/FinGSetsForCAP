@@ -40,8 +40,12 @@ InstallMethod( MapOfGSets,
     
     k := Length( MatTom( TableOfMarks( group ) ) );
     
+    if ( not IsList( I ) ) or ( not ForAll( I, x -> IsList( x ) ) ) then
+        Error( "I has the wrong format\n" );
+    fi;
+    
     imgs := List( I, x -> List( x, function( img )
-        if Length( img ) <> 3 then
+        if ( not IsList( img ) ) or Length( img ) <> 3 then
             Error("images must be triples\n");
         fi;
         
