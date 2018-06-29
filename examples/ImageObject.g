@@ -63,5 +63,9 @@ pi := ImageEmbedding( phi );
 #! <A monomorphism in Skeletal Category of G-Sets>
 Display( pi );
 #! [ [ [ 5, (), 1 ], [ 7, (), 1 ] ] ]
+phi_res := CoastrictionToImage( phi );
+#! <An epimorphism in Skeletal Category of G-Sets>
+phi = PreCompose( phi_res, pi );
+#! true
 
 #! @EndExample
