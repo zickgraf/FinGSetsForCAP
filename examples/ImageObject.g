@@ -16,11 +16,24 @@ IsEpimorphism( phi );
 #! false
 I := ImageObject( phi );
 #! <An object in Skeletal Category of G-Sets>
-psi := ImageEmbedding( phi );
+iota := ImageEmbedding( phi );
 #! <A monomorphism in Skeletal Category of G-Sets>
 phi_res := CoastrictionToImage( phi );
-#! <An epimorphism in Skeletal Category of G-Sets>
-phi = PreCompose( phi_res, psi );
+#! <A morphism in Skeletal Category of G-Sets>
+phi = PreCompose( phi_res, iota );
+#! true
+T := GSet( S3, [ 1, 1, 0, 0 ] );;
+tau1 := MapOfGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], T );;
+tau2 := MapOfGSets( T, [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );;
+IsMonomorphism( tau2 );
+#! true
+phi = PreCompose( tau1, tau2 );
+#! true
+u := UniversalMorphismFromImage( phi, [ tau1, tau2 ] );
+#! <A morphism in Skeletal Category of G-Sets>
+tau1 = PreCompose( phi_res, u );
+#! true
+iota = PreCompose( u, tau2 );
 #! true
 
 
@@ -40,7 +53,7 @@ I := ImageObject( phi );
 psi := ImageEmbedding( phi );
 #! <A monomorphism in Skeletal Category of G-Sets>
 phi_res := CoastrictionToImage( phi );
-#! <An epimorphism in Skeletal Category of G-Sets>
+#! <A morphism in Skeletal Category of G-Sets>
 phi = PreCompose( phi_res, psi );
 #! true
 
@@ -64,7 +77,7 @@ pi := ImageEmbedding( phi );
 Display( pi );
 #! [ [ [ 5, (), 1 ], [ 7, (), 1 ] ] ]
 phi_res := CoastrictionToImage( phi );
-#! <An epimorphism in Skeletal Category of G-Sets>
+#! <A morphism in Skeletal Category of G-Sets>
 phi = PreCompose( phi_res, pi );
 #! true
 

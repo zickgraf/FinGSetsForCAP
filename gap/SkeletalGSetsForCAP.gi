@@ -737,50 +737,6 @@ InstallMethod( SkeletalGSets,
         
     end );
 
-    ##
-    AddUniversalMorphismIntoEqualizerWithGivenEqualizer( SkeletalGSets,
-      function( D, tau, E )
-        local f1, M, L, i, l, S, N, imgs, img, r, g, j;
-        
-        f1 := D[ 1 ];
-        
-        D := D{ [ 2 .. Length( D ) ] };
-        
-        M := AsList( Source( f1 ) );
-        
-        L := [];
-        
-        for i in [ 1 .. k ] do
-            L[i] := [];
-            for l in [ 1 .. M[ i ] ] do
-                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
-                    Add( L[ i ], l );
-                fi;
-            od;
-        od;
-
-        
-        S := Source( tau );
-        N := AsList( S );
-        
-        imgs := [];
-        
-        for i in [ 1 .. k ] do
-            imgs[i] := [];
-            for l in [ 1 .. N[ i ] ] do
-                img := AsList( tau )[ i ][ l ];
-                r := img[ 1 ];
-                g := img[ 2 ];
-                j := img[ 3 ];
-
-                Add( imgs[i], [ Position( L[ j ], r ), g, j ]  );
-            od;
-        od;
-
-        return MapOfGSets( S, imgs, E );
-        
-    end );
-
     ## Colimits
 
     ##
@@ -1333,43 +1289,6 @@ InstallMethod( SkeletalGSets,
         od;
 
         return MapOfGSets( I, D, Range( phi ) );
-        
-    end );
-
-    ##
-    AddCoastrictionToImage( SkeletalGSets,
-      function( phi )
-        local M, I, imgs, L, i, l, r, j, D, C, g, pi;
-        
-        M := AsList( Source( phi ) );
-        
-        I := ImageObject( phi );
-        
-        imgs := AsList( phi );
-        
-        L := ImagePositions( phi );
-        
-        D := [];
-        
-        for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
-                r := imgs[ i ][ l ][ 1 ];
-                g := imgs[ i ][ l ][ 2 ];
-                j := imgs[ i ][ l ][ 3 ];
-                
-                Add( C, [ Position( Set( L[ j ] ), r ), g, j ] );
-            od;
-            Add( D, C );
-        od;
-        
-        pi := MapOfGSets( Source( phi ), D, I );
-        
-        Assert( 4, IsEpimorphism( pi ) );
-        
-        SetIsEpimorphism( pi, true );
-        
-        return pi;
         
     end );
 
