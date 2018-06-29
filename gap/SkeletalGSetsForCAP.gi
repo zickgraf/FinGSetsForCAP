@@ -91,7 +91,12 @@ InstallMethod( SkeletalGSets,
         UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct,
         ExplicitCoequalizer,
         CoequalizerOfAConnectedComponent,
-        ImagePositions;
+        Positions,
+        Component,
+        TargetPosition,
+        ImagePositions,
+        PreimagePositions,
+        EmbeddingOfPositions;
     
     if HasName( group ) then
         CategoryName := Concatenation( "Skeletal Category of ", Name( group ), "-Sets" );
@@ -161,6 +166,23 @@ InstallMethod( SkeletalGSets,
         return AsList( Omega1 ) = AsList( Omega2 );
         
     end );
+
+    # returns the positions of an object 'Omega'
+    Positions := function( Omega )
+        local M, positions, i, l;
+        
+        M := AsList( Omega );
+        
+        positions := [];
+        
+        for i in [ 1 .. k ] do
+            for l in [ 1 .. M[ i ] ] do
+                Add( positions, [ i, l ] );
+            od;
+        od;
+        
+        return positions;
+    end;
 
 
     ## Morphisms
@@ -293,6 +315,74 @@ InstallMethod( SkeletalGSets,
         return MapOfGSets( S, cmp, Range( map_post ) );
         
     end );
+    
+    # returns the component of a morphism 'phi' at position 'position'
+    Component := function( phi, position )
+        return AsList( phi )[ position[ 1 ] ][ position[ 2 ] ];
+    end;
+    
+    # returns the target position of a component 'component' of a morphism
+    TargetPosition := function( component )
+        return [ component[ 3 ], component[ 1 ] ];
+    end;
+    
+    ##
+    ImagePositions := function( phi )
+        local S, T, positions;
+        
+        S := Source( phi );
+        T := Range( phi );
+        
+        positions := Filtered( Positions( T ), p_T -> ForAny( Positions( S ), p_S -> TargetPosition( Component( phi, p_S ) ) = p_T ) );
+
+        return positions;
+        
+    end;
+    
+    ##
+    PreimagePositions := function( phi, targetPositions )
+        local S, positions;
+        
+        S := Source( phi );
+        
+        positions := Filtered( Positions( S ), p -> TargetPosition( Component( phi, p ) ) in targetPositions );
+        
+        return positions;
+        
+    end;
+    
+    ##
+    EmbeddingOfPositions := function( positions, T )
+        local L, S, M, D, i, C, l, iota;
+        
+        # impose lexicographical order
+        positions := Set( positions );
+        
+        L := List( [ 1 .. k ], i -> Filtered( positions, p -> p[ 1 ] = i ) );
+        
+        S := GSet( group, List( L, p -> Length( p ) ) );
+        
+        M := AsList( S );
+        
+        D := [];
+        
+        for i in [ 1 .. k ] do 
+            C := [];
+            for l in [ 1 .. M[ i ] ] do
+                Add( C, [ L[ i ][ l ][ 2 ], Identity( group ), i ] );
+            od;
+            Add( D, C );
+        od;
+
+        iota := MapOfGSets( S, D, T );
+        
+        Assert( 3, IsMonomorphism( iota ) );
+        
+        SetIsMonomorphism( iota, true );
+        
+        return iota;
+        
+    end;
     
     ##
     AddLiftAlongMonomorphism( SkeletalGSets,
@@ -1217,38 +1307,6 @@ InstallMethod( SkeletalGSets,
         
     end );
     
-    ImagePositions := function( phi )
-        local S, M, imgs, L, i, l, r, j;
-        
-        S := Source( phi );
-        
-        M := AsList( S );
-        
-        imgs := AsList(phi);
-        
-        L := List( [ 1 .. k ], i -> [] );
-        
-        for i in [ 1 .. k ] do
-            for l in [ 1 .. M[ i ] ] do
-                r := imgs[ i ][ l ][ 1 ];
-                j := imgs[ i ][ l ][ 3 ];
-                
-                Add( L[j], r );
-            od;
-        od;
-
-        return L;
-        
-    end;
-    
-    ##
-    AddImageObject( SkeletalGSets,
-      function( phi )
-        
-        return GSet( group, List( ImagePositions( phi ), x -> Length( Set( x ) ) ) );
-        
-    end );
-
     ##
     AddIsEpimorphism( SkeletalGSets,
       function( phi )
@@ -1268,25 +1326,8 @@ InstallMethod( SkeletalGSets,
     ##
     AddImageEmbedding( SkeletalGSets,
       function( phi )
-        local I, M, L, i, l, D, C;
         
-        I := ImageObject( phi );
-        
-        M := AsList( I );
-        
-        L := List( ImagePositions( phi ), x -> Set( x ) );
-        
-        D := [];
-        
-        for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
-                Add( C, [ L[ i ][ l ], Identity( group ), i ] );
-            od;
-            Add( D, C );
-        od;
-
-        return MapOfGSets( I, D, Range( phi ) );
+        return EmbeddingOfPositions( ImagePositions( phi ), Range( phi ) );
         
     end );
 
