@@ -107,6 +107,8 @@ InstallMethod( SkeletalGSets,
     
     SkeletalGSets!.group_for_category := group;
     
+    DisableAddForCategoricalOperations( SkeletalGSets );
+    
     AddObjectRepresentation( SkeletalGSets, IsSkeletalGSet );
     
     AddMorphismRepresentation( SkeletalGSets, IsSkeletalGSetMap );
