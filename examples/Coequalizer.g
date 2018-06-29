@@ -38,7 +38,7 @@ D := [ f_1, f_2 ];;
 Cq := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
 AsList( Cq );
-#! [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
+#! [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
 #! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
@@ -70,7 +70,7 @@ D := [ f_1, f_2 ];;
 Cq := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
 AsList( Cq );
-#! [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
+#! [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
 pi := ProjectionOntoCoequalizer( D );
 #! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
@@ -103,7 +103,7 @@ D := [ f_1, f_2 ];;
 Cq := Coequalizer( D );
 #! <An object in Skeletal Category of G-Sets>
 AsList( Cq );
-#! [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+#! [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 pi := ProjectionOntoCoequalizer( D );
 #! <An epimorphism in Skeletal Category of G-Sets>
 IsWellDefined( pi );
