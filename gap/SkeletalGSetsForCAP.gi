@@ -664,29 +664,28 @@ InstallMethod( SkeletalGSets,
     ##
     AddEmbeddingOfEqualizerWithGivenEqualizer( SkeletalGSets,
       function( D, E )
-        local f1, s, M, L, i, l;
+        local f1, S, M, L, i, l;
         
         f1 := D[ 1 ];
         
-        s := Source( f1 );
+        S := Source( f1 );
         
         D := D{ [ 2 .. Length( D ) ] };
         
-        M := AsList( s );
+        M := AsList( S );
         
         L := [];
         
         for i in [ 1 .. k ] do
             L[i] := [];
             for l in [ 1 .. M[ i ] ] do
-                # TODO: is this right? Probably not......
-                if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
+                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
                     Add( L[i], [ l, Identity( group ), i ] );
                 fi;
             od;
         od;
         
-        return MapOfGSets( E, L, s );
+        return MapOfGSets( E, L, S );
         
     end );
 
@@ -706,9 +705,8 @@ InstallMethod( SkeletalGSets,
         for i in [ 1 .. k ] do
             L[i] := [];
             for l in [ 1 .. M[ i ] ] do
-                # TODO: is this right? Probably not......
-                if ForAll( D, fj -> AsList( f1 )[i][l] = AsList( fj )[i][l] ) then
-                    Add( L[i], l );
+                if ForAll( D, fj -> AsList( f1 )[ i ][ l ] = AsList( fj )[ i ][ l ] ) then
+                    Add( L[ i ], l );
                 fi;
             od;
         od;
@@ -727,7 +725,7 @@ InstallMethod( SkeletalGSets,
                 g := img[ 2 ];
                 j := img[ 3 ];
 
-                Add( imgs[i], [ Position( L[j], r ), g, j ]  );
+                Add( imgs[i], [ Position( L[ j ], r ), g, j ]  );
             od;
         od;
 
@@ -1260,14 +1258,6 @@ InstallMethod( SkeletalGSets,
     ##
     AddIsMonomorphism( SkeletalGSets,
       function( phi )
-        
-        # Assume phi is a monomorphism mapping a generator of G/U_i to an element of G/U_j. Since phi is well-defined we have that U_i is contained in U_j
-        # up to conjugation. Since phi is injective we must have |U_j| <= |U_i|.
-        # Thus, U_i and U_j are equal up to conjugation and since the U_i are representatives of conjugacy classes of subgroups of G, we get i = j.
-        # Additionally, the multiplicity of G/U_i in the source must be the same as in the image, since otherwise phi cannot be injective.
-        # Conversely, if a morphism phi maps the generator of any G/U_i to an element of G/U_i and the multiplicity of any G/U_i in the source is the
-        # same as its multiplicity in the image, then phi is monomorphism.
-        # Conclusion: we only have to compare the multiplicities of the G/U_i in the source and the image.
         
         return AsList( ImageObject( phi ) ) = AsList( Source( phi ) );
         
