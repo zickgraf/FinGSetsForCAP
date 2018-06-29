@@ -293,6 +293,54 @@ InstallMethod( SkeletalGSets,
         return MapOfGSets( S, cmp, Range( map_post ) );
         
     end );
+    
+    ##
+    AddLiftAlongMonomorphism( SkeletalGSets,
+      function( iota, tau )
+        local S, T, M, N, D, i, C, l, img, r, g, j, found_preimage, s, t, img2, r2, g2, j2;
+      
+        S := Source( tau );
+        T := Source( iota );
+        
+        M := AsList( S );
+        N := AsList( T );
+        
+        D := [];
+        
+        for i in [ 1 .. k ] do
+            C := [];
+            for l in [ 1 .. M[ i ] ] do
+                img := AsList( tau )[ i ][ l ];
+                r := img[ 1 ];
+                g := img[ 2 ];
+                j := img[ 3 ];
+                
+                # find the preimage of img
+                found_preimage := false;
+                for s in [ 1 .. k ] do
+                    for t in [ 1 .. N[ s ] ] do
+                        img2 := AsList( iota )[ s ][ t ];
+                        r2 := img2[ 1 ];
+                        g2 := img2[ 2 ];
+                        j2 := img2[ 3 ];
+                        if r = r2 and j = j2 then
+                            found_preimage := true;
+                            break;
+                        fi;
+                    od;
+                    if found_preimage then
+                        break;
+                    fi;
+                od;
+                
+                Add( C, [ t, Inverse( g2 ) * g, s ] );
+            od;
+            Add( D, C );
+        od;
+
+        return MapOfGSets( S, D, T );
+        
+    end );
 
     ## Limits
 

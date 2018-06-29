@@ -18,6 +18,9 @@
 @Subsection Initial and Terminal objects
 @InsertSystem InitialTerminal
 
+@Subsection LiftAlongMonomorphism
+@InsertSystem LiftAlongMonomorphism
+
 @Subsection Product
 @InsertSystem DirectProduct
 
