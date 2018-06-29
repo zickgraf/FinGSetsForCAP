@@ -21,6 +21,9 @@
 @Subsection LiftAlongMonomorphism
 @InsertSystem LiftAlongMonomorphism
 
+@Subsection ColiftAlongEpimorphism
+@InsertSystem ColiftAlongEpimorphism
+
 @Subsection Product
 @InsertSystem DirectProduct
 

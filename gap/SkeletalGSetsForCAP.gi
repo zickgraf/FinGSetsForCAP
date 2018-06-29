@@ -431,6 +431,40 @@ InstallMethod( SkeletalGSets,
         return MapOfGSets( S, D, T );
         
     end );
+    
+    ##
+    AddColiftAlongEpimorphism( SkeletalGSets,
+      function( pi, phi )
+        local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
+      
+        S := Range( pi );
+        T := Range( phi );
+        
+        M := AsList( S );
+        
+        D := [];
+        
+        for i in [ 1 .. k ] do
+            C := [];
+            for l in [ 1 .. M[ i ] ] do
+                # get some preimage position under pi
+                preimagePosition := PreimagePositions( pi, [ [ i, l ] ] )[ 1 ];
+                
+                h := Representative( Component( pi, preimagePosition )[ 2 ] );
+
+                img := Component( phi, preimagePosition );
+                r := img[ 1 ];
+                g := Representative( img[ 2 ] );
+                j := img[ 3 ];
+                
+                Add( C, [ r, g * Inverse( h ), j ] );
+            od;
+            Add( D, C );
+        od;
+
+        return MapOfGSets( S, D, T );
+        
+    end );
 
     ## Limits
 
