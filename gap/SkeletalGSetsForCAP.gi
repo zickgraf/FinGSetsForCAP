@@ -547,10 +547,10 @@ InstallMethod( SkeletalGSets,
     SingleBinaryProduct := function( i, j )
         local G_i, G_j;
         
-        # G/U_i
+        # U_i\G
         G_i := IntZeroVector( k );
         G_i[ i ] := 1;
-        # G/U_j
+        # U_j\G
         G_j := IntZeroVector( k );
         G_j[ j ] := 1;
         
@@ -588,7 +588,7 @@ InstallMethod( SkeletalGSets,
             Add( imgs[ a ], r * Inverse( g ) );
         od;
         
-        # take the direct product of G/U_i and G/U_j and construct the projection pi
+        # take the direct product of U_i\G and U_j\G and construct the projection pi
         P := SingleBinaryProduct( i, j );
         
         pi := [];
@@ -692,10 +692,10 @@ InstallMethod( SkeletalGSets,
         
     end;
 
-    UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct := function( D, tau, T ) # TODO: Frage: was ist D resp. wofür braucht man es??????
+    UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct := function( D, tau, T )
         local S, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
         
-        # Assumption Length( D ) = 2
+        Assert( 4, Size( D ) = 2 );
         
         S := Source( tau[ 1 ] );
         
@@ -780,7 +780,7 @@ InstallMethod( SkeletalGSets,
 
     ##
     AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( SkeletalGSets,
-      function( D, tau, T ) # TODO: Frage: was ist D resp. wofür braucht man es??????
+      function( D, tau, T )
         local D2, tau2, sigma;
         
         if Length( D ) = 1 then
