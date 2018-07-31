@@ -56,7 +56,7 @@ Persons := [
     FirstNames := "Fabian",
     LastName := "Zickgraf",
     WWWHome := "https://github.com/zickgraf/",
-    Email := "zickgraf@rhrk.uni-kl.de",
+    Email := "fabian.zickgraf@uni-siegen.de",
     PostalAddress := Concatenation(
                "Walter-Flex-Str. 3\n",
                "57068 Siegen\n",
@@ -68,14 +68,12 @@ Persons := [
 
 SourceRepository := rec(
     Type := "git",
-    URL := Concatenation( "https://github.com/mohamed-barakat/", ~.PackageName ),
+    URL := Concatenation( "https://github.com/homalg-project/", ~.PackageName ),
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-#SupportEmail   := "TODO",
-# TODO: Homepage says "Page not found"
-PackageWWWHome  := "https://mohamed-barakat.github.io/FinSetsForCAP/",
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageWWWHome  := Concatenation( "https://github.com/homalg-project/", ~.PackageName, "/" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "blob/master/PackageInfo.g" ),
+README_URL      := Concatenation( ~.PackageWWWHome, "blob/master/README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
                                  "/", ~.PackageName, "-", ~.Version ),
@@ -116,10 +114,6 @@ Dependencies := rec(
 AvailabilityTest := function()
         return true;
     end,
-
-TestFile := "tst/testall.g",
-
-#Keywords := [ "TODO" ],
 
 ));
 
