@@ -156,7 +156,7 @@ g := MapOfGSets( A, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ] ], B );
 IsWellDefined( g );
 #! true
 D := [ f, g ];;
-Cq := Coequalizer( [ f, g ] );;
+Cq := Coequalizer( D );;
 Display( Cq );
 #! [ Group( () ), [ 1 ] ]
 pi := ProjectionOntoCoequalizer( D );;
@@ -164,5 +164,41 @@ IsWellDefined( pi );
 #! true
 PreCompose( f, pi ) = PreCompose( g, pi );
 #! true
+
+
+G := SymmetricGroup( 3 );;
+A := GSet( G, [ 0, 0, 0, 0 ] );;
+id := IdentityMorphism( A );
+#! <An identity morphism in Skeletal Category of G-Sets>
+D := [ id, id ];;
+Cq := Coequalizer( D );;
+Display( Cq );
+#! [ SymmetricGroup( [ 1 .. 3 ] ), [ 0, 0, 0, 0 ] ]
+pi := ProjectionOntoCoequalizer( D );;
+IsWellDefined( pi );
+#! true
+pi = id;
+#! true
+
+
+G := SymmetricGroup( 3 );;
+A := GSet( G, [ 0, 0, 0, 0 ] );
+#! <An object in Skeletal Category of G-Sets>
+B := GSet( G, [ 1, 1, 1, 1 ] );
+#! <An object in Skeletal Category of G-Sets>
+f := MapOfGSets( A, [ [ ], [ ], [ ], [ ] ], B );
+#! <A morphism in Skeletal Category of G-Sets>
+IsWellDefined( f );
+#! true
+D := [ f, f ];;
+Cq := Coequalizer( D );;
+Display( Cq );
+#! [ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 1, 1, 1 ] ]
+pi := ProjectionOntoCoequalizer( D );;
+pi = IdentityMorphism( B );
+#! true
+
+
+
 
 #! @EndExample

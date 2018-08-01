@@ -1153,6 +1153,12 @@ InstallMethod( SkeletalGSets,
         projections := [];
         
         rangePositions := Positions( T );
+        
+        if IsEmpty( rangePositions ) then
+            # T is the empty G-set. Thus, the coequalizer also has to be the empty G-set and the projection is the identity.
+            return IdentityMorphism( T );
+        fi;
+        
         while( not IsEmpty( rangePositions ) ) do
             imagePositions := [ rangePositions[ 1 ] ];
             previousImagePositions := [ ];
