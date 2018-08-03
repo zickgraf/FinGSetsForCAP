@@ -1,17 +1,17 @@
 #! @System Coproduct
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-M1 := GSet( S3, [ 2, 1, 0, 0 ] );
+M1 := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-M2 := GSet( S3, [ 1, 1, 0, 0 ] );
+M2 := FinGSet( S3, [ 1, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-M3 := GSet( S3, [ 2, 1, 0, 0 ] );
+M3 := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-M4 := GSet( S3, [ 2, 0, 0, 0 ] );
+M4 := FinGSet( S3, [ 2, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 C := Coproduct( [ M1, M2, M3, M4 ] );
 #! <An object in Skeletal Category of G-Sets>
@@ -55,11 +55,11 @@ IsEpimorphism( universal_morphism_into_terminal_object_to_be );
 
 
 G := SymmetricGroup( 0 );;
-m := GSet( G, [ 7 ] );
+m := FinGSet( G, [ 7 ] );
 #! <An object in Skeletal Category of G-Sets>
-n := GSet( G, [ 3 ] );
+n := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-p := GSet( G, [ 4 ] );
+p := FinGSet( G, [ 4 ] );
 #! <An object in Skeletal Category of G-Sets>
 c := Coproduct( m, n, p );
 #! <An object in Skeletal Category of G-Sets>

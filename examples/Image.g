@@ -1,14 +1,14 @@
 #! @System Image
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-M := GSet( S3, [ 2, 1, 0, 0 ] );
+M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-phi := MapOfGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
+phi := MapOfFinGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( phi );
 #! true
@@ -22,9 +22,9 @@ phi_res := CoastrictionToImage( phi );
 #! <A morphism in Skeletal Category of G-Sets>
 phi = PreCompose( phi_res, iota );
 #! true
-T := GSet( S3, [ 1, 1, 0, 0 ] );;
-tau1 := MapOfGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], T );;
-tau2 := MapOfGSets( T, [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );;
+T := FinGSet( S3, [ 1, 1, 0, 0 ] );;
+tau1 := MapOfFinGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], T );;
+tau2 := MapOfFinGSets( T, [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );;
 IsMonomorphism( tau2 );
 #! true
 phi = PreCompose( tau1, tau2 );
@@ -40,9 +40,9 @@ iota = PreCompose( u, tau2 );
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-M := GSet( S3, [ 2, 1, 0, 0 ] );
+M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-phi := MapOfGSets( M, [ [ [ 2, (), 1 ], [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
+phi := MapOfFinGSets( M, [ [ [ 2, (), 1 ], [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( phi );
 #! true
@@ -60,11 +60,11 @@ phi = PreCompose( phi_res, psi );
 
 
 G := SymmetricGroup( 0 );;
-m := GSet( G, [ 7 ] );
+m := FinGSet( G, [ 7 ] );
 #! <An object in Skeletal Category of G-Sets>
-n := GSet( G, [ 3 ] );
+n := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-phi := MapOfGSets( n, [ [ [ 7, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ] ] ], m );
+phi := MapOfFinGSets( n, [ [ [ 7, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ] ] ], m );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( phi );
 #! true

@@ -1,20 +1,20 @@
 #! @System Pushout
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-A := GSet( S3, [ 1, 0, 1, 0 ] );
+A := FinGSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S3, [ 2, 1, 0, 0 ] );
+B := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-C := GSet( S3, [ 3, 1, 1, 0 ] );
+C := FinGSet( S3, [ 3, 1, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-tau1 := MapOfGSets( A, [ [ [ 3, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ], C );
+tau1 := MapOfFinGSets( A, [ [ [ 3, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ], C );
 #! <A morphism in Skeletal Category of G-Sets>
-tau2 := MapOfGSets( B, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], C );
+tau2 := MapOfFinGSets( B, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], C );
 #! <A morphism in Skeletal Category of G-Sets>
 D := [ tau1, tau2 ];
 #! [ <A morphism in Skeletal Category of G-Sets>, 
@@ -33,17 +33,17 @@ Display( iota );
 
 
 G := SymmetricGroup( 0 );;
-M := GSet( G, [ 5 ] );
+M := FinGSet( G, [ 5 ] );
 #! <An object in Skeletal Category of G-Sets>
-N1 := GSet( G, [ 3 ] );
+N1 := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-iota1 := MapOfGSets( N1, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ], M );
+iota1 := MapOfFinGSets( N1, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsMonomorphism( iota1 );
 #! true
-N2 := GSet( G, [ 2 ] );
+N2 := FinGSet( G, [ 2 ] );
 #! <An object in Skeletal Category of G-Sets>
-iota2 := MapOfGSets( N2, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], M );
+iota2 := MapOfFinGSets( N2, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsMonomorphism( iota2 );
 #! true

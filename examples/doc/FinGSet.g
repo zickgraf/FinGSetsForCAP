@@ -1,15 +1,15 @@
-#! @System GSet
+#! @System FinGSet
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-w1 := GSet( S3, [1, 2, 3, 1]);
+w1 := FinGSet( S3, [1, 2, 3, 1]);
 #! <An object in Skeletal Category of G-Sets>
 IsWellDefined( w1 );
 #! true
-w2 := GSet( S3, [1, 2, 3, 1]);
+w2 := FinGSet( S3, [1, 2, 3, 1]);
 #! <An object in Skeletal Category of G-Sets>
 IsWellDefined( w2 );
 #! true

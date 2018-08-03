@@ -1,23 +1,23 @@
 #! @System DirectProduct
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-A := GSet( S3, [ 0, 1, 0, 0 ] );
+A := FinGSet( S3, [ 0, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S3, [ 0, 0, 1, 0 ] );
+B := FinGSet( S3, [ 0, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 Display( DirectProduct( A, B ) );
 #! [ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 0, 0, 0 ] ]
 
 S4 := SymmetricGroup( 4 );
 #! Sym( [ 1 .. 4 ] )
-A := GSet( S4, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S4, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S4, [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S4, [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 Display( DirectProduct( A, B ) );
 #! [ SymmetricGroup( [ 1 .. 4 ] ), [ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
@@ -35,9 +35,9 @@ Display( pi );
 
 S5 := SymmetricGroup( 5 );
 #! Sym( [ 1 .. 5 ] )
-A := GSet( S5, [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5, [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S5, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 D := [ A, B ];
 #! [ <An object in Skeletal Category of G-Sets>, 
@@ -58,9 +58,9 @@ IsWellDefined( u );
 #! true
 
 
-A := GSet( S3, [ 0, 1, 0, 0 ] );
+A := FinGSet( S3, [ 0, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S3, [ 0, 1, 0, 0 ] );
+B := FinGSet( S3, [ 0, 1, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 pi1 := ProjectionInFactorOfDirectProduct( [ A, B ], 1 );
 #! <A morphism in Skeletal Category of G-Sets>
@@ -72,9 +72,9 @@ Display( pi2 );
 #! [ [ [ 1, (1,3), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
 
 
-M := GSet( S3, [ 1, 2, 0, 0 ] );
+M := FinGSet( S3, [ 1, 2, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-N := GSet( S3, [ 1, 0, 1, 2 ] );
+N := FinGSet( S3, [ 1, 0, 1, 2 ] );
 #! <An object in Skeletal Category of G-Sets>
 D := [ M, N ];
 #! [ <An object in Skeletal Category of G-Sets>, 
@@ -95,7 +95,7 @@ Display( u );
 #!      [ 16, (), 1 ], [ 17, (), 1 ], [ 18, (), 1 ] ], [ [ 1, (), 2 ], [ 2, (), 2 ], [ 3, (), 2 ], [ 4, (), 2 ] ],
 #!  [  ], [  ] ]
 
-L := GSet( S3, [ 2, 1, 0, 1 ] );
+L := FinGSet( S3, [ 2, 1, 0, 1 ] );
 #! <An object in Skeletal Category of G-Sets>
 D := [ M, N, L ];
 #! [ <An object in Skeletal Category of G-Sets>,
@@ -109,11 +109,11 @@ IsWellDefined( tau );
 
 
 G := SymmetricGroup( 0 );;
-m := GSet( G, [ 7 ] );
+m := FinGSet( G, [ 7 ] );
 #! <An object in Skeletal Category of G-Sets>
-n := GSet( G, [ 3 ] );
+n := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-p := GSet( G, [ 4 ] );
+p := FinGSet( G, [ 4 ] );
 #! <An object in Skeletal Category of G-Sets>
 d := DirectProduct( [ m, n, p ] );
 #! <An object in Skeletal Category of G-Sets>

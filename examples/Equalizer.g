@@ -1,20 +1,20 @@
 #! @System Equalizer
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-s := GSet( S3, [ 1, 0, 2, 0 ] );
+s := FinGSet( S3, [ 1, 0, 2, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-r := GSet( S3, [ 1, 2, 1, 0 ] );
+r := FinGSet( S3, [ 1, 2, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-psi1 := MapOfGSets( s, [ [ [ 1, (1,2), 1 ] ], [], [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ], [] ], r );
+psi1 := MapOfFinGSets( s, [ [ [ 1, (1,2), 1 ] ], [], [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ], [] ], r );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( psi1 );
 #! true
-psi2 := MapOfGSets( s, [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ], r );
+psi2 := MapOfFinGSets( s, [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ], r );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( psi2 );
 #! true
@@ -31,9 +31,9 @@ Display( psi );
 #! [ [  ], [  ], [ [ 1, (), 3 ], [ 2, (), 3 ] ], [  ] ]
 PreCompose( psi, psi1 ) = PreCompose( psi, psi2 );
 #! true
-t := GSet( S3, [ 1, 0, 1, 0 ] );
+t := FinGSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-tau := MapOfGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
+tau := MapOfFinGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( tau );
 #! true
@@ -48,15 +48,15 @@ PreCompose( phi, psi ) = tau;
 
 
 G := SymmetricGroup( 0 );;
-S := GSet( G, [ 5 ] );
+S := FinGSet( G, [ 5 ] );
 #! <An object in Skeletal Category of G-Sets>
-T := GSet( G, [ 3 ] );
+T := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-f1 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], T );
+f1 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], T );
 #! <A morphism in Skeletal Category of G-Sets>
-f2 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+f2 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
 #! <A morphism in Skeletal Category of G-Sets>
-f3 := MapOfGSets( S, [ [ [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+f3 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
 #! <A morphism in Skeletal Category of G-Sets>
 D := [ f1, f2, f3 ];
 #! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]

@@ -1,6 +1,6 @@
 #! @System Coequalizer
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
@@ -22,13 +22,13 @@ g_3_3 := (1,3);;
 g_3_4 := (1,3);;
 
 
-A := GSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S5, [ 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5, [ 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-f_1 := MapOfGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_1 := MapOfFinGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
-f_2 := MapOfGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_2 := MapOfFinGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( f_1 );
 #! true
@@ -54,13 +54,13 @@ id = id_to_be;
 #! true
 
 
-A := GSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S5, [ 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5, [ 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-f_1 := MapOfGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_1 := MapOfFinGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
-f_2 := MapOfGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_2 := MapOfFinGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( f_1 );
 #! true
@@ -87,13 +87,13 @@ id = id_to_be;
 
 
 
-A := GSet( S5, [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5, [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( S5, [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5, [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-f_1 := MapOfGSets(A, [ [ [ 1, (), 3 ] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_1 := MapOfFinGSets(A, [ [ [ 1, (), 3 ] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
-f_2 := MapOfGSets(A, [ [ [ 1, (1,2,3), 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+f_2 := MapOfFinGSets(A, [ [ [ 1, (1,2,3), 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( f_1 );
 #! true
@@ -112,13 +112,13 @@ IsWellDefined( pi );
 
 
 G := SymmetricGroup( 0 );;
-s := GSet( G, [ 5 ] );
+s := FinGSet( G, [ 5 ] );
 #! <An object in Skeletal Category of G-Sets>
-t := GSet( G, [ 4 ] );
+t := FinGSet( G, [ 4 ] );
 #! <An object in Skeletal Category of G-Sets>
-f := MapOfGSets( s, [ [ [ 3, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+f := MapOfFinGSets( s, [ [ [ 3, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
 #! <A morphism in Skeletal Category of G-Sets>
-g := MapOfGSets( s, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+g := MapOfFinGSets( s, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
 #! <A morphism in Skeletal Category of G-Sets>
 D := [ f, g ];
 #! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
@@ -130,7 +130,7 @@ pi := ProjectionOntoCoequalizer( D );
 #! <An epimorphism in Skeletal Category of G-Sets>
 Display( pi );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
-tau := MapOfGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], GSet( G, [ 2 ] ) );
+tau := MapOfFinGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], FinGSet( G, [ 2 ] ) );
 #! <A morphism in Skeletal Category of G-Sets>
 phi := UniversalMorphismFromCoequalizer( D, tau );
 #! <A morphism in Skeletal Category of G-Sets>
@@ -143,15 +143,15 @@ PreCompose( pi, phi ) = tau;
 
 
 G := SymmetricGroup( 0 );;
-A := GSet( G, [ 2 ] );
+A := FinGSet( G, [ 2 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( G, [ 3 ] );
+B := FinGSet( G, [ 3 ] );
 #! <An object in Skeletal Category of G-Sets>
-f := MapOfGSets( A, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], B );
+f := MapOfFinGSets( A, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], B );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( f );
 #! true
-g := MapOfGSets( A, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ] ], B );
+g := MapOfFinGSets( A, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ] ], B );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( g );
 #! true
@@ -167,7 +167,7 @@ PreCompose( f, pi ) = PreCompose( g, pi );
 
 
 G := SymmetricGroup( 3 );;
-A := GSet( G, [ 0, 0, 0, 0 ] );;
+A := FinGSet( G, [ 0, 0, 0, 0 ] );;
 id := IdentityMorphism( A );
 #! <An identity morphism in Skeletal Category of G-Sets>
 D := [ id, id ];;
@@ -182,11 +182,11 @@ pi = id;
 
 
 G := SymmetricGroup( 3 );;
-A := GSet( G, [ 0, 0, 0, 0 ] );
+A := FinGSet( G, [ 0, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-B := GSet( G, [ 1, 1, 1, 1 ] );
+B := FinGSet( G, [ 1, 1, 1, 1 ] );
 #! <An object in Skeletal Category of G-Sets>
-f := MapOfGSets( A, [ [ ], [ ], [ ], [ ] ], B );
+f := MapOfFinGSets( A, [ [ ], [ ], [ ], [ ] ], B );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( f );
 #! true

@@ -1,6 +1,6 @@
 #! @System EqualForObjects
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 # Groups have to be the same with respect to IsIdenticalObj
@@ -10,13 +10,13 @@ C6 := CyclicGroup( 6 );
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
 
-w1 := GSet( C6, [1, 2, 3, 1]);
+w1 := FinGSet( C6, [1, 2, 3, 1]);
 #! <An object in Skeletal Category of G-Sets>
 
 IsWellDefined( w1 );
 #! true
 
-w2 := GSet( S3, [1, 2, 3, 1]);
+w2 := FinGSet( S3, [1, 2, 3, 1]);
 #! <An object in Skeletal Category of G-Sets>
 
 IsWellDefined( w2 );

@@ -4,4 +4,4 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "FinGSetsForCAP", "gap/SkeletalGSetsForCAP.gd");
+ReadPackage( "FinGSetsForCAP", "gap/SkeletalFinGSetsForCAP.gd");

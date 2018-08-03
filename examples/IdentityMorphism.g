@@ -1,12 +1,12 @@
 #! @System IdentityMorphism
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-M := GSet( S3, [ 1, 2, 1, 2 ] );
+M := FinGSet( S3, [ 1, 2, 1, 2 ] );
 #! <An object in Skeletal Category of G-Sets>
 iota := IdentityMorphism( M );
 #! <An identity morphism in Skeletal Category of G-Sets>

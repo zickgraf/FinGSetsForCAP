@@ -1,19 +1,19 @@
 #! @System InitialTerminal
 
-LoadPackage( "SkeletalGSets" );
+LoadPackage( "FinGSetsForCAP" );
 
 #! @Example
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-S := GSet( S3, [ 2, 2, 0, 0 ] );
+S := FinGSet( S3, [ 2, 2, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 u := UniversalMorphismFromInitialObject( S );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( u );
 #! true
 
-S := GSet( S3, [ 2, 2, 0, 0 ] );
+S := FinGSet( S3, [ 2, 2, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
 u := UniversalMorphismIntoTerminalObject( S );
 #! <A morphism in Skeletal Category of G-Sets>
@@ -23,7 +23,7 @@ IsWellDefined( u );
 
 
 G := SymmetricGroup( 0 );;
-m := GSet( G, [ 8 ] );
+m := FinGSet( G, [ 8 ] );
 #! <An object in Skeletal Category of G-Sets>
 i := InitialObject( m );
 #! <An object in Skeletal Category of G-Sets>
