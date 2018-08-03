@@ -39,20 +39,6 @@ DeclareAttribute( "AsList",
 DeclareAttribute( "UnderlyingGroup",
         IsSkeletalFinGSet );
 
-#! @Description
-#!  The table of marks of the group $G$ underlying the finite $G$-set <A>Omega</A>.
-#! @Arguments Omega
-#! @Returns a table of marks
-DeclareAttribute( "TableOfMarks",
-        IsSkeletalFinGSet );
-
-#! @Description
-#!  The number of conjugacy classes of subgroups of the group underlying the finite $G$-set <A>Omega</A>.
-#! @Arguments Omega
-#! @Returns a positive integer
-DeclareAttribute( "NrConjugacyClassesOfSubgroups",
-        IsSkeletalFinGSet );
-
 #! @Section Constructors
 
 #! @Description
