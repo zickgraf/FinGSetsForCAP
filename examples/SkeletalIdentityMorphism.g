@@ -1,4 +1,4 @@
-#! @System IdentityMorphism
+#! @System SkeletalIdentityMorphism
 
 LoadPackage( "FinGSetsForCAP" );
 

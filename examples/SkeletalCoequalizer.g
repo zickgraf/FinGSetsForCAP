@@ -1,4 +1,4 @@
-#! @System Coequalizer
+#! @System SkeletalCoequalizer
 
 LoadPackage( "FinGSetsForCAP" );
 

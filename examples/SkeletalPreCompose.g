@@ -1,4 +1,4 @@
-#! @System PreCompose
+#! @System SkeletalPreCompose
 
 LoadPackage( "FinGSetsForCAP" );
 

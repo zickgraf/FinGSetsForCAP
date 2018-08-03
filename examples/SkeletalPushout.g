@@ -1,4 +1,4 @@
-#! @System Pushout
+#! @System SkeletalPushout
 
 LoadPackage( "FinGSetsForCAP" );
 

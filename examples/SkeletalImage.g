@@ -1,4 +1,4 @@
-#! @System Image
+#! @System SkeletalImage
 
 LoadPackage( "FinGSetsForCAP" );
 

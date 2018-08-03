@@ -1,4 +1,4 @@
-#! @System DirectProduct
+#! @System SkeletalDirectProduct
 
 LoadPackage( "FinGSetsForCAP" );
 

@@ -1,46 +1,46 @@
 @Chapter The category of skeletal finite G-sets
 
-@Section GAP Categories
-@Section Attributes
-@Section Constructors
-@Section Tools
-@Section Examples
+@Section Skeletal GAP Categories
+@Section Skeletal Attributes
+@Section Skeletal Constructors
+@Section Skeletal Tools
+@Section Skeletal Examples
 
-@Subsection EqualForObjects
-@InsertSystem EqualForObjects
+@Subsection Skeletal IsEqualForObjects
+@InsertSystem SkeletalIsEqualForObjects
 
-@Subsection PreCompose
-@InsertSystem PreCompose
+@Subsection Skeletal PreCompose
+@InsertSystem SkeletalPreCompose
 
-@Subsection IdentityMorphism
-@InsertSystem IdentityMorphism
+@Subsection Skeletal IdentityMorphism
+@InsertSystem SkeletalIdentityMorphism
 
-@Subsection Initial and Terminal objects
-@InsertSystem InitialTerminal
+@Subsection Skeletal Initial and Terminal Objects
+@InsertSystem SkeletalInitialTerminal
 
-@Subsection LiftAlongMonomorphism
-@InsertSystem LiftAlongMonomorphism
+@Subsection Skeletal LiftAlongMonomorphism
+@InsertSystem SkeletalLiftAlongMonomorphism
 
-@Subsection ColiftAlongEpimorphism
-@InsertSystem ColiftAlongEpimorphism
+@Subsection Skeletal ColiftAlongEpimorphism
+@InsertSystem SkeletalColiftAlongEpimorphism
 
-@Subsection Product
-@InsertSystem DirectProduct
+@Subsection Skeletal Product
+@InsertSystem SkeletalDirectProduct
 
-@Subsection Coproduct
-@InsertSystem Coproduct
+@Subsection Skeletal Coproduct
+@InsertSystem SkeletalCoproduct
 
-@Subsection Image
-@InsertSystem Image
+@Subsection Skeletal Image
+@InsertSystem SkeletalImage
 
-@Subsection Equalizer
-@InsertSystem Equalizer
+@Subsection Skeletal Equalizer
+@InsertSystem SkeletalEqualizer
 
-@Subsection Pullback
-@InsertSystem FiberProduct
+@Subsection Skeletal Pullback
+@InsertSystem SkeletalFiberProduct
 
-@Subsection Coequalizer
-@InsertSystem Coequalizer
+@Subsection Skeletal Coequalizer
+@InsertSystem SkeletalCoequalizer
 
-@Subsection Pushout
-@InsertSystem Pushout
+@Subsection Skeletal Pushout
+@InsertSystem SkeletalPushout

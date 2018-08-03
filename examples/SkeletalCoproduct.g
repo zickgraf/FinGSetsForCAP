@@ -1,4 +1,4 @@
-#! @System Coproduct
+#! @System SkeletalCoproduct
 
 LoadPackage( "FinGSetsForCAP" );
 

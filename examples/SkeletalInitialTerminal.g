@@ -1,4 +1,4 @@
-#! @System InitialTerminal
+#! @System SkeletalInitialTerminal
 
 LoadPackage( "FinGSetsForCAP" );
 

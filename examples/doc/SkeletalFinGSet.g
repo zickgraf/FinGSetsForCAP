@@ -1,4 +1,4 @@
-#! @System FinGSet
+#! @System SkeletalFinGSet
 
 LoadPackage( "FinGSetsForCAP" );
 

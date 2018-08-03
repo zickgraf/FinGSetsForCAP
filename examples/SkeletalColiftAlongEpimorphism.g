@@ -1,4 +1,4 @@
-#! @System LiftAlongMonomorphism
+#! @System SkeletalColiftAlongEpimorphism
 
 LoadPackage( "FinGSetsForCAP" );
 
@@ -6,27 +6,27 @@ LoadPackage( "FinGSetsForCAP" );
 
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
-M := FinGSet( S3, [ 1, 0, 0, 0 ] );
+M := FinGSet( S3, [ 2, 0, 0, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-N := FinGSet( S3, [ 2, 0, 2, 0 ] );
+N := FinGSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-O := FinGSet( S3, [ 2, 0, 0, 0 ] );
+O := FinGSet( S3, [ 2, 0, 1, 0 ] );
 #! <An object in Skeletal Category of G-Sets>
-tau := MapOfFinGSets( M, [ [ [ 1, (1,2), 1 ] ], [], [], [] ], N );
+tau := MapOfFinGSets( M, [ [ [ 1, (1,2), 1 ], [ 1, (), 3 ] ], [], [], [] ], O );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( tau );
 #! true
-iota := MapOfFinGSets( O, [ [ [ 2, (), 1 ], [ 1, (1,3,2), 1 ] ], [], [], [] ], N );
+epsilon := MapOfFinGSets( M, [ [ [ 1, (1,2,3), 1 ], [ 1, (1,2), 3 ] ], [], [], [] ], N );
 #! <A morphism in Skeletal Category of G-Sets>
-IsWellDefined( iota );
+IsWellDefined( epsilon );
 #! true
-IsMonomorphism( iota );
+IsEpimorphism( epsilon );
 #! true
-u := LiftAlongMonomorphism( iota, tau );
+u := ColiftAlongEpimorphism( epsilon, tau );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( u );
 #! true
-tau = PreCompose( u, iota );
+tau = PreCompose( epsilon, u );
 #! true
 
 #! @EndExample
