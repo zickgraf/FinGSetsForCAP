@@ -1,5 +1,5 @@
 #
-# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # This file is a script which compiles the package manual.
 #
@@ -19,7 +19,7 @@ AutoDoc(
 
             maketest := rec( folder := ".",
                              commands :=
-                             [ "LoadPackage( \"SkeletalGSetsForCAP\" );",
+                             [ "LoadPackage( \"FinGSetsForCAP\" );",
                              ],
                            ),
             )

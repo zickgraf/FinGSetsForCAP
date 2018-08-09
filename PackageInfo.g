@@ -1,5 +1,5 @@
 #
-# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,10 +8,10 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "SkeletalGSetsForCAP",
-Subtitle := "The elementary topos of skeletal finite G-sets",
+PackageName := "FinGSetsForCAP",
+Subtitle := "The elementary topos of (skeletal) finite G-sets",
 Version := Maximum( [
-                   "2017.06.14", ## Mohamed's version
+                   "2017.08.09", ## Mohamed's version
                    ## this line prevents merge conflicts
                    "2017.05.26", ## Julia's version
                    ## this line prevents merge conflicts
@@ -93,12 +93,12 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "SkeletalGSetsForCAP",
+  BookName  := "FinGSetsForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "The elementary topos of skeletal finite G-sets",
+  LongTitle := "The elementary topos of (skeletal) finite G-sets",
 ),
 
 Dependencies := rec(

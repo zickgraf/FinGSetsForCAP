@@ -1,5 +1,5 @@
 #
-# SkeletalGSetsForCAP: The elementary topos of skeletal finite G-sets
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Declarations
 #

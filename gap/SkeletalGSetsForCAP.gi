@@ -1,5 +1,5 @@
 #
-# SkeletalGSetsForCAP: The skeletal category of G sets
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Implementations
 #
