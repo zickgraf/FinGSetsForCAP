@@ -522,6 +522,7 @@ InstallMethod( SkeletalFinGSets,
         
     end );
     
+    ##
     OrbitsOfActionOnCartesianProduct := function( L )
         local LoS, LoF, C, e, o;
         
