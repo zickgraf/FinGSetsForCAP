@@ -92,9 +92,7 @@ InstallMethod( SkeletalFinGSets,
         OrbitsOfActionOnCartesianProduct,
         SingleBinaryProduct,
         ProjectionOfASingleBinaryProduct,
-        ProjectionInFactorOfBinaryDirectProduct,
         OffsetInCartesianProduct,
-        UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct,
         ExplicitCoequalizer,
         ProjectionOntoCoequalizerOfAConnectedComponent,
         Positions,
@@ -608,18 +606,20 @@ InstallMethod( SkeletalFinGSets,
         return MapOfFinGSets( P, pi, target );
         
     end;
-
-    ProjectionInFactorOfBinaryDirectProduct := function( L, pos )
+    
+    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "ProjectionInFactorOfBinaryDirectProductToProjectionInFactorOfDirectProduct", SkeletalFinGSets, function( L1, L2, pos )
         local S, T, M, N, D, tau, i, j, l, imgs, img, m, n, target, copy_number, pi, P;
         
-        Assert( 4, Size( L ) = 2 );
+        S := DirectProduct( [ L1, L2 ] );
         
-        S := DirectProduct( L );
+        if pos = 1 then
+            T := L1;
+        else
+            T := L2;
+        fi;
         
-        T := L[ pos ];
-        
-        M := AsList( L[ 1 ] );
-        N := AsList( L[ 2 ] );
+        M := AsList( L1 );
+        N := AsList( L2 );
         
         D := [];
         tau := [];
@@ -647,29 +647,9 @@ InstallMethod( SkeletalFinGSets,
         
         return UniversalMorphismFromCoproduct( D, tau );
         
-    end;
+    end ) );
 
     ##
-    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets,
-      function( L, pos )
-        local P, pi1, pi2;
-        
-        if Length( L ) = 1 then
-            return IdentityMorphism( L[ 1 ] );
-        fi;
-        
-        P := DirectProduct( L{ [ 2 .. Length( L ) ] } );
-        
-        if pos = 1 then
-            return ProjectionInFactorOfBinaryDirectProduct( [ L[ 1 ], P ], 1 );
-        else
-            pi1 := ProjectionInFactorOfBinaryDirectProduct( [ L[ 1 ], P ], 2 );
-            pi2 := ProjectionInFactorOfDirectProduct( L{ [ 2 .. Length( L ) ] }, pos - 1 );
-            return PreCompose( pi1, pi2 );
-        fi;
-        
-    end );
-     
     OffsetInCartesianProduct := function( M, N, given_i, given_j, given_m, given_n  )
         local result, i, j, m, n, pi;
         
@@ -692,27 +672,26 @@ InstallMethod( SkeletalFinGSets,
         
     end;
 
-    UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct := function( D, tau, T )
-        local S, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
+    AddUniversalMorphismIntoDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "UniversalMorphismIntoBinaryDirectProductToUniversalMorphismIntoDirectProduct", SkeletalFinGSets, function( tau1, tau2 )
+        local S, T, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
         
-        Assert( 4, Size( D ) = 2 );
+        S := Source( tau1 );
+        T := DirectProduct( [ Range( tau1 ), Range( tau2 ) ] );
         
-        S := Source( tau[ 1 ] );
-        
-        M := AsList( Range( tau[ 1 ] ) );
-        N := AsList( Range( tau[ 2 ] ) );
+        M := AsList( Range( tau1 ) );
+        N := AsList( Range( tau2 ) );
         
         imgs := [];
         
         for i in [ 1 .. k ] do
             imgs[ i ] := [];
             for l in [ 1.. AsList( S )[ i ] ] do
-                r_1 := AsList( tau[ 1 ] )[ i ][ l ][ 1 ];
-                r_2 := AsList( tau[ 2 ] )[ i ][ l ][ 1 ];
-                g_1 := AsList( tau[ 1 ] )[ i ][ l ][ 2 ];
-                g_2 := AsList( tau[ 2 ] )[ i ][ l ][ 2 ];
-                j_1 := AsList( tau[ 1 ] )[ i ][ l ][ 3 ];
-                j_2 := AsList( tau[ 2 ] )[ i ][ l ][ 3 ];
+                r_1 := AsList( tau1 )[ i ][ l ][ 1 ];
+                r_2 := AsList( tau2 )[ i ][ l ][ 1 ];
+                g_1 := AsList( tau1 )[ i ][ l ][ 2 ];
+                g_2 := AsList( tau2 )[ i ][ l ][ 2 ];
+                j_1 := AsList( tau1 )[ i ][ l ][ 3 ];
+                j_2 := AsList( tau2 )[ i ][ l ][ 3 ];
                 
                 Offset := OffsetInCartesianProduct( M, N, j_1, j_2, r_1, r_2 );
                 
@@ -776,28 +755,7 @@ InstallMethod( SkeletalFinGSets,
         
         return MapOfFinGSets( S, imgs, T );
         
-    end;
-
-    ##
-    AddUniversalMorphismIntoDirectProductWithGivenDirectProduct( SkeletalFinGSets,
-      function( D, tau, T )
-        local D2, tau2, sigma;
-        
-        if Length( D ) = 1 then
-            return tau[ 1 ];
-        fi;
-        
-        if Length( D ) = 2 then
-            return UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct( D, tau, T );
-        fi;
-        
-        D2 := D{ [ 2 .. Length( D ) ] };
-        tau2 := tau{ [ 2 .. Length( tau ) ] };
-        
-        sigma := UniversalMorphismIntoDirectProduct( D2, tau2 );
-        return UniversalMorphismIntoBinaryDirectProductWithGivenDirectProduct( [ D[ 1 ], DirectProduct( D2 ) ], [ tau[ 1 ], sigma ], T );
-        
-    end );
+    end ) );
 
     ##
     AddEmbeddingOfEqualizer( SkeletalFinGSets,
