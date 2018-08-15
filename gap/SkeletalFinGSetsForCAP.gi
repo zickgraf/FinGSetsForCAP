@@ -40,7 +40,7 @@ InstallMethod( MapOfFinGSets,
     
     k := Length( MatTom( TableOfMarks( group ) ) );
     
-    if ( not IsList( I ) ) or ( not ForAll( I, x -> IsList( x ) ) ) then
+    if not ForAll( I, x -> IsList( x ) ) then
         Error( "I has the wrong format\n" );
     fi;
     
