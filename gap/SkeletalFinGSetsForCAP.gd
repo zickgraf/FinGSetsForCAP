@@ -49,7 +49,7 @@ DeclareAttribute( "UnderlyingGroup",
 #! @Returns a &CAP; object
 DeclareOperation( "FinGSet",
         [ IsGroup, IsList ] );
-#! @InsertSystem FinGSet
+#! @InsertSystem SkeletalFinGSet
 
 #! @Description
 #!  Construct a map $\phi \colon$<A>s</A>$\to$<A>t</A> of the skeletal finite $G$-sets <A>s</A> and <A>t</A>,
@@ -59,7 +59,7 @@ DeclareOperation( "FinGSet",
 #! @Returns a &CAP; morphism
 DeclareOperation( "MapOfFinGSets",
         [ IsSkeletalFinGSet, IsList, IsSkeletalFinGSet ] );
-#! @InsertSystem  MapOfFinGSets
+#! @InsertSystem  SkeletalMapOfFinGSets
 
 #! @Description
 #! The argument is a group $G$.
