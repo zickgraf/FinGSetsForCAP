@@ -207,7 +207,7 @@ InstallMethod( SkeletalFinGSets,
         img := AsList( mor );
         
         if not Length( img ) = k then
-            return Error( "The length of the list of relations is wrong.\n");
+            return false;
         fi;
         
         tom := MatTom( TableOfMarks( group ) );
@@ -220,7 +220,7 @@ InstallMethod( SkeletalFinGSets,
                                 local r, g, j;
                                 
                                 if not ( IsList( e ) and Length( e ) = 3 ) then
-                                    return Error( "The list of relations has a wrong syntax.\n" );
+                                    return false;
                                 fi;
                                 
                                 r := e[1];
@@ -233,26 +233,26 @@ InstallMethod( SkeletalFinGSets,
                                 # U_i has to be a subgroup of U_j up to conjugation, which can be read off the table of marks
                                 
                                 if not ( IsPosInt( j ) and j <= k and IsPosInt( r ) and r <= t[ j ] ) then
-                                    return Error( "2\n" );
+                                    return false;
                                 fi;
 
                                 U_i := RepresentativeOfSubgroupsUpToConjugation( i );
                                 U_j := RepresentativeOfSubgroupsUpToConjugation( j );
 
                                 if not ( g in RightCosets( group, U_j ) and tom[ j ][ i ] > 0 ) then
-                                    return Error( "3\n" );
+                                    return false;
                                 fi;
                                 
                                 # U_i has to be a subgroup of U_j up to conjugation with Inverse(g)
                                 if not IsSubset( U_j, ConjugateSubgroup( U_i, Inverse( Representative( g ) ) ) ) then
-                                    return Error( "4\n" );
+                                    return false;
                                 fi;
                                 
                                 return true;
                             end
                   )
                      ) then
-            return Error( "5\n" );
+            return false;
         fi;
         
         return true;

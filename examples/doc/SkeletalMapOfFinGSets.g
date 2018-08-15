@@ -27,6 +27,6 @@ M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 phi := MapOfFinGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (1,2,3), 2 ] ], [], [] ], M );
 #! <A morphism in Skeletal Category of G-Sets>
 IsWellDefined( phi );
-#! Error, 4
+#! false
 
 #! @EndExample
