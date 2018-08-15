@@ -55,7 +55,7 @@ InstallMethod( MapOfFinGSets,
         if g in group then
             j := img[ 3 ];
             if not ( IsPosInt( j ) and j <= k ) then
-                Error( "last entry of an image must be an integer j with 1 <= j <= k\n" );
+                Error( Concatenation( "last entry of an image must be an integer j with 1 <= j <= ", String( k ), "\n" ) );
             fi;
             U_j := RepresentativeTom( TableOfMarks( group ), j );
             img[ 2 ] := RightCoset( U_j, g );
