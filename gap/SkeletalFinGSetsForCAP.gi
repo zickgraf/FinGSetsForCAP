@@ -103,7 +103,7 @@ InstallMethod( SkeletalFinGSets,
         EmbeddingOfPositions;
     
     if HasName( group ) then
-        CategoryName := Concatenation( "Skeletal Category of ", Name( group ), "-Sets" );
+        CategoryName := Concatenation( "SkeletalFin-", Name( group ), "-Sets" );
     else
         CategoryName := "SkeletalFinGSets";
     fi;
