@@ -7,9 +7,9 @@ LoadPackage( "FinGSetsForCAP" );
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
 M := FinGSet( S3, [ 1, 2, 1, 2 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 iota := IdentityMorphism( M );
-#! <An identity morphism in Skeletal Category of G-Sets>
+#! <An identity morphism in SkeletalFinGSets>
 IsWellDefined( iota );
 #! true
 IsEpimorphism( iota );

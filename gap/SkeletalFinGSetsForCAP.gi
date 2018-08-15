@@ -105,7 +105,7 @@ InstallMethod( SkeletalFinGSets,
     if HasName( group ) then
         CategoryName := Concatenation( "Skeletal Category of ", Name( group ), "-Sets" );
     else
-        CategoryName := "Skeletal Category of G-Sets";
+        CategoryName := "SkeletalFinGSets";
     fi;
     
     SkeletalFinGSets := CreateCapCategory( CategoryName );

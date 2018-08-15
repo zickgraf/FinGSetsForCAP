@@ -7,24 +7,24 @@ LoadPackage( "FinGSetsForCAP" );
 S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
 s := FinGSet( S3, [ 1, 0, 2, 0 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 r := FinGSet( S3, [ 1, 2, 1, 0 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 psi1 := MapOfFinGSets( s, [ [ [ 1, (1,2), 1 ] ], [], [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ], [] ], r );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi1 );
 #! true
 psi2 := MapOfFinGSets( s, [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ], r );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi2 );
 #! true
 D := [ psi1, psi2 ];;
 Eq := Equalizer( D );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 AsList( Eq );
 #! [ 0, 0, 2, 0 ]
 psi := EmbeddingOfEqualizer( D );
-#! <A monomorphism in Skeletal Category of G-Sets>
+#! <A monomorphism in SkeletalFinGSets>
 IsWellDefined( psi );
 #! true
 Display( psi );
@@ -32,13 +32,13 @@ Display( psi );
 PreCompose( psi, psi1 ) = PreCompose( psi, psi2 );
 #! true
 t := FinGSet( S3, [ 1, 0, 1, 0 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 tau := MapOfFinGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 IsWellDefined( tau );
 #! true
 phi := UniversalMorphismIntoEqualizer( D, tau );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 Display( phi );
 #! [ [ [ 2, (1,2), 3 ] ], [  ], [ [ 1, (1,2,3), 3 ] ], [  ] ]
 IsWellDefined( phi );
@@ -49,23 +49,23 @@ PreCompose( phi, psi ) = tau;
 
 G := SymmetricGroup( 0 );;
 S := FinGSet( G, [ 5 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 T := FinGSet( G, [ 3 ] );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 f1 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], T );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 f2 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 f3 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
-#! <A morphism in Skeletal Category of G-Sets>
+#! <A morphism in SkeletalFinGSets>
 D := [ f1, f2, f3 ];
-#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+#! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
 Eq := Equalizer( D );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 AsList( Eq );
 #! [ 2 ]
 psi := EmbeddingOfEqualizer( D );
-#! <A monomorphism in Skeletal Category of G-Sets>
+#! <A monomorphism in SkeletalFinGSets>
 Display( psi );
 #! [ [ [ 1, (), 1 ], [ 5, (), 1 ] ] ]
 PreCompose( psi, f1 ) = PreCompose( psi, f2 );
@@ -73,13 +73,13 @@ PreCompose( psi, f1 ) = PreCompose( psi, f2 );
 PreCompose( psi, f1 ) = PreCompose( psi, f3 );
 #! true
 D := [ f2, f3 ];
-#! [ <A morphism in Skeletal Category of G-Sets>, <A morphism in Skeletal Category of G-Sets> ]
+#! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
 Eq := Equalizer( D );
-#! <An object in Skeletal Category of G-Sets>
+#! <An object in SkeletalFinGSets>
 AsList( Eq );
 #! [ 3 ]
 psi := EmbeddingOfEqualizer( D );
-#! <A monomorphism in Skeletal Category of G-Sets>
+#! <A monomorphism in SkeletalFinGSets>
 Display( psi );
 #! [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ] ] ]
 
