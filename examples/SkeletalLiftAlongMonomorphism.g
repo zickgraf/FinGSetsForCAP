@@ -16,7 +16,8 @@ tau := MapOfFinGSets( M, [ [ [ 1, (1,2), 1 ] ], [], [], [] ], N );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( tau );
 #! true
-iota := MapOfFinGSets( O, [ [ [ 2, (), 1 ], [ 1, (1,3,2), 1 ] ], [], [], [] ], N );
+imgs := [ [ [ 2, (), 1 ], [ 1, (1,3,2), 1 ] ], [], [], [] ];;
+iota := MapOfFinGSets( O, imgs, N );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( iota );
 #! true

@@ -23,10 +23,8 @@ tau3 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 3 );
 #! <A morphism in SkeletalFinGSets>
 tau4 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 4 );
 #! <A morphism in SkeletalFinGSets>
-tau := [ tau1, tau2, tau3, tau4 ];
-#! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
-D := [ M1, M2, M3, M4 ];
-#! [ <An object in SkeletalFinGSets>, <An object in SkeletalFinGSets>, <An object in SkeletalFinGSets>, <An object in SkeletalFinGSets> ]
+tau := [ tau1, tau2, tau3, tau4 ];;
+D := [ M1, M2, M3, M4 ];;
 id_to_be := UniversalMorphismFromCoproduct( D, tau );
 #! <A morphism in SkeletalFinGSets>
 id := IdentityMorphism( C );
@@ -44,13 +42,12 @@ pi3 := UniversalMorphismIntoTerminalObject( M3 );
 #! <A morphism in SkeletalFinGSets>
 pi4 := UniversalMorphismIntoTerminalObject( M4 );
 #! <A morphism in SkeletalFinGSets>
-pi := [ pi1, pi2, pi3, pi4 ];
-#! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
-universal_morphism_into_terminal_object_to_be := UniversalMorphismFromCoproduct( D, pi );
+pi := [ pi1, pi2, pi3, pi4 ];;
+psi := UniversalMorphismFromCoproduct( D, pi );
 #! <A morphism in SkeletalFinGSets>
-universal_morphism_into_terminal_object_to_be = UniversalMorphismIntoTerminalObject( C );
+psi = UniversalMorphismIntoTerminalObject( C );
 #! true
-IsEpimorphism( universal_morphism_into_terminal_object_to_be );
+IsEpimorphism( psi );
 #! true
 
 
@@ -70,7 +67,13 @@ iota1 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 1 );
 IsWellDefined( iota1 );
 #! true
 Display( iota1 );
-#! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ], [ 6, (), 1 ], [ 7, (), 1 ] ] ]
+#! [ [ [ 1, (), 1 ],
+#!     [ 2, (), 1 ],
+#!     [ 3, (), 1 ],
+#!     [ 4, (), 1 ],
+#!     [ 5, (), 1 ],
+#!     [ 6, (), 1 ],
+#!     [ 7, (), 1 ] ] ]
 iota3 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 3 );
 #! <A morphism in SkeletalFinGSets>
 Display( iota3 );

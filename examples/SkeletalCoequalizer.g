@@ -22,13 +22,37 @@ g_3_3 := (1,3);;
 g_3_4 := (1,3);;
 
 
-A := FinGSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5,
+              [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-B := FinGSet( S5, [ 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5,
+              [ 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-f_1 := MapOfFinGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, g_1_1, 2 ],
+            [ 1, g_1_3, 2 ],
+            [ 2, g_2_1, 2 ],
+            [ 2, g_2_3, 2 ],
+            [ 3, g_3_1, 2 ],
+            [ 3, g_3_3, 2 ] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_1 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
-f_2 := MapOfFinGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, g_1_2, 4 ],
+            [ 1, g_1_4, 4 ],
+            [ 2, g_2_2, 4 ],
+            [ 2, g_2_4, 4 ],
+            [ 3, g_3_2, 4 ],
+            [ 3, g_3_4, 4 ] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_2 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( f_1 );
 #! true
@@ -54,13 +78,37 @@ id = id_to_be;
 #! true
 
 
-A := FinGSet( S5, [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5,
+              [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-B := FinGSet( S5, [ 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5,
+              [ 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-f_1 := MapOfFinGSets(A, [ [ [ 1, g_1_1, 2 ], [ 1, g_1_3, 2], [ 2, g_2_1, 2 ], [ 2, g_2_3, 2], [ 3, g_3_1, 2 ], [ 3, g_3_3, 2] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, g_1_1, 2 ],
+            [ 1, g_1_3, 2 ],
+            [ 2, g_2_1, 2 ],
+            [ 2, g_2_3, 2 ],
+            [ 3, g_3_1, 2 ],
+            [ 3, g_3_3, 2 ] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_1 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
-f_2 := MapOfFinGSets(A, [ [ [ 1, g_1_2, 4 ], [ 1, g_1_4, 4], [ 2, g_2_2, 4 ], [ 2, g_2_4, 4], [ 3, g_3_2, 4 ], [ 3, g_3_4, 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, g_1_2, 4 ],
+            [ 1, g_1_4, 4 ],
+            [ 2, g_2_2, 4 ],
+            [ 2, g_2_4, 4 ],
+            [ 3, g_3_2, 4 ],
+            [ 3, g_3_4, 4 ] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_2 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( f_1 );
 #! true
@@ -87,13 +135,27 @@ id = id_to_be;
 
 
 
-A := FinGSet( S5, [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+A := FinGSet( S5,
+              [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-B := FinGSet( S5, [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] );
+B := FinGSet( S5,
+              [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            );
 #! <An object in SkeletalFinGSets>
-f_1 := MapOfFinGSets(A, [ [ [ 1, (), 3 ] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, (), 3 ] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_1 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
-f_2 := MapOfFinGSets(A, [ [ [ 1, (1,2,3), 4] ], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ], B);
+imgs := [ [ [ 1, (1,2,3), 4] ],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [],
+          [], [], [], [], [], [] ];;
+f_2 := MapOfFinGSets(A, imgs, B);
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( f_1 );
 #! true
@@ -116,9 +178,19 @@ s := FinGSet( G, [ 5 ] );
 #! <An object in SkeletalFinGSets>
 t := FinGSet( G, [ 4 ] );
 #! <An object in SkeletalFinGSets>
-f := MapOfFinGSets( s, [ [ [ 3, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+imgs := [ [ [ 3, (), 1 ],
+            [ 4, (), 1 ],
+            [ 4, (), 1 ],
+            [ 2, (), 1 ],
+            [ 4, (), 1 ] ] ];;
+f := MapOfFinGSets( s, imgs, t );
 #! <A morphism in SkeletalFinGSets>
-g := MapOfFinGSets( s, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], [ 2, (), 1 ], [ 4, (), 1 ] ] ], t );
+imgs := [ [ [ 3, (), 1 ],
+            [ 3, (), 1 ],
+            [ 4, (), 1 ],
+            [ 2, (), 1 ],
+            [ 4, (), 1 ] ] ];;
+g := MapOfFinGSets( s, imgs, t );
 #! <A morphism in SkeletalFinGSets>
 D := [ f, g ];
 #! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
@@ -130,7 +202,8 @@ pi := ProjectionOntoCoequalizer( D );
 #! <An epimorphism in SkeletalFinGSets>
 Display( pi );
 #! [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
-tau := MapOfFinGSets( t, [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], FinGSet( G, [ 2 ] ) );
+imgs := [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ];;
+tau := MapOfFinGSets( t, imgs, FinGSet( G, [ 2 ] ) );
 #! <A morphism in SkeletalFinGSets>
 phi := UniversalMorphismFromCoequalizer( D, tau );
 #! <A morphism in SkeletalFinGSets>

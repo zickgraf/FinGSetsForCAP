@@ -37,18 +37,29 @@ R := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in SkeletalFinGSets>
 T := FinGSet( S3,  [ 2, 1, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
-psi1 := MapOfFinGSets( S, [ [ [ 2, (1,2), 1 ], [ 1, (1,2,3), 2 ] ], [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ], [], [] ], R );
+imgs := [ [ [ 2, (1,2), 1 ], [ 1, (1,2,3), 2 ] ],
+          [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ],
+          [ ],
+          [ ] ];;
+psi1 := MapOfFinGSets( S, imgs, R );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi1 );
 #! true
-psi2 := MapOfFinGSets( R, [ [ [ 1, (1,3), 1 ], [ 1, (1,2,3), 3 ] ], [ [ 1, (), 2 ] ], [], [] ], T );
+imgs := [ [ [ 1, (1,3), 1 ], [ 1, (1,2,3), 3 ] ],
+          [ [ 1, (), 2 ] ],
+          [ ],
+          [ ] ];;
+psi2 := MapOfFinGSets( R, imgs, T );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi2 );
 #! true
 pi := PreCompose( psi1, psi2 );
 #! <A morphism in SkeletalFinGSets>
 Display( pi );
-#! [ [ [ 1, (2,3), 3 ], [ 1, (1,2,3), 2 ] ], [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ], [  ], [  ] ]
+#! [ [ [ 1, (2,3), 3 ], [ 1, (1,2,3), 2 ] ],
+#!   [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ],
+#!   [  ],
+#!   [  ] ]
 
 
 G := SymmetricGroup( 0 );;
@@ -58,9 +69,15 @@ n := FinGSet( G, [ 5 ] );
 #! <An object in SkeletalFinGSets>
 p := FinGSet( G, [ 7 ] );
 #! <An object in SkeletalFinGSets>
-psi := MapOfFinGSets( m, [ [ [ 2, (), 1 ], [ 5, (), 1 ], [ 3, (), 1 ] ] ], n );
+imgs := [ [ [ 2, (), 1 ], [ 5, (), 1 ], [ 3, (), 1 ] ] ];;
+psi := MapOfFinGSets( m, imgs, n );
 #! <A morphism in SkeletalFinGSets>
-phi := MapOfFinGSets( n, [ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], [ 3, (), 1 ] ] ], p );
+imgs := [ [ [ 1, (), 1 ],
+            [ 4, (), 1 ],
+            [ 6, (), 1 ],
+            [ 6, (), 1 ],
+            [ 3, (), 1 ] ] ];;
+phi := MapOfFinGSets( n, imgs, p );
 #! <A morphism in SkeletalFinGSets>
 alpha := PreCompose( psi, phi );
 #! <A morphism in SkeletalFinGSets>

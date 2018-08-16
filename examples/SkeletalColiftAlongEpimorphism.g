@@ -12,11 +12,13 @@ N := FinGSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
 O := FinGSet( S3, [ 2, 0, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
-tau := MapOfFinGSets( M, [ [ [ 1, (1,2), 1 ], [ 1, (), 3 ] ], [], [], [] ], O );
+imgs := [ [ [ 1, (1,2), 1 ], [ 1, (), 3 ] ], [], [], [] ];;
+tau := MapOfFinGSets( M, imgs, O );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( tau );
 #! true
-epsilon := MapOfFinGSets( M, [ [ [ 1, (1,2,3), 1 ], [ 1, (1,2), 3 ] ], [], [], [] ], N );
+imgs := [ [ [ 1, (1,2,3), 1 ], [ 1, (1,2), 3 ] ], [], [], [] ];;
+epsilon := MapOfFinGSets( M, imgs, N );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( epsilon );
 #! true

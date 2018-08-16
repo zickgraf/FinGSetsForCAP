@@ -10,11 +10,16 @@ s := FinGSet( S3, [ 1, 0, 2, 0 ] );
 #! <An object in SkeletalFinGSets>
 r := FinGSet( S3, [ 1, 2, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
-psi1 := MapOfFinGSets( s, [ [ [ 1, (1,2), 1 ] ], [], [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ], [] ], r );
+imgs := [ [ [ 1, (1,2), 1 ] ],
+          [],
+          [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ],
+          [] ];;
+psi1 := MapOfFinGSets( s, imgs, r );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi1 );
 #! true
-psi2 := MapOfFinGSets( s, [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ], r );
+imgs := [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ];;
+psi2 := MapOfFinGSets( s, imgs, r );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( psi2 );
 #! true
@@ -33,7 +38,8 @@ PreCompose( psi, psi1 ) = PreCompose( psi, psi2 );
 #! true
 t := FinGSet( S3, [ 1, 0, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
-tau := MapOfFinGSets( t, [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ] , s );
+imgs := [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ];;
+tau := MapOfFinGSets( t, imgs , s );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( tau );
 #! true
@@ -52,14 +58,28 @@ S := FinGSet( G, [ 5 ] );
 #! <An object in SkeletalFinGSets>
 T := FinGSet( G, [ 3 ] );
 #! <An object in SkeletalFinGSets>
-f1 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ], T );
+imgs := [ [ [ 3, (), 1 ],
+            [ 3, (), 1 ],
+            [ 1, (), 1 ],
+            [ 2, (), 1 ],
+            [ 2, (), 1 ] ] ];;
+f1 := MapOfFinGSets( S, imgs, T );
 #! <A morphism in SkeletalFinGSets>
-f2 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+imgs := [ [ [ 3, (), 1 ],
+            [ 2, (), 1 ],
+            [ 3, (), 1 ],
+            [ 1, (), 1 ],
+            [ 2, (), 1 ] ] ];;
+f2 := MapOfFinGSets( S, imgs, T );
 #! <A morphism in SkeletalFinGSets>
-f3 := MapOfFinGSets( S, [ [ [ 3, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ], T );
+imgs := [ [ [ 3, (), 1 ],
+            [ 1, (), 1 ],
+            [ 2, (), 1 ],
+            [ 1, (), 1 ],
+            [ 2, (), 1 ] ] ];;
+f3 := MapOfFinGSets( S, imgs, T );
 #! <A morphism in SkeletalFinGSets>
-D := [ f1, f2, f3 ];
-#! [ <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets>, <A morphism in SkeletalFinGSets> ]
+D := [ f1, f2, f3 ];;
 Eq := Equalizer( D );
 #! <An object in SkeletalFinGSets>
 AsList( Eq );

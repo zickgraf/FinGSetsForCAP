@@ -8,7 +8,8 @@ S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
 M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in SkeletalFinGSets>
-phi := MapOfFinGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
+imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;
+phi := MapOfFinGSets( M, imgs, M );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( phi );
 #! true
@@ -23,8 +24,10 @@ phi_res := CoastrictionToImage( phi );
 phi = PreCompose( phi_res, iota );
 #! true
 T := FinGSet( S3, [ 1, 1, 0, 0 ] );;
-tau1 := MapOfFinGSets( M, [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ], T );;
-tau2 := MapOfFinGSets( T, [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );;
+imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;
+tau1 := MapOfFinGSets( M, imgs, T );;
+imgs := [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;
+tau2 := MapOfFinGSets( T, imgs, M );;
 IsMonomorphism( tau2 );
 #! true
 phi = PreCompose( tau1, tau2 );
@@ -42,7 +45,8 @@ S3 := SymmetricGroup( 3 );
 #! Sym( [ 1 .. 3 ] )
 M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in SkeletalFinGSets>
-phi := MapOfFinGSets( M, [ [ [ 2, (), 1 ], [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], M );
+imgs := [ [ [ 2, (), 1 ], [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;
+phi := MapOfFinGSets( M, imgs, M );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( phi );
 #! true
@@ -64,7 +68,8 @@ m := FinGSet( G, [ 7 ] );
 #! <An object in SkeletalFinGSets>
 n := FinGSet( G, [ 3 ] );
 #! <An object in SkeletalFinGSets>
-phi := MapOfFinGSets( n, [ [ [ 7, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ] ] ], m );
+imgs := [ [ [ 7, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ] ] ];;
+phi := MapOfFinGSets( n, imgs, m );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( phi );
 #! true

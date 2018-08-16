@@ -12,9 +12,11 @@ B := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in SkeletalFinGSets>
 C := FinGSet( S3, [ 3, 1, 1, 0 ] );
 #! <An object in SkeletalFinGSets>
-tau1 := MapOfFinGSets( A, [ [ [ 3, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ], C );
+imgs := [ [ [ 3, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ];;
+tau1 := MapOfFinGSets( A, imgs, C );
 #! <A morphism in SkeletalFinGSets>
-tau2 := MapOfFinGSets( B, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ], C );
+imgs := [ [ [ 2, (), 1 ], [ 3, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;
+tau2 := MapOfFinGSets( B, imgs, C );
 #! <A morphism in SkeletalFinGSets>
 D := [ tau1, tau2 ];
 #! [ <A morphism in SkeletalFinGSets>, 
@@ -37,7 +39,8 @@ M := FinGSet( G, [ 5 ] );
 #! <An object in SkeletalFinGSets>
 N1 := FinGSet( G, [ 3 ] );
 #! <An object in SkeletalFinGSets>
-iota1 := MapOfFinGSets( N1, [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ], M );
+imgs := [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ];;
+iota1 := MapOfFinGSets( N1, imgs, M );
 #! <A morphism in SkeletalFinGSets>
 IsMonomorphism( iota1 );
 #! true
