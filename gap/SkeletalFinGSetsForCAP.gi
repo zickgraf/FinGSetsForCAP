@@ -370,7 +370,7 @@ InstallMethod( SkeletalFinGSets,
         
         D := [];
         
-        for i in [ 1 .. k ] do 
+        for i in [ 1 .. k ] do
             C := [];
             for l in [ 1 .. M[ i ] ] do
                 Add( C, [ L[ i ][ l ][ 2 ], Identity( group ), i ] );
@@ -1084,7 +1084,7 @@ InstallMethod( SkeletalFinGSets,
                     for j in [ 1 .. k ] do
                         imgs[ j ] := [];
                         for r in [ 1 .. N[ j ] ] do
-                            imgs[ j ][ r ] := [ 1, g * solutions[ j ][ r ], i ]; 
+                            imgs[ j ][ r ] := [ 1, g * solutions[ j ][ r ], i ];
                         od;
                     od;
                     
