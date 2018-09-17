@@ -113,7 +113,6 @@ InstallMethod( SkeletalFinGSets,
     SkeletalFinGSets!.group_for_category := group;
     
     SetIsSymmetricClosedMonoidalCategory( SkeletalFinGSets, true );
-    SetIsStrictMonoidalCategory( SkeletalFinGSets, true );
     
     DisableAddForCategoricalOperations( SkeletalFinGSets );
     
