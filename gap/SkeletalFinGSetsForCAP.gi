@@ -9,7 +9,7 @@ InstallMethod( FinGSet,
         "for a group and a list of nonnegative integers",
         [ IsGroup, IsList ],
         
-  function( group, L )
+  function ( group, L )
     local Omega;
     
     Omega := rec( );
@@ -29,7 +29,7 @@ InstallMethod( MapOfFinGSets,
         "for two CAP skeletal finite G-sets and a list",
         [ IsSkeletalFinGSet, IsList, IsSkeletalFinGSet ],
         
-  function( S, I, T )
+  function ( S, I, T )
     local group, map, k, imgs, g, j, U_j;
     
     group := UnderlyingGroup( S );
@@ -44,21 +44,21 @@ InstallMethod( MapOfFinGSets,
         Error( "I has the wrong format\n" );
     fi;
     
-    imgs := List( ShallowCopy( I ), x -> List( ShallowCopy( x ), function( img )
+    imgs := List( ShallowCopy( I ), x -> List( ShallowCopy( x ), function ( img )
         if ( not IsList( img ) ) or Length( img ) <> 3 then
             Error( "images must be triples\n" );
         fi;
 
         img := ShallowCopy( img );
         
-        g := img[ 2 ];
+        g := img[2];
         if g in group then
-            j := img[ 3 ];
-            if not ( IsPosInt( j ) and j <= k ) then
+            j := img[3];
+            if not (IsPosInt( j ) and j <= k) then
                 Error( Concatenation( "last entry of an image must be an integer j with 1 <= j <= ", String( k ), "\n" ) );
             fi;
             U_j := RepresentativeTom( TableOfMarks( group ), j );
-            img[ 2 ] := RightCoset( U_j, g );
+            img[2] := RightCoset( U_j, g );
         fi;
         return img;
     end ) );
@@ -81,7 +81,7 @@ end );
 InstallMethod( SkeletalFinGSets,
                [ IsGroup ],
                
-  function( group )
+  function ( group )
     local
         CategoryName,
         SkeletalFinGSets,
@@ -122,19 +122,19 @@ InstallMethod( SkeletalFinGSets,
     
     k := Length( MatTom( TableOfMarks( group ) ) );
     
-    IntZeroVector := function( i )
+    IntZeroVector := function ( i )
         
         return ListWithIdenticalEntries( i, 0 );
         
     end;
     
-    RepresentativeOfSubgroupsUpToConjugation := function( i )
+    RepresentativeOfSubgroupsUpToConjugation := function ( i )
         
         return RepresentativeTom( TableOfMarks( group ), i );
         
     end;
     
-    PositionOfSubgroup := function( U )
+    PositionOfSubgroup := function ( U )
         local i;
 
         for i in [ 1 .. k ] do
@@ -147,7 +147,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsWellDefinedForObjects( SkeletalFinGSets,
-      function( Omega )
+      function ( Omega )
         local L;
         
         L := AsList( Omega );
@@ -166,7 +166,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEqualForObjects( SkeletalFinGSets,
-      function( Omega1, Omega2 )
+      function ( Omega1, Omega2 )
         
         # groups have to be the same, because G is fixed
         return AsList( Omega1 ) = AsList( Omega2 );
@@ -174,15 +174,15 @@ InstallMethod( SkeletalFinGSets,
     end );
 
     # returns the positions of an object 'Omega'
-    Positions := function( Omega )
+    Positions := function ( Omega )
         local M, positions, i, l;
         
         M := AsList( Omega );
         
-        positions := [];
+        positions := [ ];
         
         for i in [ 1 .. k ] do
-            for l in [ 1 .. M[ i ] ] do
+            for l in [ 1 .. M[i] ] do
                 Add( positions, [ i, l ] );
             od;
         od;
@@ -195,14 +195,14 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsWellDefinedForMorphisms( SkeletalFinGSets,
-      function( mor )
+      function ( mor )
         local S, T, img, tom, s, t, U_i, U_j, u;
         
         S := Source( mor );
         
         T := Range( mor );
         
-        if not ( group = UnderlyingGroup( S ) and group = UnderlyingGroup( T ) ) then
+        if not (group = UnderlyingGroup( S ) and group = UnderlyingGroup( T )) then
             return false;
         fi;
         
@@ -217,11 +217,11 @@ InstallMethod( SkeletalFinGSets,
         s := AsList( S );
         t := AsList( T );
         
-        if not ForAll( [ 1 .. k ], i -> IsList( img[ i ] ) and Length( img[ i ] ) = s[ i ] and
-            ForAll( img[ i ], function( e )
+        if not ForAll( [ 1 .. k ], i -> IsList( img[i] ) and Length( img[i] ) = s[i] and
+            ForAll( img[i], function ( e )
                                 local r, g, j;
                                 
-                                if not ( IsList( e ) and Length( e ) = 3 ) then
+                                if not (IsList( e ) and Length( e ) = 3) then
                                     return false;
                                 fi;
                                 
@@ -234,14 +234,14 @@ InstallMethod( SkeletalFinGSets,
                                 # g has to be an element of group
                                 # U_i has to be a subgroup of U_j up to conjugation, which can be read off the table of marks
                                 
-                                if not ( IsPosInt( j ) and j <= k and IsPosInt( r ) and r <= t[ j ] ) then
+                                if not (IsPosInt( j ) and j <= k and IsPosInt( r ) and r <= t[j]) then
                                     return false;
                                 fi;
 
                                 U_i := RepresentativeOfSubgroupsUpToConjugation( i );
                                 U_j := RepresentativeOfSubgroupsUpToConjugation( j );
 
-                                if not ( g in RightCosets( group, U_j ) and tom[ j ][ i ] > 0 ) then
+                                if not (g in RightCosets( group, U_j ) and tom[j][i] > 0) then
                                     return false;
                                 fi;
                                 
@@ -263,7 +263,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEqualForMorphisms( SkeletalFinGSets,
-      function( mor1, mor2 )
+      function ( mor1, mor2 )
         
         return AsList( mor1 ) = AsList( mor2 );
         
@@ -271,15 +271,15 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIdentityMorphism( SkeletalFinGSets,
-      function( Omega )
+      function ( Omega )
         local L, M, i, C, l;
         
-        L := [];
+        L := [ ];
         M := AsList( Omega );
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
                 Add( C, [ l, Identity( group ), i ] );
             od;
             Add( L, C );
@@ -291,27 +291,27 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddPreCompose( SkeletalFinGSets,
-      function( map_pre, map_post )
+      function ( map_pre, map_post )
         local cmp, S, M, i, C, l, img_1, r_1, g_1, j_1, img_2, r_2, g_2, j_2;
         
-        cmp := [];
+        cmp := [ ];
         
         S := Source( map_pre );
         
         M := AsList( S );
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
                 img_1 := Component( map_pre, [ i, l ] );
-                r_1 := img_1[ 1 ];
-                g_1 := img_1[ 2 ];
-                j_1 := img_1[ 3 ];
+                r_1 := img_1[1];
+                g_1 := img_1[2];
+                j_1 := img_1[3];
                 
-                img_2 := Component( map_post, [ j_1 , r_1 ] );
-                r_2 := img_2[ 1 ];
-                g_2 := img_2[ 2 ];
-                j_2 := img_2[ 3 ];
+                img_2 := Component( map_post, [ j_1, r_1 ] );
+                r_2 := img_2[1];
+                g_2 := img_2[2];
+                j_2 := img_2[3];
                 
                 Add( C, [ r_2, Representative( g_2 ) * Representative( g_1 ), j_2 ] );
             od;
@@ -323,17 +323,17 @@ InstallMethod( SkeletalFinGSets,
     end );
     
     # returns the component of a morphism 'phi' at position 'position'
-    Component := function( phi, position )
-        return AsList( phi )[ position[ 1 ] ][ position[ 2 ] ];
+    Component := function ( phi, position )
+        return AsList( phi )[position[1]][position[2]];
     end;
     
     # returns the target position of a component 'component' of a morphism
-    TargetPosition := function( component )
-        return [ component[ 3 ], component[ 1 ] ];
+    TargetPosition := function ( component )
+        return [ component[3], component[1] ];
     end;
     
     ##
-    ImagePositions := function( phi )
+    ImagePositions := function ( phi )
         local S, T, positions;
         
         S := Source( phi );
@@ -346,7 +346,7 @@ InstallMethod( SkeletalFinGSets,
     end;
     
     ##
-    PreimagePositions := function( phi, targetPositions )
+    PreimagePositions := function ( phi, targetPositions )
         local S, positions;
         
         S := Source( phi );
@@ -358,24 +358,24 @@ InstallMethod( SkeletalFinGSets,
     end;
     
     ##
-    EmbeddingOfPositions := function( positions, T )
+    EmbeddingOfPositions := function ( positions, T )
         local L, S, M, D, i, C, l, iota;
         
         # impose lexicographical order
         positions := Set( positions );
         
-        L := List( [ 1 .. k ], i -> Filtered( positions, p -> p[ 1 ] = i ) );
+        L := List( [ 1 .. k ], i -> Filtered( positions, p -> p[1] = i ) );
         
         S := FinGSet( group, List( L, p -> Length( p ) ) );
         
         M := AsList( S );
         
-        D := [];
+        D := [ ];
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
-                Add( C, [ L[ i ][ l ][ 2 ], Identity( group ), i ] );
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
+                Add( C, [ L[i][l][2], Identity( group ), i ] );
             od;
             Add( D, C );
         od;
@@ -392,7 +392,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddLiftAlongMonomorphism( SkeletalFinGSets,
-      function( iota, phi )
+      function ( iota, phi )
         local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
       
         S := Source( phi );
@@ -400,22 +400,22 @@ InstallMethod( SkeletalFinGSets,
         
         M := AsList( S );
         
-        D := [];
+        D := [ ];
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
-                img := Component( phi, [ i , l ] );
-                r := img[ 1 ];
-                g := Representative( img[ 2 ] );
-                j := img[ 3 ];
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
+                img := Component( phi, [ i, l ] );
+                r := img[1];
+                g := Representative( img[2] );
+                j := img[3];
                 
                 # get the unique preimage position under iota
-                preimagePosition := PreimagePositions( iota, [ [ j, r ] ] )[ 1 ];
+                preimagePosition := PreimagePositions( iota, [ [ j, r ] ] )[1];
                 
-                t := preimagePosition[ 2 ];
-                h := Representative( Component( iota, preimagePosition )[ 2 ] );
-                s := preimagePosition[ 1 ];
+                t := preimagePosition[2];
+                h := Representative( Component( iota, preimagePosition )[2] );
+                s := preimagePosition[1];
                 
                 Add( C, [ t, Inverse( h ) * g, s ] );
             od;
@@ -428,7 +428,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddColiftAlongEpimorphism( SkeletalFinGSets,
-      function( pi, phi )
+      function ( pi, phi )
         local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
       
         S := Range( pi );
@@ -436,20 +436,20 @@ InstallMethod( SkeletalFinGSets,
         
         M := AsList( S );
         
-        D := [];
+        D := [ ];
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
                 # get some preimage position under pi
-                preimagePosition := PreimagePositions( pi, [ [ i, l ] ] )[ 1 ];
+                preimagePosition := PreimagePositions( pi, [ [ i, l ] ] )[1];
                 
-                h := Representative( Component( pi, preimagePosition )[ 2 ] );
+                h := Representative( Component( pi, preimagePosition )[2] );
 
                 img := Component( phi, preimagePosition );
-                r := img[ 1 ];
-                g := Representative( img[ 2 ] );
-                j := img[ 3 ];
+                r := img[1];
+                g := Representative( img[2] );
+                j := img[3];
                 
                 Add( C, [ r, g * Inverse( h ), j ] );
             od;
@@ -464,12 +464,12 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddTerminalObject( SkeletalFinGSets,
-      function( arg )
+      function ( arg )
         local L;
         
         L := IntZeroVector( k );
         
-        L[ k ] := 1;
+        L[k] := 1;
         
         return FinGSet( group, L );
         
@@ -477,16 +477,16 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( SkeletalFinGSets,
-      function( Omega, T )
+      function ( Omega, T )
         local L, M, i, C, l;
         
-        L := [];
+        L := [ ];
         
         M := AsList( Omega );
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
                 Add( C, [ 1, Identity( group ), k ] );
             od;
             Add( L, C );
@@ -498,7 +498,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddDirectProduct( SkeletalFinGSets,
-      function( L )
+      function ( L )
         local ToM, prod, l, M_l, i, V, B, C;
         
         ToM := TableOfMarks( group );
@@ -525,7 +525,7 @@ InstallMethod( SkeletalFinGSets,
     end );
     
     ##
-    OrbitsOfActionOnCartesianProduct := function( L )
+    OrbitsOfActionOnCartesianProduct := function ( L )
         local LoS, LoF, C, e, o;
         
         # ListOfSubgroups
@@ -545,29 +545,29 @@ InstallMethod( SkeletalFinGSets,
         
     end;
     
-    SingleBinaryProduct := function( i, j )
+    SingleBinaryProduct := function ( i, j )
         local G_i, G_j;
         
         # U_i\G
         G_i := IntZeroVector( k );
-        G_i[ i ] := 1;
+        G_i[i] := 1;
         # U_j\G
         G_j := IntZeroVector( k );
-        G_j[ j ] := 1;
+        G_j[j] := 1;
         
         return DirectProduct( [ FinGSet( group, G_i ), FinGSet( group, G_j ) ] );
         
     end;
     
-    ProjectionOfASingleBinaryProduct := function( i, j, pos, copy_number, target )
+    ProjectionOfASingleBinaryProduct := function ( i, j, pos, copy_number, target )
         local o, RoO, imgs, r, s, a, found_g, U_a, g, P, pi, l, img, target_index;
         
         o := OrbitsOfActionOnCartesianProduct( [ i, j ] );
         
         # Representatives Of Orbits
-        RoO := List( o, x -> x[ 1 ] );
+        RoO := List( o, x -> x[1] );
         
-        imgs := List( [ 1 .. k ], x -> [] );
+        imgs := List( [ 1 .. k ], x -> [ ] );
         
         for r in RoO do
             s := Stabilizer( group, r, OnRight );
@@ -586,23 +586,23 @@ InstallMethod( SkeletalFinGSets,
                 fi;
             od;
             
-            Add( imgs[ a ], r * Inverse( g ) );
+            Add( imgs[a], r * Inverse( g ) );
         od;
         
         # take the direct product of U_i\G and U_j\G and construct the projection pi
         P := SingleBinaryProduct( i, j );
         
-        pi := [];
+        pi := [ ];
         for l in [ 1 .. k ] do
-            pi [ l ] := [];
-            for img in imgs[ l ] do
+            pi[l] := [ ];
+            for img in imgs[l] do
                 if pos = 1 then
                     target_index := i;
                 else
                     target_index := j;
                 fi;
                 
-                Add( pi[ l ], [ copy_number, img[ pos ], target_index ] );
+                Add( pi[l], [ copy_number, img[pos], target_index ] );
             od;
         od;
         
@@ -610,7 +610,7 @@ InstallMethod( SkeletalFinGSets,
         
     end;
     
-    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "ProjectionInFactorOfBinaryDirectProductToProjectionInFactorOfDirectProduct", SkeletalFinGSets, function( L1, L2, pos )
+    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "ProjectionInFactorOfBinaryDirectProductToProjectionInFactorOfDirectProduct", SkeletalFinGSets, function ( L1, L2, pos )
         local S, T, M, N, D, tau, i, j, l, imgs, img, m, n, target, copy_number, pi, P;
         
         S := DirectProduct( [ L1, L2 ] );
@@ -624,8 +624,8 @@ InstallMethod( SkeletalFinGSets,
         M := AsList( L1 );
         N := AsList( L2 );
         
-        D := [];
-        tau := [];
+        D := [ ];
+        tau := [ ];
         
         for i in [ 1 .. k ] do
             for j in [ 1 .. k ] do
@@ -653,7 +653,7 @@ InstallMethod( SkeletalFinGSets,
     end ) );
 
     ##
-    OffsetInCartesianProduct := function( M, N, given_i, given_j, given_m, given_n  )
+    OffsetInCartesianProduct := function ( M, N, given_i, given_j, given_m, given_n )
         local result, i, j, m, n, pi;
         
         result := IntZeroVector( k );
@@ -675,7 +675,7 @@ InstallMethod( SkeletalFinGSets,
         
     end;
 
-    AddUniversalMorphismIntoDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "UniversalMorphismIntoBinaryDirectProductToUniversalMorphismIntoDirectProduct", SkeletalFinGSets, function( tau1, tau2 )
+    AddUniversalMorphismIntoDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "UniversalMorphismIntoBinaryDirectProductToUniversalMorphismIntoDirectProduct", SkeletalFinGSets, function ( tau1, tau2 )
         local S, T, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
         
         S := Source( tau1 );
@@ -684,24 +684,24 @@ InstallMethod( SkeletalFinGSets,
         M := AsList( Range( tau1 ) );
         N := AsList( Range( tau2 ) );
         
-        imgs := [];
+        imgs := [ ];
         
         for i in [ 1 .. k ] do
-            imgs[ i ] := [];
-            for l in [ 1.. AsList( S )[ i ] ] do
-                r_1 := AsList( tau1 )[ i ][ l ][ 1 ];
-                r_2 := AsList( tau2 )[ i ][ l ][ 1 ];
-                g_1 := AsList( tau1 )[ i ][ l ][ 2 ];
-                g_2 := AsList( tau2 )[ i ][ l ][ 2 ];
-                j_1 := AsList( tau1 )[ i ][ l ][ 3 ];
-                j_2 := AsList( tau2 )[ i ][ l ][ 3 ];
+            imgs[i] := [ ];
+            for l in [ 1 .. AsList( S )[i] ] do
+                r_1 := AsList( tau1 )[i][l][1];
+                r_2 := AsList( tau2 )[i][l][1];
+                g_1 := AsList( tau1 )[i][l][2];
+                g_2 := AsList( tau2 )[i][l][2];
+                j_1 := AsList( tau1 )[i][l][3];
+                j_2 := AsList( tau2 )[i][l][3];
                 
                 Offset := OffsetInCartesianProduct( M, N, j_1, j_2, r_1, r_2 );
                 
                 Orbits := OrbitsOfActionOnCartesianProduct( [ j_1, j_2 ] );
                 
                 # Representatives Of Orbits
-                RoO := List( Orbits, x -> x[ 1 ] );
+                RoO := List( Orbits, x -> x[1] );
                 
                 # Stabilizers of Representatives of orbits
                 SRO := List( RoO, r -> Stabilizer( group, r, OnRight ) );
@@ -711,19 +711,19 @@ InstallMethod( SkeletalFinGSets,
                 
                 # find the orbit containing img
                 for o in [ 1 .. Length( Orbits ) ] do
-                    if img in Orbits[ o ] then
+                    if img in Orbits[o] then
                         break;
                     fi;
                 od;
                  
                 # find an element of g which maps the representative of o to img
                 for g in group do
-                    if RoO[ o ] * g = img then
+                    if RoO[o] * g = img then
                         break;
                     fi;
                 od;
                 
-                s := SRO[ o ];
+                s := SRO[o];
                 
                 found_conj := false;
                 for j in [ 1 .. k ] do
@@ -741,8 +741,8 @@ InstallMethod( SkeletalFinGSets,
                  
                 Internaloffset := 0;
                  
-                for p in [ 1 .. Length( SRO )] do
-                    j_p := PositionOfSubgroup( SRO[ p ] );
+                for p in [ 1 .. Length( SRO ) ] do
+                    j_p := PositionOfSubgroup( SRO[p] );
                     if j = j_p then
                         Internaloffset := Internaloffset + 1;
                         if p = o then
@@ -751,7 +751,7 @@ InstallMethod( SkeletalFinGSets,
                     fi;
                 od;
                   
-                r := Offset[ j ] + Internaloffset;
+                r := Offset[j] + Internaloffset;
                 Add( imgs[i], [ r, conj * g, j ] );
             od;
         od;
@@ -762,14 +762,14 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddEmbeddingOfEqualizer( SkeletalFinGSets,
-      function( D )
+      function ( D )
         local phi_1, S, positions;
         
-        phi_1 := D[ 1 ];
+        phi_1 := D[1];
         
         S := Source( phi_1 );
         
-        D := D{ [ 2 .. Length( D ) ] };
+        D := D{[ 2 .. Length( D ) ]};
         
         positions := Filtered( Positions( S ), p -> ForAll( D, phi -> Component( phi_1, p ) = Component( phi, p ) ) );
         
@@ -781,7 +781,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddInitialObject( SkeletalFinGSets,
-      function( arg )
+      function ( arg )
         
         return FinGSet( group, IntZeroVector( k ) );
         
@@ -789,15 +789,15 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismFromInitialObject( SkeletalFinGSets,
-      function( Omega )
+      function ( Omega )
         
-        return MapOfFinGSets( FinGSet( group, IntZeroVector( k ) ), List( AsList( Omega ), x -> [] ), Omega );
+        return MapOfFinGSets( FinGSet( group, IntZeroVector( k ) ), List( AsList( Omega ), x -> [ ] ), Omega );
         
     end );
 
     ##
     AddCoproduct( SkeletalFinGSets,
-      function( L )
+      function ( L )
         local sum, l;
         
         sum := IntZeroVector( k );
@@ -812,10 +812,10 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddInjectionOfCofactorOfCoproduct( SkeletalFinGSets,
-      function( L, pos )
+      function ( L, pos )
         local S, M, T, sum, j, imgs, i, C, l;
         
-        S := L[ pos ];
+        S := L[pos];
         
         M := AsList( S );
         
@@ -824,14 +824,14 @@ InstallMethod( SkeletalFinGSets,
         sum := IntZeroVector( k );
         
         for j in [ 1 .. (pos - 1) ] do
-            sum := sum + AsList( L[ j ] );
+            sum := sum + AsList( L[j] );
         od;
         
-        imgs := [];
+        imgs := [ ];
         
         for i in [ 1 .. k ] do
-            C := [];
-            for l in [ 1 .. M[ i ] ] do
+            C := [ ];
+            for l in [ 1 .. M[i] ] do
                 Add( C, [ sum[i] + l, Identity( group ), i ] );
             od;
             Add( imgs, C );
@@ -843,19 +843,19 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismFromCoproductWithGivenCoproduct( SkeletalFinGSets,
-      function( D, tau, S )
+      function ( D, tau, S )
         local T, M, imgs, i, C, j;
         
         T := Range( tau[1] );
         
         M := AsList( S );
         
-        imgs := [];
+        imgs := [ ];
         
         for i in [ 1 .. k ] do
-            C := [];
-            for j in [ 1 .. Length(tau) ] do
-                C := Concatenation( C, AsList(tau[ j ])[ i ] );
+            C := [ ];
+            for j in [ 1 .. Length( tau ) ] do
+                C := Concatenation( C, AsList( tau[j] )[i] );
             od;
             Add( imgs, C );
         od;
@@ -865,25 +865,25 @@ InstallMethod( SkeletalFinGSets,
     end );
 
     ##
-    ExplicitCoequalizer :=  function( D )
+    ExplicitCoequalizer := function ( D )
     # TODO
         local IsEqualModSubgroup, AsASet, A, B, ASet, BSet, AreEquivalent, equivalence_classes, b, first_equivalence_class, i, class, j, element, OurAction, external_set, orbits, RoO, Cq, r, s;
         
         
-        IsEqualModSubgroup := function( g1, g2, U )
+        IsEqualModSubgroup := function ( g1, g2, U )
             
             return g1 * Inverse( g2 ) in U;
             
         end;
 
         
-        AsASet := function( M )
+        AsASet := function ( M )
             local set, i, U, l, g;
             
-            set := [];
+            set := [ ];
             for i in [ 1 .. k ] do
                 U := RepresentativeOfSubgroupsUpToConjugation( i );
-                for l in [ 1 .. M[ i ] ] do
+                for l in [ 1 .. M[i] ] do
                     set := Concatenation( set, List( RightTransversal( group, U ), g -> [ l, g, i ] ) );
                 od;
             od;
@@ -891,12 +891,12 @@ InstallMethod( SkeletalFinGSets,
             
         end;
 
-        A := Source( D[ 1 ] );
-        B := Range( D[ 1 ] );
+        A := Source( D[1] );
+        B := Range( D[1] );
         ASet := AsASet( AsList( A ) );
         BSet := AsASet( AsList( B ) );
         
-        AreEquivalent := function(e, b)
+        AreEquivalent := function ( e, b )
             local a, imgs, found_e, found_b, img, U;
             if e = b then
                 Error( "this should not happen" );
@@ -907,11 +907,11 @@ InstallMethod( SkeletalFinGSets,
                 found_e := false;
                 found_b := false;
                 for img in imgs do
-                    U := RepresentativeOfSubgroupsUpToConjugation( img[ 3 ] );
-                    if e[ 3 ] = img[ 3 ] and e[ 1 ] = img[ 1 ] and IsEqualModSubgroup( e[ 2 ], img[ 2 ], U ) then
+                    U := RepresentativeOfSubgroupsUpToConjugation( img[3] );
+                    if e[3] = img[3] and e[1] = img[1] and IsEqualModSubgroup( e[2], img[2], U ) then
                         found_e := true;
                     fi;
-                    if b[ 3 ] = img[ 3 ] and b[ 1 ] = img[ 1 ] and IsEqualModSubgroup( b[ 2 ], img[ 2 ], U ) then
+                    if b[3] = img[3] and b[1] = img[1] and IsEqualModSubgroup( b[2], img[2], U ) then
                         found_b := true;
                     fi;
                     if found_e and found_b then
@@ -924,26 +924,26 @@ InstallMethod( SkeletalFinGSets,
         end;
         
         Display( ASet );
-        Display( Length( ASet));
+        Display( Length( ASet ) );
         Display( BSet );
-        Display( Length( BSet));
+        Display( Length( BSet ) );
         
-        equivalence_classes := [];
+        equivalence_classes := [ ];
         for b in BSet do
             first_equivalence_class := 0;
             for i in [ 1 .. Length( equivalence_classes ) ] do
-                class := equivalence_classes[ i ];
+                class := equivalence_classes[i];
                 for j in [ 1 .. Length( class ) ] do
-                    element := class[ j ];
+                    element := class[j];
                     # prüfe ob element ~ b
-                    if AreEquivalent( element, b) then
+                    if AreEquivalent( element, b ) then
                         if first_equivalence_class > 0 then
                             # merge class and first_equivalence_class
                             Display( "classes are merged" );
-                            equivalence_classes[ first_equivalence_class ] := Union2( equivalence_classes[ first_equivalence_class ], class );
-                            equivalence_classes[ i ] := [];
+                            equivalence_classes[first_equivalence_class] := Union2( equivalence_classes[first_equivalence_class], class );
+                            equivalence_classes[i] := [ ];
                         else
-                            Add( equivalence_classes[ i ], b);
+                            Add( equivalence_classes[i], b );
                             first_equivalence_class := i;
                         fi;
                         break;
@@ -951,29 +951,29 @@ InstallMethod( SkeletalFinGSets,
                 od;
             od;
             if first_equivalence_class = 0 then
-                Add(equivalence_classes, [ b ]);
+                Add( equivalence_classes, [ b ] );
             fi;
         od;
         equivalence_classes := Filtered( equivalence_classes, x -> Length( x ) > 0 );
         
         Display( Size( equivalence_classes ) );
         
-        OurAction := function( pnt, g )
+        OurAction := function ( pnt, g )
             local representative, l_r, g_r, i_r, result, class, element, U;
             
-            representative := pnt[ 1 ];
+            representative := pnt[1];
             
-            l_r := representative[ 1 ];
-            g_r := representative[ 2 ];
-            i_r := representative[ 3 ];
+            l_r := representative[1];
+            g_r := representative[2];
+            i_r := representative[3];
             
             result := [ l_r, g_r * g, i_r ];
             for class in equivalence_classes do
                 for element in class do
                     
-                    U := RepresentativeOfSubgroupsUpToConjugation( result[ 3 ] );
+                    U := RepresentativeOfSubgroupsUpToConjugation( result[3] );
                     
-                    if result[ 3 ] = element[ 3 ] and result[ 1 ] = element[ 1 ] and IsEqualModSubgroup( result[ 2 ], element[ 2 ], U ) then
+                    if result[3] = element[3] and result[1] = element[1] and IsEqualModSubgroup( result[2], element[2], U ) then
                         return class;
                     fi;
                 od;
@@ -986,48 +986,48 @@ InstallMethod( SkeletalFinGSets,
         orbits := Orbits( external_set );
         
         # Representatives Of Orbits
-        RoO := List( orbits, x -> x[ 1 ] );
+        RoO := List( orbits, x -> x[1] );
         
         Cq := IntZeroVector( k );
         for r in RoO do
             s := Stabilizer( group, r, OurAction );
             i := PositionOfSubgroup( s );
-            Cq[ i ] := Cq[ i ] + 1;
+            Cq[i] := Cq[i] + 1;
         od;
         
         return FinGSet( group, Cq );
     end;
 
     ##
-    ProjectionOntoCoequalizerOfAConnectedComponent := function( D )
+    ProjectionOntoCoequalizerOfAConnectedComponent := function ( D )
       local S, T, M, N, equations, a, b, i, l, phi_a, phi_b, img_a, img_b, e, solutions, j_a, r_a, g_a, j_b, r_b, g_b, X, j, r, U_j, h, h_a, h_b, V, U_i, g, Cq, imgs, pi;
         
-        S := Source( D[ 1 ] );
-        T := Range( D[ 1 ] );
+        S := Source( D[1] );
+        T := Range( D[1] );
 
         M := AsList( S );
         N := AsList( T );
         
         # build the system of equations
-        equations := [];
+        equations := [ ];
         for a in [ 1 .. Length( D ) ] do
             for b in [ ( a + 1 ) .. Length( D ) ] do
                 for i in [ 1 .. k ] do
-                    for l in [ 1 .. M[ i ] ] do
-                        phi_a := D[ a ];
-                        phi_b := D[ b ];
+                    for l in [ 1 .. M[i] ] do
+                        phi_a := D[a];
+                        phi_b := D[b];
                         
                         img_a := Component( phi_a, [ i, l ] );
                         img_b := Component( phi_b, [ i, l ] );
 
-                        e := rec();
-                        e.("j_a") := img_a[ 3 ];
-                        e.("r_a") := img_a[ 1 ];
-                        e.("g_a") := Representative( img_a[ 2 ] );
+                        e := rec( );
+                        e.("j_a") := img_a[3];
+                        e.("r_a") := img_a[1];
+                        e.("g_a") := Representative( img_a[2] );
 
-                        e.("j_b") := img_b[ 3 ];
-                        e.("r_b") := img_b[ 1 ];
-                        e.("g_b") := Representative( img_b[ 2 ] );
+                        e.("j_b") := img_b[3];
+                        e.("r_b") := img_b[1];
+                        e.("g_b") := Representative( img_b[2] );
                         
                         Add( equations, e );
                     od;
@@ -1037,8 +1037,8 @@ InstallMethod( SkeletalFinGSets,
 
         # solve the system of equations
         # "false" indicates that a solution is not yet known
-        solutions := List( [ 1 .. k ], j -> ListWithIdenticalEntries( N[ j ], false ) );
-        solutions[ PositionProperty( N, x -> x <> 0 ) ][ 1 ] := Identity( group );
+        solutions := List( [ 1 .. k ], j -> ListWithIdenticalEntries( N[j], false ) );
+        solutions[ PositionProperty( N, x -> x <> 0 ) ][1] := Identity( group );
         repeat
             for e in equations do
                 j_a := e.j_a;
@@ -1049,29 +1049,29 @@ InstallMethod( SkeletalFinGSets,
                 r_b := e.r_b;
                 g_b := e.g_b;
                 
-                if solutions[ j_a ][ r_a ] = false and solutions[ j_b ][ r_b ] <> false then
-                    solutions[ j_a ][ r_a ] := solutions[ j_b ][ r_b ] * g_b * Inverse( g_a );
+                if solutions[j_a][r_a] = false and solutions[j_b][r_b] <> false then
+                    solutions[j_a][r_a] := solutions[j_b][r_b] * g_b * Inverse( g_a );
                 fi;
-                if solutions[ j_a ][ r_a ] <> false and solutions[ j_b ][ r_b ] = false then
-                    solutions[ j_b ][ r_b ] := solutions[ j_a ][ r_a ] * g_a * Inverse( g_b );
+                if solutions[j_a][r_a] <> false and solutions[j_b][r_b] = false then
+                    solutions[j_b][r_b] := solutions[j_a][r_a] * g_a * Inverse( g_b );
                 fi;
             od;
             
         until ForAll( solutions, x -> ForAll( x, y -> y <> false ) );
         
-        X := [];
+        X := [ ];
         for j in [ 1 .. k ] do
-            for r in [ 1 .. N[ j ] ] do
+            for r in [ 1 .. N[j] ] do
                 U_j := RepresentativeOfSubgroupsUpToConjugation( j );
-                h := solutions[ j ][ r ];
+                h := solutions[j][r];
                 X := Concatenation( X, GeneratorsOfGroup( ConjugateSubgroup( U_j, Inverse( h ) ) ) );
             od;
         od;
         
         for e in equations do
-            h_a := solutions[ e.j_a ][ e.r_a ];
-            h_b := solutions[ e.j_b ][ e.r_b ];
-            Add( X , h_b * e.g_b * Inverse( e.g_a ) * Inverse( h_a ) );
+            h_a := solutions[e.j_a][e.r_a];
+            h_b := solutions[e.j_b][e.r_b];
+            Add( X, h_b * e.g_b * Inverse( e.g_a ) * Inverse( h_a ) );
         od;
 
         V := Subgroup( group, X );
@@ -1080,13 +1080,13 @@ InstallMethod( SkeletalFinGSets,
             for g in group do
                 if ConjugateSubgroup( V, Inverse( g ) ) = U_i then
                     Cq := IntZeroVector( k );
-                    Cq[ i ] := 1;
+                    Cq[i] := 1;
                     
-                    imgs := [];
+                    imgs := [ ];
                     for j in [ 1 .. k ] do
-                        imgs[ j ] := [];
-                        for r in [ 1 .. N[ j ] ] do
-                            imgs[ j ][ r ] := [ 1, g * solutions[ j ][ r ], i ];
+                        imgs[j] := [ ];
+                        for r in [ 1 .. N[j] ] do
+                            imgs[j][r] := [ 1, g * solutions[j][r], i ];
                         od;
                     od;
                     
@@ -1101,17 +1101,17 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddProjectionOntoCoequalizer( SkeletalFinGSets,
-      function( D )
+      function ( D )
         local S, T, M, N, Cq, rangePositions, imgs, j, r, previousImagePositions, preimagePositions, imagePositions, iota, preimageEmbedding, imageEmbedding, projection, imageEmbeddings, projections, tau, alpha, pi;
         
-        S := Source( D[ 1 ] );
-        T := Range( D[ 1 ] );
+        S := Source( D[1] );
+        T := Range( D[1] );
 
         M := AsList( S );
         N := AsList( T );
         
-        imageEmbeddings := [];
-        projections := [];
+        imageEmbeddings := [ ];
+        projections := [ ];
         
         rangePositions := Positions( T );
         
@@ -1121,7 +1121,7 @@ InstallMethod( SkeletalFinGSets,
         fi;
         
         while( not IsEmpty( rangePositions ) ) do
-            imagePositions := [ rangePositions[ 1 ] ];
+            imagePositions := [ rangePositions[1] ];
             previousImagePositions := [ ];
             while previousImagePositions <> imagePositions do
                 previousImagePositions := imagePositions;
@@ -1154,7 +1154,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddImageEmbedding( SkeletalFinGSets,
-      function( phi )
+      function ( phi )
         
         return EmbeddingOfPositions( ImagePositions( phi ), Range( phi ) );
         
@@ -1162,7 +1162,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEpimorphism( SkeletalFinGSets,
-      function( phi )
+      function ( phi )
         
         return ImageObject( phi ) = Range( phi );
         
@@ -1170,7 +1170,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsMonomorphism( SkeletalFinGSets,
-      function( phi )
+      function ( phi )
         
         return AsList( ImageObject( phi ) ) = AsList( Source( phi ) );
         
@@ -1183,7 +1183,7 @@ InstallMethod( SkeletalFinGSets,
             "for a CAP skeletal finite G-set",
             [ IsSkeletalFinGSet ],
             
-      function( N )
+      function ( N )
         Display( [ UnderlyingGroup( N ), AsList( N ) ] );
     end );
 
@@ -1192,8 +1192,8 @@ InstallMethod( SkeletalFinGSets,
             "for a CAP map of CAP skeletal finite G-sets",
             [ IsSkeletalFinGSetMap ],
             
-      function( mor )
-        Display( List( AsList( mor ), x -> List( x, y -> [ y[ 1 ], Representative( y[ 2 ] ), y[ 3 ] ] ) ) );
+      function ( mor )
+        Display( List( AsList( mor ), x -> List( x, y -> [ y[1], Representative( y[2] ), y[3] ] ) ) );
     end );
 
 
