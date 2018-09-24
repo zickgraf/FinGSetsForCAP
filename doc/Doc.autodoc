@@ -47,3 +47,6 @@
 
 @Subsection Reconstructing the Table of Marks
 @InsertSystem ReconstructTableOfMarks
+
+@Subsection Reconstructing the Group
+@InsertSystem ReconstructGroup

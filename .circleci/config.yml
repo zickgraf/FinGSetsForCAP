@@ -14,6 +14,7 @@ jobs:
           git clone --depth 1 https://github.com/homalg-project/homalg_project
           git clone --depth 1 https://github.com/homalg-project/CAP_project.git
           git clone --depth 1 https://github.com/homalg-project/Toposes.git
+          git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
           cd FinGSetsForCAP
           echo "SetUserPreference(\"PackagesToLoad\", []);" > ~/.gap/gap.ini
           sed 's/  SuggestedOtherPackages := \[ \[ "Browse", ">=0" \] \],/  SuggestedOtherPackages := [ ],/g' -i ~/.gap/pkg/CAP_project/CAP/PackageInfo.g

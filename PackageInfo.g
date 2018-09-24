@@ -108,7 +108,9 @@ Dependencies := rec(
                    [ "CAP", ">= 2018.09.17" ],
                    [ "Toposes", ">= 2018.09.17" ],
                    ],
-  SuggestedOtherPackages := [ ],
+  SuggestedOtherPackages := [
+                   [ "FinSetsForCAP", ">= 2018.09.17" ],
+                   ],
   ExternalConditions := [ ],
 ),
 
