@@ -44,3 +44,6 @@
 
 @Subsection Skeletal Pushout
 @InsertSystem SkeletalPushout
+
+@Subsection Reconstructing the Table of Marks
+@InsertSystem ReconstructTableOfMarks

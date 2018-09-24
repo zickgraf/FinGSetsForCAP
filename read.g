@@ -3,4 +3,6 @@
 #
 # Reading the implementation part of the package.
 #
+
 ReadPackage( "FinGSetsForCAP", "gap/SkeletalFinGSetsForCAP.gi");
+ReadPackage( "FinGSetsForCAP", "gap/ReconstructTableOfMarks.gi");
