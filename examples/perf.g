@@ -22,22 +22,22 @@ c_2 := 1;
 Display(Runtimes());
 last := Runtimes().user_time;
 for i in [ 1 .. 10^7 ] do
-	j := R.(c_1);
+    j := R.(c_1);
 od;
 Display(Runtimes().user_time - last);
 last := Runtimes().user_time;
 for i in [ 1 .. 10^7 ] do
-	j := R.(c_2);
+    j := R.(c_2);
 od;
 Display(Runtimes().user_time - last);
 last := Runtimes().user_time;
 for i in [ 1 .. 10^7 ] do
-	j := L[c_1];
+    j := L[c_1];
 od;
 Display(Runtimes().user_time - last);
 last := Runtimes().user_time;
 for i in [ 1 .. 10^7 ] do
-	j := L[c_2];
+    j := L[c_2];
 od;
 Display(Runtimes().user_time - last);
 last := Runtimes().user_time;
@@ -70,7 +70,7 @@ InstallImmediateMethod( TESTASD,
                         
   function( morphism )
     
-	return true;
+    return true;
 
 end );
 
@@ -78,13 +78,13 @@ Display(Runtimes());
 begin := Runtimes().user_time;
 
 for i in [ 1 .. (6^6 * 6) ] do
-	element := rec( );
-	ObjectifyWithAttributes( element, TheTypeOfMyGroupElements );
-	# SetFilterObj( element, IsCapCategoryMorphism );
-	# SetFilterObj( element, HasCapCategory );
-	# SetFilterObj( element, HasSource );
-	# SetFilterObj( element, HasRange );
-	# ObjectifyWithAttributes( element, TheTypeOfMapsOfSkeletalFiniteSets );
+    element := rec( );
+    ObjectifyWithAttributes( element, TheTypeOfMyGroupElements );
+    # SetFilterObj( element, IsCapCategoryMorphism );
+    # SetFilterObj( element, HasCapCategory );
+    # SetFilterObj( element, HasSource );
+    # SetFilterObj( element, HasRange );
+    # ObjectifyWithAttributes( element, TheTypeOfMapsOfSkeletalFiniteSets );
 od;
 
 
@@ -97,7 +97,7 @@ mysource := RandomSource(IsMersenneTwister, 42);;
 
 
 for i in [ 1 .. Length( list ) ] do
-	list[ i ] := [Random(mysource, 1, 2^32)];
+    list[ i ] := [Random(mysource, 1, 2^32)];
 od;
 
 Display(Runtimes());
@@ -111,7 +111,7 @@ quit;
 
 int := 0;
 for i in [ 0 .. ( base - 1 ) ] do
-	int := int + i * base^i;
+    int := int + i * base^i;
 od;
 
 Display(Runtimes());
