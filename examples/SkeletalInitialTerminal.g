@@ -39,7 +39,7 @@ pi := UniversalMorphismIntoTerminalObject( m );
 #! <A morphism in SkeletalFinGSets>
 IsIdenticalObj( Range( pi ), t );
 #! true
-pi_t := UniversalMorphismIntoTerminalObjectWithGivenTerminalObject( m, t );
+pi_t := UniversalMorphismIntoTerminalObject( m );
 #! <A morphism in SkeletalFinGSets>
 Display( pi_t );
 #! [ [ [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 

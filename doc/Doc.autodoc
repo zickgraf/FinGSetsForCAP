@@ -1,3 +1,15 @@
+@Chapter Mathematical background
+
+@BeginLatexOnly
+\input{tex/definitions.tex}
+\input{tex/01_skeletal_g_sets.tex}
+\clearpage
+\input{tex/02_tannaka_duality.tex}
+\clearpage
+\input{tex/03_reconstructing_G.tex}
+\clearpage
+@EndLatexOnly
+
 @Chapter The category of skeletal finite G-sets
 
 @Section Skeletal GAP Categories
@@ -50,3 +62,11 @@
 
 @Subsection Reconstructing the Group
 @InsertSystem ReconstructGroup
+
+
+
+@BeginLatexOnly
+\nocite{*}
+\bibliography{tex/literature}{}
+\bibliographystyle{tex/my_amsalpha}
+@EndLatexOnly
