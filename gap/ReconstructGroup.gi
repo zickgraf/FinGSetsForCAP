@@ -4,7 +4,7 @@ TheTypeOfReconstructedGroupElements := NewType( NewFamily( "TheFamilyOfReconstru
 DeclareAttribute( "AsList", IsReconstructedGroupElement );
 DeclareAttribute( "ID", IsReconstructedGroupElement );
 
-BindGlobal( "ReconstructGroup", function ( C, HomC, ForgetfulFunctor, GeneratingSet, EndImplementation )
+InstallGlobalFunction( ReconstructGroup, function ( C, HomC, ForgetfulFunctor, GeneratingSet, EndImplementation )
     local End, EndElements, unit, element;
 
     End := EndImplementation( C, HomC, ForgetfulFunctor, GeneratingSet );

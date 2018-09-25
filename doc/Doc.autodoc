@@ -57,6 +57,13 @@
 @Subsection Skeletal Pushout
 @InsertSystem SkeletalPushout
 
+
+@Chapter Reconstructing G from the category of skeletal finite G-sets
+
+@Section Reconstruction Tools
+
+@Section Examples
+
 @Subsection Reconstructing the Table of Marks
 @InsertSystem ReconstructTableOfMarks
 

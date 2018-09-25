@@ -1,4 +1,4 @@
-BindGlobal( "EndByLifts", function ( C, HomC, ForgetfulFunctor, Objects )
+InstallGlobalFunction( EndByLifts, function ( C, HomC, ForgetfulFunctor, Objects )
     local PermutationsListKWithRestrictions, PermutationsListWithRestrictions, LiftMaps, knownLifts, LiftEfficiently, End_C_1;
 
     # adapted from PermutationsListK

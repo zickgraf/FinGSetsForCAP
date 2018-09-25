@@ -1,4 +1,8 @@
-BindGlobal( "ForgetfulFunctorSkeletalFinGSets", function ( G )
+InstallMethod( ForgetfulFunctorSkeletalFinGSets,
+        "for a group",
+        [ IsGroup ],
+        
+  function ( G )
     local ForgetfulFunctor;
     
     ForgetfulFunctor := CapFunctor( "Forgetful functor SkeletalFinGSets -> SkeletalFinSets", SkeletalFinGSets( G ), SkeletalFinSets );

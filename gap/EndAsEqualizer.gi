@@ -1,4 +1,4 @@
-BindGlobal( "EndAsEqualizer", function ( C, HomC, ForgetfulFunctor, IndexSet )
+InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, IndexSet )
     local IntToMorphism, MorphismToInt, PseudoMorphismToInt, HomFinSetsSkeletal, GetRhoComponent, GetLambdaComponent, SourceComponents, S, Projections, TargetComponents, T, RhoComponents, Rho, LambdaComponents, Lambda, iota, EndSkeletal, End;
 
     IntToMorphism := function ( S, int, T )
