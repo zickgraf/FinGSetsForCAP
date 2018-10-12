@@ -23,7 +23,7 @@ IsWellDefined( w2 );
 #! true
 
 w1 = w2;
-#! Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-#! Error, no 1st choice method found for `IsEqualForObjects' on 2 arguments
+#! Error, the object "An object in SkeletalFinGSets" and the object "An o\
+#! bject in SkeletalFinGSets" do not belong to the same CAP category
 
 #! @EndExample
