@@ -17,7 +17,7 @@ InstallGlobalFunction( HomSkeletalFinGSets, function ( S, T )
             U_i := RepresentativeTom( TableOfMarks( group ), i );
             for l in [ 1 .. M[ i ] ] do
                 # cosets must be indexed by l to distinguish different copies, also index by i to keep the notation similar to the notation of maps
-                Append( underlyingSet, Immutable( List( RightCosets( group, U_i ), coset ->  [ l, coset, i ] ) ) );
+                Append( underlyingSet, Immutable( List( RightCosets( group, U_i ), coset -> [ l, coset, i ] ) ) );
             od;
         od;
 

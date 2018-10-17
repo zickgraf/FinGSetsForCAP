@@ -9,7 +9,7 @@ InstallGlobalFunction( EndByLifts, function ( C, HomC, ForgetfulFunctor, Objects
             perms := [ perm ];
         else
             perms := [ ];
-            for l  in [ 1 .. n ]  do
+            for l in [ 1 .. n ] do
                 if m[l] and (l = 1 or m[l - 1] = false or mset[l] <> mset[l - 1]) and (mset[l] in restrictions[i]) then
                     perm[i] := mset[l];
                     m[l] := false;
