@@ -1,3 +1,9 @@
+#
+# FinGSetsForCAP: ForgetfulFunctorSkeletalFinGSets
+#
+# Implementations
+#
+
 InstallMethod( ForgetfulFunctorSkeletalFinGSets,
         "for a group",
         [ IsGroup ],

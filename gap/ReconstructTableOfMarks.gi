@@ -1,3 +1,9 @@
+#
+# FinGSetsForCAP: ReconstructTableOfMarks
+#
+# Implementations
+#
+
 InstallGlobalFunction( ReconstructTableOfMarks, function ( C, MinimalGeneratingSet, Decompose )
     local ArgMax, k, sizes, i, Square, i_1, C_1, P, L, equations, j, C_i, C_j, l, ToM, nonZeroValues, GetValue, Simplify, SetValue, WasSolved, updated, e, e_simple;
 

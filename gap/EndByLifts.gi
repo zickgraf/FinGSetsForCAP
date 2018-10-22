@@ -1,3 +1,9 @@
+#
+# FinGSetsForCAP: EndByLifts
+#
+# Implementations
+#
+
 InstallGlobalFunction( EndByLifts, function ( C, HomC, ForgetfulFunctor, Objects )
     local PermutationsListKWithRestrictions, PermutationsListWithRestrictions, LiftMaps, knownLifts, LiftEfficiently, End_C_1;
 

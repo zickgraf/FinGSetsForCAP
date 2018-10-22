@@ -1,3 +1,9 @@
+#
+# FinGSetsForCAP: ReconstructGroup
+#
+# Implementations
+#
+
 DeclareRepresentation( "IsReconstructedGroupElement", IsMultiplicativeElementWithInverse and IsAttributeStoringRep, [ ] );
 TheTypeOfReconstructedGroupElements := NewType( NewFamily( "TheFamilyOfReconstructedGroupElements" ), IsReconstructedGroupElement );
 

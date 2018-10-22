@@ -1,6 +1,7 @@
 #
-# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
+# FinGSetsForCAP: Reconstruction
 #
+# Declarations
 #
 
 #! @Chapter Reconstructing G from the category of skeletal finite G-sets

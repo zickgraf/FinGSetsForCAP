@@ -1,7 +1,7 @@
 #
-# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
+# FinGSetsForCAP
 #
-# This file is a script which compiles the package manual.
+# This file is a script which compiles the package manual and prints overfull hbox warnings.
 #
 if fail = LoadPackage("AutoDoc", "2016.02.16") then
     Error("AutoDoc version 2016.02.16 or newer is required.");

@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
+# FinGSetsForCAP
 #
 # Reading the declaration part of the package.
 #

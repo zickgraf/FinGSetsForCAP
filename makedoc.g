@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
+# FinGSetsForCAP
 #
 # This file is a script which compiles the package manual.
 #
