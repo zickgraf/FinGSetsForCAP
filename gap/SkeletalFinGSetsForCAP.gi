@@ -1044,25 +1044,24 @@ InstallMethod( SkeletalFinGSets,
 
     Finalize( SkeletalFinGSets );
 
-    ##
-    InstallMethod( Display,
-            "for a CAP skeletal finite G-set",
-            [ IsSkeletalFinGSet ],
-            
-      function ( N )
-        Display( [ UnderlyingGroup( N ), AsList( N ) ] );
-    end );
-
-    ##
-    InstallMethod( Display,
-            "for a CAP map of CAP skeletal finite G-sets",
-            [ IsSkeletalFinGSetMap ],
-            
-      function ( mor )
-        Display( List( AsList( mor ), x -> List( x, y -> [ y[1], Representative( y[2] ), y[3] ] ) ) );
-    end );
-
-
     return SkeletalFinGSets;
         
+end );
+
+##
+InstallMethod( Display,
+        "for a CAP skeletal finite G-set",
+        [ IsSkeletalFinGSet ],
+        
+  function ( N )
+    Display( [ UnderlyingGroup( N ), AsList( N ) ] );
+end );
+
+##
+InstallMethod( Display,
+        "for a CAP map of CAP skeletal finite G-sets",
+        [ IsSkeletalFinGSetMap ],
+        
+  function ( mor )
+    Display( List( AsList( mor ), x -> List( x, y -> [ y[1], Representative( y[2] ), y[3] ] ) ) );
 end );
