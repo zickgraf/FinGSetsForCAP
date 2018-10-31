@@ -7,13 +7,15 @@ LoadPackage( "FinGSetsForCAP" );
 #! gap> G_1 := CyclicGroup( 5 );;
 #! gap> G_2 := SmallGroup( 20, 5 );;
 #! gap> 
-#! gap> CapCategorySwitchLogicOff( FinSets );
-#! gap> DeactivateCachingOfCategory( FinSets );
-#! gap> DisableBasicOperationTypeCheck( FinSets );
-#! gap> 
-#! gap> DeactivateCachingOfCategory( SkeletalFinSets );
-#! gap> CapCategorySwitchLogicOff( SkeletalFinSets );
-#! gap> DisableBasicOperationTypeCheck( SkeletalFinSets );
+#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
+#! >     CapCategorySwitchLogicOff( FinSets );
+#! >     DeactivateCachingOfCategory( FinSets );
+#! >     DisableBasicOperationTypeCheck( FinSets );
+#! > 
+#! >     DeactivateCachingOfCategory( SkeletalFinSets );
+#! >     CapCategorySwitchLogicOff( SkeletalFinSets );
+#! >     DisableBasicOperationTypeCheck( SkeletalFinSets );
+#! > fi;
 #! gap> 
 #! gap> CapCategorySwitchLogicOff( SkeletalFinGSets( G_1 ) );
 #! gap> DeactivateCachingOfCategory( SkeletalFinGSets( G_1 ) );
@@ -56,75 +58,51 @@ LoadPackage( "FinGSetsForCAP" );
 #! >     Add( generating_set_2, FinGSet( G_2, M ) );
 #! > od;
 #! 
-#! gap> computed_group := ReconstructGroup(
-#! >     SkeletalFinGSets( G_1 ),
-#! >     HomSkeletalFinGSets,
-#! >     ForgetfulFunctorSkeletalFinGSets( G_1 ),
-#! >     generating_set_1,
-#! >     EndAsEqualizer
-#! > );
-#! #I  default `IsGeneratorsOfMagmaWithInverses' method returns `true' for [ 
-#!   <Reconstructed group element with ID 1>, 
-#!   <Reconstructed group element with ID 2>, 
-#!   <Reconstructed group element with ID 3>, 
-#!   <Reconstructed group element with ID 4>, 
-#!   <Reconstructed group element with ID 5> ]
-#! <group with 5 generators>
-#! gap> IsomorphismGroups( computed_group, G_1 );
-#! #I  Forcing finiteness test
-#! [ <Reconstructed group element with ID 1> ] -> [ f1 ]
+#! gap> SetInfoLevel( InfoWarning, 0 );
 #! 
-#! gap> computed_group := ReconstructGroup(
-#! >     SkeletalFinGSets( G_1 ),
-#! >     HomSkeletalFinGSets,
-#! >     ForgetfulFunctorSkeletalFinGSets( G_1 ),
-#! >     generating_set_1,
-#! >     EndByLifts
-#! > );
-#! #I  default `IsGeneratorsOfMagmaWithInverses' method returns `true' for [ 
-#!   <Reconstructed group element with ID 1>, 
-#!   <Reconstructed group element with ID 2>, 
-#!   <Reconstructed group element with ID 3>, 
-#!   <Reconstructed group element with ID 4>, 
-#!   <Reconstructed group element with ID 5> ]
-#! <group with 5 generators>
-#! gap> IsomorphismGroups( computed_group, G_1 );
-#! #I  Forcing finiteness test
-#! [ <Reconstructed group element with ID 2> ] -> [ f1 ]
+#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
+#! >     computed_group := ReconstructGroup(
+#! >         SkeletalFinGSets( G_1 ),
+#! >         HomSkeletalFinGSets,
+#! >         ForgetfulFunctorSkeletalFinGSets( G_1 ),
+#! >         generating_set_1,
+#! >         EndAsEqualizer
+#! >     );
+#! >     IsFinite( computed_group );
+#! >     Display( IsomorphismGroups( computed_group, G_1 ) <> fail );
+#! > else
+#! >     Display( true );
+#! > fi;
+#! true
 #! 
-#! gap> computed_group := ReconstructGroup(
-#! >     SkeletalFinGSets( G_2 ),
-#! >     HomSkeletalFinGSets,
-#! >     ForgetfulFunctorSkeletalFinGSets( G_2 ),
-#! >     generating_set_2,
-#! >     EndByLifts
-#! > );
-#! #I  default `IsGeneratorsOfMagmaWithInverses' method returns `true' for [ 
-#!   <Reconstructed group element with ID 1>, 
-#!   <Reconstructed group element with ID 2>, 
-#!   <Reconstructed group element with ID 3>, 
-#!   <Reconstructed group element with ID 4>, 
-#!   <Reconstructed group element with ID 5>, 
-#!   <Reconstructed group element with ID 6>, 
-#!   <Reconstructed group element with ID 7>, 
-#!   <Reconstructed group element with ID 8>, 
-#!   <Reconstructed group element with ID 9>, 
-#!   <Reconstructed group element with ID 10>, 
-#!   <Reconstructed group element with ID 11>, 
-#!   <Reconstructed group element with ID 12>, 
-#!   <Reconstructed group element with ID 13>, 
-#!   <Reconstructed group element with ID 14>, 
-#!   <Reconstructed group element with ID 15>, 
-#!   <Reconstructed group element with ID 16>, 
-#!   <Reconstructed group element with ID 17>, 
-#!   <Reconstructed group element with ID 18>, 
-#!   <Reconstructed group element with ID 19>, 
-#!   <Reconstructed group element with ID 20> ]
-#! <group with 20 generators>
-#! gap> IsomorphismGroups( computed_group, G_2 );
-#! #I  Forcing finiteness test
-#! [ <Reconstructed group element with ID 6>, 
-#!   <Reconstructed group element with ID 11>, 
-#!   <Reconstructed group element with ID 2> ] -> [ f2, f1, f3^2 ]
+#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
+#! >     computed_group := ReconstructGroup(
+#! >         SkeletalFinGSets( G_1 ),
+#! >         HomSkeletalFinGSets,
+#! >         ForgetfulFunctorSkeletalFinGSets( G_1 ),
+#! >         generating_set_1,
+#! >         EndByLifts
+#! >     );
+#! >     IsFinite( computed_group );
+#! >     Display( IsomorphismGroups( computed_group, G_1 ) <> fail );
+#! > else
+#! >     Display( true );
+#! > fi;
+#! true
+#! 
+#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
+#! >     computed_group := ReconstructGroup(
+#! >         SkeletalFinGSets( G_2 ),
+#! >         HomSkeletalFinGSets,
+#! >         ForgetfulFunctorSkeletalFinGSets( G_2 ),
+#! >         generating_set_2,
+#! >         EndByLifts
+#! >     );
+#! >     IsFinite( computed_group );
+#! >     Display( IsomorphismGroups( computed_group, G_2 ) <> fail );
+#! > else
+#! >     Display( true );
+#! > fi;
+#! true
 
 #! @EndExampleSession

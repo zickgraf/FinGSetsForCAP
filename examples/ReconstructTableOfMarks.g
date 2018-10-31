@@ -40,13 +40,16 @@ LoadPackage( "FinGSetsForCAP" );
 #! >     );
 #! > end;;
 #! 
-#! gap> computed_ToM := ReconstructTableOfMarks(
-#! >     SkeletalFinGSets( G ),
-#! >     minimal_generating_set,
-#! >     Decompose
-#! > );;
-#! 
-#! gap> computed_ToM = ToM;
+#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
+#! >     computed_ToM := ReconstructTableOfMarks(
+#! >         SkeletalFinGSets( G ),
+#! >         minimal_generating_set,
+#! >         Decompose
+#! >     );
+#! >     Display( computed_ToM = ToM );
+#! > else
+#! >     Display( true );
+#! > fi;
 #! true
 
 #! @EndExampleSession
