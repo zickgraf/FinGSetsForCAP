@@ -87,7 +87,7 @@ InstallGlobalFunction( ReconstructGroup, function ( C, HomC, ForgetfulFunctor, G
         Error( "EndElements does not contain the identity" );
     fi;
 
-    InstallMethodWithCache( One,
+    InstallMethodWithCache( OneOp,
       "for my group elements",
       [ IsReconstructedGroupElement ],
             
