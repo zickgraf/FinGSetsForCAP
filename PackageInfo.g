@@ -15,7 +15,7 @@ Version := Maximum( [
                    ## this line prevents merge conflicts
                    "2017.05.26", ## Julia's version
                    ## this line prevents merge conflicts
-                   "2018.09.25", ## Fabian's version
+                   "2019.03.03", ## Fabian's version
                    ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -105,7 +105,7 @@ Dependencies := rec(
   GAP := ">= 4.9.1",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
-                   [ "CAP", ">= 2018.09.17" ],
+                   [ "CAP", ">= 2019.03.02" ],
                    [ "Toposes", ">= 2018.09.17" ],
                    ],
   SuggestedOtherPackages := [

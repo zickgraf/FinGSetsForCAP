@@ -10,20 +10,20 @@ LoadPackage( "FinGSetsForCAP" );
 #! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
 #! >     CapCategorySwitchLogicOff( FinSets );
 #! >     DeactivateCachingOfCategory( FinSets );
-#! >     DisableBasicOperationTypeCheck( FinSets );
+#! >     DisableSanityChecks( FinSets );
 #! > 
 #! >     DeactivateCachingOfCategory( SkeletalFinSets );
 #! >     CapCategorySwitchLogicOff( SkeletalFinSets );
-#! >     DisableBasicOperationTypeCheck( SkeletalFinSets );
+#! >     DisableSanityChecks( SkeletalFinSets );
 #! > fi;
 #! gap> 
 #! gap> CapCategorySwitchLogicOff( SkeletalFinGSets( G_1 ) );
 #! gap> DeactivateCachingOfCategory( SkeletalFinGSets( G_1 ) );
-#! gap> DisableBasicOperationTypeCheck( SkeletalFinGSets( G_1 ) );
+#! gap> DisableSanityChecks( SkeletalFinGSets( G_1 ) );
 #! gap> 
 #! gap> CapCategorySwitchLogicOff( SkeletalFinGSets( G_2 ) );
 #! gap> DeactivateCachingOfCategory( SkeletalFinGSets( G_2 ) );
-#! gap> DisableBasicOperationTypeCheck( SkeletalFinGSets( G_2 ) );
+#! gap> DisableSanityChecks( SkeletalFinGSets( G_2 ) );
 #! gap> 
 #! gap> DeactivateToDoList();
 #! 
