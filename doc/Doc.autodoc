@@ -10,6 +10,10 @@
 \clearpage
 @EndLatexOnly
 
+@BeginNotLatex
+See the PDF version of this manual.
+@EndNotLatex
+
 @Chapter The category of skeletal finite G-sets
 
 @Section Skeletal GAP Categories
