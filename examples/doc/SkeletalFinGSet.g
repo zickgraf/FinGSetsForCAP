@@ -17,9 +17,6 @@ IsWellDefined( w2 );
 w1 = w2;
 #! true
 
-# do not add objects which are not well-defined to cache
-DeactivateCachingOfCategory( SkeletalFinGSets( S3 ) );
-
 S := FinGSet( S3, [ 1 ] );
 #! <An object in SkeletalFin-S3-Sets>
 IsWellDefined( S );
@@ -32,7 +29,5 @@ S := FinGSet( S3, [ -1, 0, 0, 0 ] );
 #! <An object in SkeletalFin-S3-Sets>
 IsWellDefined( S );
 #! false
-
-SetCachingOfCategoryWeak( SkeletalFinGSets( S3 ) );
 
 #! @EndExample

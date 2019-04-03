@@ -28,9 +28,6 @@ pi1 = pi2;
 imgs1 = imgs2;
 #! false
 
-# do not add morphisms which are not well-defined to cache
-DeactivateCachingOfCategory( SkeletalFinGSets( S3 ) );
-
 M := FinGSet( S3, [ 2, 1, 0, 0 ] );
 #! <An object in SkeletalFinGSets>
 N := FinGSet( SymmetricGroup( 3 ), [ 2, 1, 0, 0 ] );
@@ -90,7 +87,5 @@ phi := MapOfFinGSets( M, imgs, M );
 #! <A morphism in SkeletalFinGSets>
 IsWellDefined( phi );
 #! false
-
-SetCachingOfCategoryWeak( SkeletalFinGSets( S3 ) );
 
 #! @EndExample
