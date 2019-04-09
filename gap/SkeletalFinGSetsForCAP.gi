@@ -114,8 +114,6 @@ InstallMethod( SkeletalFinGSets,
     
     SetIsCartesianClosedCategory( SkeletalFinGSets, true );
     
-    DisableAddForCategoricalOperations( SkeletalFinGSets );
-    
     AddObjectRepresentation( SkeletalFinGSets, IsSkeletalFinGSet );
     
     AddMorphismRepresentation( SkeletalFinGSets, IsSkeletalFinGSetMap );
