@@ -1,4 +1,5 @@
 /maketest.g
+/tst/fingsetsforcap*.tst
 /doc/*.xml
 
 /doc/chap*.html
