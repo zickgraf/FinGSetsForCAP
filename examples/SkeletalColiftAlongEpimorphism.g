@@ -1,4 +1,4 @@
-#! @System SkeletalColiftAlongEpimorphism
+#! @Chunk SkeletalColiftAlongEpimorphism
 
 LoadPackage( "FinGSetsForCAP" );
 

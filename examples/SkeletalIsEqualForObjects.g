@@ -1,4 +1,4 @@
-#! @System SkeletalIsEqualForObjects
+#! @Chunk SkeletalIsEqualForObjects
 
 LoadPackage( "FinGSetsForCAP" );
 

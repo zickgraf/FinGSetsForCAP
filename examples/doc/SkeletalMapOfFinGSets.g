@@ -1,4 +1,4 @@
-#! @System SkeletalMapOfFinGSets
+#! @Chunk SkeletalMapOfFinGSets
 
 LoadPackage( "FinGSetsForCAP" );
 

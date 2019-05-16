@@ -1,4 +1,4 @@
-#! @System SkeletalIdentityMorphism
+#! @Chunk SkeletalIdentityMorphism
 
 LoadPackage( "FinGSetsForCAP" );
 

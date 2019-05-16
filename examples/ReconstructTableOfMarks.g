@@ -1,4 +1,4 @@
-#! @System ReconstructTableOfMarks
+#! @Chunk ReconstructTableOfMarks
 
 LoadPackage( "FinGSetsForCAP" );
 

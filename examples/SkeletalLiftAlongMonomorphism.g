@@ -1,4 +1,4 @@
-#! @System SkeletalLiftAlongMonomorphism
+#! @Chunk SkeletalLiftAlongMonomorphism
 
 LoadPackage( "FinGSetsForCAP" );
 

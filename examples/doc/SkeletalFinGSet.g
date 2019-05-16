@@ -1,4 +1,4 @@
-#! @System SkeletalFinGSet
+#! @Chunk SkeletalFinGSet
 
 LoadPackage( "FinGSetsForCAP" );
 

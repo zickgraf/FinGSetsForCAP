@@ -1,4 +1,4 @@
-#! @System ReconstructGroup
+#! @Chunk ReconstructGroup
 
 LoadPackage( "FinGSetsForCAP" );
 
