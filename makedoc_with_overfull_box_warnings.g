@@ -30,23 +30,29 @@ AutoDoc(
                                                   \usepackage{listings}
                                                   \usepackage[scaled]{beramono}
                                                   \usepackage[figure]{hypcap}
-                                                  \renewcommand{\\hypcapspace}{2\\baselineskip}
+                                                  \renewcommand{\hypcapspace}{2\baselineskip}
                                                   \usepackage{mathtools}
                                                   \usepackage{faktor}
-                                                  \DeclareMathOperator{\\Stab}{Stab}
-                                                  \DeclareMathOperator{\\fix}{fix}
-                                                  \DeclareMathOperator{\\coeq}{coeq}
-                                                  \DeclareMathOperator{\\im}{im}
-                                                  \DeclareMathOperator{\\rank}{rank}
-                                                  \DeclareMathOperator{\\CartProdExt}{CartProdExt}
-                                                  \DeclareMathOperator{\\End}{End}
-                                                  \DeclareMathOperator{\\Hom}{Hom}
-                                                  \DeclareMathOperator{\\op}{op}
-                                                  \DeclareMathOperator{\\id}{id}
-                                                  \DeclareMathOperator{\\Obj}{Obj}
+                                                  \DeclareMathOperator{\Stab}{Stab}
+                                                  \DeclareMathOperator{\fix}{fix}
+                                                  \DeclareMathOperator{\coeq}{coeq}
+                                                  \DeclareMathOperator{\im}{im}
+                                                  \DeclareMathOperator{\rank}{rank}
+                                                  \DeclareMathOperator{\CartProdExt}{CartProdExt}
+                                                  \DeclareMathOperator{\End}{End}
+                                                  \DeclareMathOperator{\Hom}{Hom}
+                                                  \DeclareMathOperator{\op}{op}
+                                                  \DeclareMathOperator{\id}{id}
+                                                  \DeclareMathOperator{\Obj}{Obj}
                                                   \usepackage{ifthen}
                                                   % use \ell instead of l everywhere
-                                                  \mathcode`l=\"8000\\begingroup\\makeatletter\\lccode`\\~=`\\l\\DeclareMathSymbol{\\lsb@l}{\\mathalpha}{letters}{`l}\\lowercase{\\gdef~{\\ifnum\\the\\mathgroup=\\m@ne \\ell \\else \\lsb@l \\fi}}\\endgroup
+                                                  \mathcode`l="8000
+                                                  \begingroup
+                                                  \makeatletter
+                                                  \lccode`\~=`\l
+                                                  \DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+                                                  \lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+                                                  \endgroup
                                                   \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
                                                   """ ),
                              entities := [ "GAP4", "CAP" ],
