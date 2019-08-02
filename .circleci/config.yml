@@ -17,9 +17,7 @@ jobs:
           git clone --depth 1 https://github.com/homalg-project/Toposes.git
           git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
           cd FinGSetsForCAP
-          echo "SetUserPreference(\"PackagesToLoad\", []);" > ~/.gap/gap.ini
-          sed 's/  SuggestedOtherPackages := \[ \[ "Browse", ">=0" \] \],/  SuggestedOtherPackages := [ ],/g' -i ~/.gap/pkg/CAP_project/CAP/PackageInfo.g
-          make ci-test
+          TERM=dumb make ci-test
           bash <(curl -s https://codecov.io/bash)
 workflows:
   version: 2
