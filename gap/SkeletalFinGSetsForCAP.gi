@@ -65,10 +65,10 @@ InstallMethod( MapOfFinGSets,
     
     map := rec( );
     
-    ObjectifyMorphismForCAPWithAttributes( map, SkeletalFinGSets( group ),
-        AsList, imgs,
-        Source, S,
-        Range, T
+    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( map, SkeletalFinGSets( group ),
+        S,
+        T,
+        AsList, imgs
     );
     
     Assert( 4, IsWellDefined( map ) );
