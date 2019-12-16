@@ -4,6 +4,8 @@
 # Reading the implementation part of the package.
 #
 
+ReadPackage( "FinGSetsForCAP", "gap/Tools.gi");
+
 ReadPackage( "FinGSetsForCAP", "gap/SkeletalFinGSetsForCAP.gi");
 
 if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
