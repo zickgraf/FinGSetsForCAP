@@ -38,7 +38,7 @@ InstallMethod( MapOfFinGSets,
         Error( "The underlying groups of the source and the range are not the same with respect to IsIdenticalObj\n" );
     fi;
     
-    k := Length( MatTom( TableOfMarks( group ) ) );
+    k := Length( MarksTom( TableOfMarks( group ) ) );
     
     if not ForAll( I, x -> IsList( x ) ) then
         Error( "I has the wrong format\n" );
@@ -118,7 +118,7 @@ InstallMethod( SkeletalFinGSets,
     
     AddMorphismRepresentation( SkeletalFinGSets, IsSkeletalFinGSetMap );
     
-    k := Length( MatTom( TableOfMarks( group ) ) );
+    k := Length( MarksTom( TableOfMarks( group ) ) );
     
     IntZeroVector := function ( i )
         
