@@ -59,7 +59,7 @@ DeclareOperation( "FinGSet",
 #! @Returns a &CAP; morphism
 DeclareOperation( "MapOfFinGSets",
         [ IsSkeletalFinGSet, IsList, IsSkeletalFinGSet ] );
-#! @InsertChunk  SkeletalMapOfFinGSets
+#! @InsertChunk SkeletalMapOfFinGSets
 
 #! @Description
 #! The argument is a group $G$.

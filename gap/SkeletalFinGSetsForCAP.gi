@@ -38,7 +38,7 @@ InstallMethod( MapOfFinGSets,
         Error( "The underlying groups of the source and the range are not the same with respect to IsIdenticalObj\n" );
     fi;
     
-    k := Length( MatTom( TableOfMarks( group ) ) );
+    k := Length( MarksTom( TableOfMarks( group ) ) );
     
     if not ForAll( I, x -> IsList( x ) ) then
         Error( "I has the wrong format\n" );
@@ -118,7 +118,7 @@ InstallMethod( SkeletalFinGSets,
     
     AddMorphismRepresentation( SkeletalFinGSets, IsSkeletalFinGSetMap );
     
-    k := Length( MatTom( TableOfMarks( group ) ) );
+    k := Length( MarksTom( TableOfMarks( group ) ) );
     
     IntZeroVector := function ( i )
         
@@ -558,7 +558,7 @@ InstallMethod( SkeletalFinGSets,
     end;
     
     ProjectionOfASingleBinaryProduct := function ( i, j, pos, copy_number, target )
-        local o, RoO, imgs, r, s, a, found_g, U_a, g, P, pi, l, img, target_index;
+        local o, RoO, imgs, position_and_conjugator, a, g, P, pi, target_index, r, l, img;
         
         o := OrbitsOfActionOnCartesianProduct( [ i, j ] );
         
@@ -568,23 +568,12 @@ InstallMethod( SkeletalFinGSets,
         imgs := List( [ 1 .. k ], x -> [ ] );
         
         for r in RoO do
-            s := Stabilizer( group, r, OnRight );
+            position_and_conjugator := PositionAndConjugatorOfStabilizer( group, r, OnRight );
+
+            a := position_and_conjugator[1];
+            g := position_and_conjugator[2];
             
-            found_g := false;
-            for a in [ 1 .. k ] do
-                U_a := RepresentativeOfSubgroupsUpToConjugation( a );
-                for g in group do
-                    if ConjugateSubgroup( s, Inverse( g ) ) = U_a then
-                        found_g := true;
-                        break;
-                    fi;
-                od;
-                if found_g then
-                    break;
-                fi;
-            od;
-            
-            Add( imgs[a], r * Inverse( g ) );
+            Add( imgs[a], r * g );
         od;
         
         # take the direct product of U_i\G and U_j\G and construct the projection pi
