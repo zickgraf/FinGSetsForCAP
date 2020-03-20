@@ -2,11 +2,11 @@
 
 LoadPackage( "FinGSetsForCAP" );
 
-#! @ExampleSession
+#! @Example
 
-#! gap> G := CyclicGroup( 210 );;
-#! 
-#! gap> ToM := MatTom( TableOfMarks( G ) );
+G := CyclicGroup( 210 );;
+
+ToM := MatTom( TableOfMarks( G ) );
 #! [ [ 210, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
 #!   [ 105, 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
 #!   [ 70, 0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -23,33 +23,29 @@ LoadPackage( "FinGSetsForCAP" );
 #!   [ 3, 3, 0, 3, 0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 0, 0 ], 
 #!   [ 2, 0, 2, 2, 0, 2, 0, 0, 2, 2, 0, 2, 0, 0, 2, 0 ], 
 #!   [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ]
-#! gap> k := Size( ToM );
-#! 16
-#! 
-#! gap> minimal_generating_set := [ ];;
-#! 
-#! gap> for i in [ 1 .. k ] do
-#! >     M := ListWithIdenticalEntries( k, 0 );
-#! >     M[ i ] := 1;
-#! >     Add( minimal_generating_set, FinGSet( G, M ) );
-#! > od;
-#! 
-#! gap> Decompose := function( Omega, minimal_generating_set )
-#! >     return List( [ 1 .. k ], i ->
-#! >         AsList( Omega )[Position( AsList( minimal_generating_set[i] ), 1 )]
-#! >     );
-#! > end;;
-#! 
-#! gap> if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" ) then
-#! >     computed_ToM := ReconstructTableOfMarks(
-#! >         SkeletalFinGSets( G ),
-#! >         minimal_generating_set,
-#! >         Decompose
-#! >     );
-#! >     Display( computed_ToM = ToM );
-#! > else
-#! >     Display( true );
-#! > fi;
-#! true
 
-#! @EndExampleSession
+k := Size( ToM );
+#! 16
+
+minimal_generating_set := [ ];;
+
+for i in [ 1 .. k ] do
+    M := ListWithIdenticalEntries( k, 0 )
+    ; M[ i ] := 1; Add( minimal_generating_set, FinGSet( G, M ) ); od;
+
+Decompose := function( Omega, minimal_generating_set )
+    return List( [ 1 .. k ], i ->
+        AsList( Omega )[Position( AsList( minimal_generating_set[i] ), 1 )]
+    ); end;;
+
+#! #@if IsPackageMarkedForLoading( "FinSetsForCAP", ">= 2018.09.17" )
+computed_ToM := ReconstructTableOfMarks(
+    SkeletalFinGSets( G ),
+    minimal_generating_set,
+    Decompose
+);;
+computed_ToM = ToM;
+#! true
+#! #@fi
+
+#! @EndExample
