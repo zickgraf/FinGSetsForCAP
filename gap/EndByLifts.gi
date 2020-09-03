@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: EndByLifts
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Implementations
 #

@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        image: [gapsystem/gap-docker, gapsystem/gap-docker-master]
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: mkdir -p /home/gap/.gap/pkg/
+      - run: sudo cp -a $GITHUB_WORKSPACE /home/gap/.gap/pkg/
+      - run: sudo chown -R gap:gap /home/gap/.gap/pkg/
+      - run: |
+          export HOME="/home/gap"
+          cd /home/gap/.gap/pkg/
+          sudo apt update
+          sudo apt dist-upgrade -y
+          sudo apt install -y texlive-latex-extra texlive-science texlive-fonts-extra
+          git clone --depth 1 https://github.com/gap-packages/AutoDoc.git
+          git clone --depth 1 https://github.com/homalg-project/homalg_project.git
+          git clone --depth 1 https://github.com/homalg-project/CAP_project.git
+          git clone --depth 1 https://github.com/homalg-project/Toposes.git
+          git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
+          TERM=dumb make -C FinGSetsForCAP -j $(nproc) --output-sync ci-test
+          curl -s https://codecov.io/bash | bash
+          cd FinGSetsForCAP
+          CUR_SHA=$(git rev-parse --verify HEAD)
+          git worktree add branch_doc/ doc || (echo "There was an error. Make sure there is a branch named 'doc'."; exit 1)
+          cp doc/manual.pdf branch_doc/FinGSetsForCAP.pdf
+          cd branch_doc
+          git add FinGSetsForCAP.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add FinGSetsForCAP.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          # push iff using gap-stable and if on master branch
+          if [ "${{ matrix.image }}" = "gapsystem/gap-docker" ] && [ "$CUR_SHA" = "$(git rev-parse origin/master)" ]; then \
+            git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git doc:doc; \
+          else \
+            echo "Not pushing result."; \
+          fi; \

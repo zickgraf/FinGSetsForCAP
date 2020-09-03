@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: ReconstructGroup
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Implementations
 #

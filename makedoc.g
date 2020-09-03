@@ -1,13 +1,21 @@
 #
-# FinGSetsForCAP
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # This file is a script which compiles the package manual.
 #
-if fail = LoadPackage("AutoDoc", "2019.05.20") then
-    Error("AutoDoc version 2019.05.20 or newer is required.");
+if fail = LoadPackage( "AutoDoc", "2019.05.20" ) then
+    
+    Error( "AutoDoc version 2019.05.20 or newer is required." );
+    
 fi;
 
-AutoDoc(rec(
+AutoDoc( rec(
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+    ),
+    extract_examples := rec(
+        units := "Single",
+    ),
     gapdoc := rec(
         LaTeXOptions := rec(
             LateExtraPreamble := """
@@ -53,14 +61,12 @@ AutoDoc(rec(
                 \DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
                 \lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
                 \endgroup
-                """
+            """,
         ),
     ),
     scaffold := rec(
-        entities := [ "GAP4", "CAP" ],
+        entities := [ "homalg", "CAP" ],
     ),
-    autodoc := rec( files := [ "doc/Doc.autodoc" ] ),
-    extract_examples := rec( units := "Single" ),
-));
+) );
 
 QUIT;

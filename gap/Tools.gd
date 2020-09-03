@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: Tools
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Declarations
 #

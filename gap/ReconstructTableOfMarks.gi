@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: ReconstructTableOfMarks
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Implementations
 #

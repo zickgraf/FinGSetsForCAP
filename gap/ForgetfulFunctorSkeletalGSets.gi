@@ -1,5 +1,5 @@
 #
-# FinGSetsForCAP: ForgetfulFunctorSkeletalFinGSets
+# FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # Implementations
 #
