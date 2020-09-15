@@ -1,18 +1,5 @@
 @Chapter Mathematical background
 
-@BeginLatexOnly
-\input{tex/definitions.tex}
-\input{tex/01_skeletal_g_sets.tex}
-\clearpage
-\input{tex/02_tannaka_duality.tex}
-\clearpage
-\input{tex/03_reconstructing_G.tex}
-\clearpage
-@EndLatexOnly
-
-@BeginNotLatex
-See the PDF version of this manual.
-@EndNotLatex
 
 @Chapter The category of skeletal finite G-sets
 
@@ -21,45 +8,6 @@ See the PDF version of this manual.
 @Section Skeletal Constructors
 @Section Skeletal Tools
 @Section Skeletal Examples
-
-@Subsection Skeletal IsEqualForObjects
-@InsertChunk SkeletalIsEqualForObjects
-
-@Subsection Skeletal PreCompose
-@InsertChunk SkeletalPreCompose
-
-@Subsection Skeletal IdentityMorphism
-@InsertChunk SkeletalIdentityMorphism
-
-@Subsection Skeletal Initial and Terminal Objects
-@InsertChunk SkeletalInitialTerminal
-
-@Subsection Skeletal LiftAlongMonomorphism
-@InsertChunk SkeletalLiftAlongMonomorphism
-
-@Subsection Skeletal ColiftAlongEpimorphism
-@InsertChunk SkeletalColiftAlongEpimorphism
-
-@Subsection Skeletal Product
-@InsertChunk SkeletalDirectProduct
-
-@Subsection Skeletal Coproduct
-@InsertChunk SkeletalCoproduct
-
-@Subsection Skeletal Image
-@InsertChunk SkeletalImage
-
-@Subsection Skeletal Equalizer
-@InsertChunk SkeletalEqualizer
-
-@Subsection Skeletal Pullback
-@InsertChunk SkeletalFiberProduct
-
-@Subsection Skeletal Coequalizer
-@InsertChunk SkeletalCoequalizer
-
-@Subsection Skeletal Pushout
-@InsertChunk SkeletalPushout
 
 
 @Chapter Tools
@@ -70,19 +18,7 @@ See the PDF version of this manual.
 @Chapter Reconstructing G from the category of skeletal finite G-sets
 
 @Section Reconstruction Tools
-
 @Section Examples
 
-@Subsection Reconstructing the Table of Marks
-@InsertChunk ReconstructTableOfMarks
 
-@Subsection Reconstructing the Group
-@InsertChunk ReconstructGroup
-
-
-
-@BeginLatexOnly
-\nocite{*}
-\bibliography{tex/literature}{}
-\bibliographystyle{tex/my_amsalpha}
-@EndLatexOnly
+@Chapter Bibliography

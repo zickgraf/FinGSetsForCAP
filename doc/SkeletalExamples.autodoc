@@ -1,0 +1,42 @@
+@Chapter The category of skeletal finite G-sets
+
+@Section Skeletal Examples
+
+@Subsection Skeletal IsEqualForObjects
+@InsertChunk SkeletalIsEqualForObjects
+
+@Subsection Skeletal PreCompose
+@InsertChunk SkeletalPreCompose
+
+@Subsection Skeletal IdentityMorphism
+@InsertChunk SkeletalIdentityMorphism
+
+@Subsection Skeletal Initial and Terminal Objects
+@InsertChunk SkeletalInitialTerminal
+
+@Subsection Skeletal LiftAlongMonomorphism
+@InsertChunk SkeletalLiftAlongMonomorphism
+
+@Subsection Skeletal ColiftAlongEpimorphism
+@InsertChunk SkeletalColiftAlongEpimorphism
+
+@Subsection Skeletal Product
+@InsertChunk SkeletalDirectProduct
+
+@Subsection Skeletal Coproduct
+@InsertChunk SkeletalCoproduct
+
+@Subsection Skeletal Image
+@InsertChunk SkeletalImage
+
+@Subsection Skeletal Equalizer
+@InsertChunk SkeletalEqualizer
+
+@Subsection Skeletal Pullback
+@InsertChunk SkeletalFiberProduct
+
+@Subsection Skeletal Coequalizer
+@InsertChunk SkeletalCoequalizer
+
+@Subsection Skeletal Pushout
+@InsertChunk SkeletalPushout

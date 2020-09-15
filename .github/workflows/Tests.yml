@@ -3,7 +3,8 @@ name: Tests
 on:
   push:
     branches:
-      - "*"
+      - "master"
+      - "*-ci"
   pull_request:
   schedule:
     - cron: "0 0 * * *"
@@ -32,6 +33,8 @@ jobs:
           git clone --depth 1 https://github.com/homalg-project/CAP_project.git
           git clone --depth 1 https://github.com/homalg-project/Toposes.git
           git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
+          # set SOURCE_DATE_EPOCH for reproducible PDFs
+          export SOURCE_DATE_EPOCH=0
           TERM=dumb make -C FinGSetsForCAP -j $(nproc) --output-sync ci-test
           curl -s https://codecov.io/bash | bash
           cd FinGSetsForCAP

@@ -1,0 +1,9 @@
+@Chapter Reconstructing G from the category of skeletal finite G-sets
+
+@Section Examples
+
+@Subsection Reconstructing the Table of Marks
+@InsertChunk ReconstructTableOfMarks
+
+@Subsection Reconstructing the Group
+@InsertChunk ReconstructGroup
