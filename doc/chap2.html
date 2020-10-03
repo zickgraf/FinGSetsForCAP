@@ -1,0 +1,1374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (FinGSetsForCAP) - Chapter 2: The category of skeletal finite G-sets</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X7BD583FF7A9D3669" name="X7BD583FF7A9D3669"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7BD583FF7A9D3669">2 <span class="Heading">The category of skeletal finite G-sets</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X867E211D853A6182">2.1 <span class="Heading">Skeletal GAP Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B5524E087A73211">2.1-1 IsSkeletalFinGSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8240F0B97BB9369E">2.1-2 IsSkeletalFinGSetMap</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X830265E28769F1F7">2.2 <span class="Heading">Skeletal Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8719BDEF7F5C112F">2.2-1 AsList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A1B6A7683A4181E">2.2-2 UnderlyingGroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X81646703869F35B5">2.3 <span class="Heading">Skeletal Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C0195BA834BDB90">2.3-1 FinGSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87A4B9967E9C25B1">2.3-2 MapOfFinGSets</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D5778117FAD4A27">2.3-3 SkeletalFinGSets</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A95C44F85102748">2.4 <span class="Heading">Skeletal Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7932C4A6858E1212">2.4-1 <span class="Heading">Skeletal IsEqualForObjects</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86100A35872E3E9F">2.4-2 <span class="Heading">Skeletal PreCompose</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X863395C783B40EF1">2.4-3 <span class="Heading">Skeletal IdentityMorphism</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8671AA4181FFF519">2.4-4 <span class="Heading">Skeletal Initial and Terminal Objects</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6BD799789DDBA3">2.4-5 <span class="Heading">Skeletal LiftAlongMonomorphism</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EFD6EAD798E6AD4">2.4-6 <span class="Heading">Skeletal ColiftAlongEpimorphism</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85D4C3CA80D98F0E">2.4-7 <span class="Heading">Skeletal Product</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ADD1E46831BEED2">2.4-8 <span class="Heading">Skeletal Coproduct</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CA82F40876ABC87">2.4-9 <span class="Heading">Skeletal Image</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8612F06E7F683F4C">2.4-10 <span class="Heading">Skeletal Equalizer</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CAD01387C12A9E8">2.4-11 <span class="Heading">Skeletal Pullback</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83BC64A980FE2B98">2.4-12 <span class="Heading">Skeletal Coequalizer</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A2A65A58651651A">2.4-13 <span class="Heading">Skeletal Pushout</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">The category of skeletal finite G-sets</span></h3>
+
+<p><a id="X867E211D853A6182" name="X867E211D853A6182"></a></p>
+
+<h4>2.1 <span class="Heading">Skeletal GAP Categories</span></h4>
+
+<p><a id="X7B5524E087A73211" name="X7B5524E087A73211"></a></p>
+
+<h5>2.1-1 IsSkeletalFinGSet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSkeletalFinGSet</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The GAP category of objects in the category of skeletal finite <span class="Math">G</span>-sets.</p>
+
+<p><a id="X8240F0B97BB9369E" name="X8240F0B97BB9369E"></a></p>
+
+<h5>2.1-2 IsSkeletalFinGSetMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSkeletalFinGSetMap</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The GAP category of morphisms in the category of skeletal finite <span class="Math">G</span>-sets.</p>
+
+<p><a id="X830265E28769F1F7" name="X830265E28769F1F7"></a></p>
+
+<h4>2.2 <span class="Heading">Skeletal Attributes</span></h4>
+
+<p><a id="X8719BDEF7F5C112F" name="X8719BDEF7F5C112F"></a></p>
+
+<h5>2.2-1 AsList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">Omega</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <strong class="pkg">GAP</strong> set</p>
+
+<p>The <strong class="pkg">GAP</strong> set of the list used to construct a finite <span class="Math">G</span>-set <var class="Arg">Omega</var>, i.e., <code class="code">AsList( FinGSet( G, <var class="Arg">L</var> ) ) = <var class="Arg">L</var></code>.</p>
+
+<p><a id="X7A1B6A7683A4181E" name="X7A1B6A7683A4181E"></a></p>
+
+<h5>2.2-2 UnderlyingGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingGroup</code>( <var class="Arg">Omega</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a group</p>
+
+<p>The group <span class="Math">G</span> underlying the finite <span class="Math">G</span>-set <var class="Arg">Omega</var>.</p>
+
+<p><a id="X81646703869F35B5" name="X81646703869F35B5"></a></p>
+
+<h4>2.3 <span class="Heading">Skeletal Constructors</span></h4>
+
+<p><a id="X7C0195BA834BDB90" name="X7C0195BA834BDB90"></a></p>
+
+<h5>2.3-1 FinGSet</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FinGSet</code>( <var class="Arg">G</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> object</p>
+
+<p>Construct a skeletal finite <span class="Math">G</span>-set out of the group <var class="Arg">G</var> and a list <var class="Arg">L</var>, i.e., an object in the <strong class="pkg">CAP</strong> category <code class="code">SkeletalFinGSets</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( S3, "S3" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 := FinGSet( S3, [ 1, 2, 3, 1 ] );</span>
+&lt;An object in SkeletalFin-S3-Sets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( w1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w2 := FinGSet( S3, [ 1, 2, 3, 1 ] );</span>
+&lt;An object in SkeletalFin-S3-Sets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( w2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 = w2;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ 1 ] );</span>
+&lt;An object in SkeletalFin-S3-Sets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( S );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ "a", 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFin-S3-Sets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( S );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ -1, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFin-S3-Sets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( S );</span>
+false
+</pre></div>
+
+<p><a id="X87A4B9967E9C25B1" name="X87A4B9967E9C25B1"></a></p>
+
+<h5>2.3-2 MapOfFinGSets</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MapOfFinGSets</code>( <var class="Arg">s</var>, <var class="Arg">G</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> morphism</p>
+
+<p>Construct a map <span class="Math">\phi \colon</span><var class="Arg">s</var><span class="Math">\to</span><var class="Arg">t</var> of the skeletal finite <span class="Math">G</span>-sets <var class="Arg">s</var> and <var class="Arg">t</var>, i.e., a morphism in the <strong class="pkg">CAP</strong> category <code class="code">SkeletalFinGSets</code>, where <var class="Arg">G</var> is a list of lists describing the graph of <span class="Math">\phi</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 := FinGSet( S3, [ 1, 2, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w2 := FinGSet( S3, [ 0, 1, 0, 1 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs1 := [ [ [ 1, (2,3), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [ [ 1, (), 4 ], [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := MapOfFinGSets( w1, imgs1, w2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs2 := [ [ [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [ [ 1, (), 4 ], [ 1, (2,3), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := MapOfFinGSets( w1, imgs2, w2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 = pi2;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># BUT</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">imgs1 = imgs2;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := FinGSet( SymmetricGroup( 3 ), [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, N );</span>
+Error, The underlying groups of the source and the range are not the same
+  with respect to IsIdenticalObj
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, [ 1 ], M );</span>
+Error, I has the wrong format
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, [ [ 1 ] ], M );</span>
+Error, images must be triples
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, [ [ [ 1, () ] ] ], M );</span>
+Error, images must be triples
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, [ [ [ 1, (), -1 ] ] ], M );</span>
+Error, last entry of an image must be an integer j with 1 &lt;= j &lt;= 4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, [ [ [ 1, (), 5 ] ] ], M );</span>
+Error, last entry of an image must be an integer j with 1 &lt;= j &lt;= 4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 0, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, "", 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 3 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ [ 1, (1,2,3), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+false
+</pre></div>
+
+<p><a id="X7D5778117FAD4A27" name="X7D5778117FAD4A27"></a></p>
+
+<h5>2.3-3 SkeletalFinGSets</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SkeletalFinGSets</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>The argument is a group <span class="Math">G</span>. The output is the category of skeletal finite <span class="Math">G</span>-Sets.</p>
+
+<p><a id="X7A95C44F85102748" name="X7A95C44F85102748"></a></p>
+
+<h4>2.4 <span class="Heading">Skeletal Examples</span></h4>
+
+<p><a id="X7932C4A6858E1212" name="X7932C4A6858E1212"></a></p>
+
+<h5>2.4-1 <span class="Heading">Skeletal IsEqualForObjects</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># Groups have to be the same with respect to IsIdenticalObj</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">C6 := CyclicGroup( 6 );</span>
+&lt;pc group of size 6 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 := FinGSet( C6, [1, 2, 3, 1]);</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( w1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w2 := FinGSet( S3, [1, 2, 3, 1]);</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( w2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w1 = w2;</span>
+Error, the object "An object in SkeletalFinGSets" and the object "An o\
+bject in SkeletalFinGSets" do not belong to the same CAP category
+</pre></div>
+
+<p><a id="X86100A35872E3E9F" name="X86100A35872E3E9F"></a></p>
+
+<h5>2.4-2 <span class="Heading">Skeletal PreCompose</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ 1, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := FinGSet( S3, [ 1, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FinGSet( S3, [ 1, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi1 := MapOfFinGSets( S, [ [ [ 1, (1,2), 1 ] ], [], [], [] ], R );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi2 := MapOfFinGSets( R, [ [ [ 1, (1,2,3), 1 ] ] , [], [], [] ] , T );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( psi1, psi2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := PreCompose( psi1, psi2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( phi );</span>
+[ [ [ 1, (2,3), 1 ] ], [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ 2, 2, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FinGSet( S3,  [ 2, 1, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (1,2), 1 ], [ 1, (1,2,3), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi1 := MapOfFinGSets( S, imgs, R );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (1,3), 1 ], [ 1, (1,2,3), 3 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ [ 1, (), 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi2 := MapOfFinGSets( R, imgs, T );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := PreCompose( psi1, psi2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi );</span>
+[ [ [ 1, (2,3), 3 ], [ 1, (1,2,3), 2 ] ],
+  [ [ 1, (), 2 ], [ 1, (2,3), 2 ] ],
+  [  ],
+  [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := FinGSet( G, [ 5 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := FinGSet( G, [ 7 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ], [ 5, (), 1 ], [ 3, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := MapOfFinGSets( m, imgs, n );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 6, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 6, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( n, imgs, p );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := PreCompose( psi, phi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( alpha );</span>
+[ [ [ 4, (), 1 ], [ 3, (), 1 ], [ 6, (), 1 ] ] ]
+</pre></div>
+
+<p><a id="X863395C783B40EF1" name="X863395C783B40EF1"></a></p>
+
+<h5>2.4-3 <span class="Heading">Skeletal IdentityMorphism</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 1, 2, 1, 2 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := IdentityMorphism( M );</span>
+&lt;An identity morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( iota );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iota );</span>
+[ [ [ 1, (), 1 ] ],
+  [ [ 1, (), 2 ], [ 2, (), 2 ] ],
+  [ [ 1, (), 3 ] ],
+  [ [ 1, (), 4 ], [ 2, (), 4 ] ] ]
+</pre></div>
+
+<p><a id="X8671AA4181FFF519" name="X8671AA4181FFF519"></a></p>
+
+<h5>2.4-4 <span class="Heading">Skeletal Initial and Terminal Objects</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ 2, 2, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismFromInitialObject( S );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( S3, [ 2, 2, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoTerminalObject( S );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 8 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i := InitialObject( m );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := UniversalMorphismFromInitialObject( m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( i );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := TerminalObject( m );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( t );</span>
+[ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := UniversalMorphismIntoTerminalObject( m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj( Range( pi ), t );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_t := UniversalMorphismIntoTerminalObject( m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi_t );</span>
+[ [ [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
+      [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi = pi_t;</span>
+true
+</pre></div>
+
+<p><a id="X7C6BD799789DDBA3" name="X7C6BD799789DDBA3"></a></p>
+
+<h5>2.4-5 <span class="Heading">Skeletal LiftAlongMonomorphism</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 1, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := FinGSet( S3, [ 2, 0, 2, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O := FinGSet( S3, [ 2, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := MapOfFinGSets( M, [ [ [ 1, (1,2), 1 ] ], [], [], [] ], N );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( tau );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ], [ 1, (1,3,2), 1 ] ], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := MapOfFinGSets( O, imgs, N );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( iota );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := LiftAlongMonomorphism( iota, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau = PreCompose( u, iota );</span>
+true
+</pre></div>
+
+<p><a id="X7EFD6EAD798E6AD4" name="X7EFD6EAD798E6AD4"></a></p>
+
+<h5>2.4-6 <span class="Heading">Skeletal ColiftAlongEpimorphism</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 2, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := FinGSet( S3, [ 1, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O := FinGSet( S3, [ 2, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (1,2), 1 ], [ 1, (), 3 ] ], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := MapOfFinGSets( M, imgs, O );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( tau );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (1,2,3), 1 ], [ 1, (1,2), 3 ] ], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon := MapOfFinGSets( M, imgs, N );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( epsilon );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( epsilon );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := ColiftAlongEpimorphism( epsilon, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau = PreCompose( epsilon, u );</span>
+true
+</pre></div>
+
+<p><a id="X85D4C3CA80D98F0E" name="X85D4C3CA80D98F0E"></a></p>
+
+<h5>2.4-7 <span class="Heading">Skeletal Product</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S3, [ 0, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S3, [ 0, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( DirectProduct( A, B ) );</span>
+[ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 0, 0, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S4 := SymmetricGroup( 4 );</span>
+Sym( [ 1 .. 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S4, [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S4, [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( DirectProduct( A, B ) );</span>
+[ SymmetricGroup( [ 1 .. 4 ] ), [ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionInFactorOfDirectProduct( [ A, A ], 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi );</span>
+[ [ [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], [ 1, (), 3 ], 
+      [ 1, (), 3 ] ], [  ], [ [ 1, (), 3 ], [ 1, (), 3 ] ], [  ], 
+  [  ], [  ], [  ], [  ], [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S5 := SymmetricGroup( 5 );</span>
+Sym( [ 1 .. 5 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ A, B ];</span>
+[ &lt;An object in SkeletalFinGSets&gt;, 
+  &lt;An object in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfDirectProduct( D, 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfDirectProduct( D, 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := [ pi1, pi2 ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoDirectProduct( D, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S3, [ 0, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S3, [ 0, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfDirectProduct( [ A, B ], 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfDirectProduct( [ A, B ], 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi1 );</span>
+[ [ [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi2 );</span>
+[ [ [ 1, (1,3), 2 ] ], [ [ 1, (), 2 ] ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 1, 2, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := FinGSet( S3, [ 1, 0, 1, 2 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ M, N ];</span>
+[ &lt;An object in SkeletalFinGSets&gt;, 
+  &lt;An object in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 := ProjectionInFactorOfDirectProduct( D, 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau2 := ProjectionInFactorOfDirectProduct( D, 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := [ tau1, tau2 ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoDirectProduct( D, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( u );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 5, (), 1 ], [ 6, (), 1 ], [ 7, (), 1 ], [ 8, (), 1 ], 
+      [ 9, (), 1 ], [ 10, (), 1 ], [ 11, (), 1 ], [ 12, (), 1 ], 
+      [ 13, (), 1 ], [ 14, (), 1 ], [ 15, (), 1 ], [ 16, (), 1 ], 
+      [ 17, (), 1 ], [ 18, (), 1 ] ], 
+  [ [ 1, (), 2 ], [ 2, (), 2 ], [ 3, (), 2 ], [ 4, (), 2 ] ], [  ], 
+  [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := FinGSet( S3, [ 2, 1, 0, 1 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ M, N, L ];</span>
+[ &lt;An object in SkeletalFinGSets&gt;,
+  &lt;An object in SkeletalFinGSets&gt;, 
+  &lt;An object in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := ProjectionInFactorOfDirectProduct( D, 3 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( tau );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 7 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := FinGSet( G, [ 4 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := DirectProduct( [ m, n, p ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( d );</span>
+[ 84 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfDirectProduct( [ m, n, p ], 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi1 );</span>
+[ [ [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
+      [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
+      [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], [ 1, (), 1 ], 
+      [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], 
+      [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], 
+      [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ], 
+      [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], 
+      [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], 
+      [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ], 
+      [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], 
+      [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], 
+      [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], [ 4, (), 1 ], 
+      [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], 
+      [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], 
+      [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ], 
+      [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], 
+      [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], 
+      [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], [ 6, (), 1 ], 
+      [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], 
+      [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], 
+      [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ], [ 7, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi3 := ProjectionInFactorOfDirectProduct( [ m, n, p ], 3 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi3 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ], 
+      [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ] ] ]
+</pre></div>
+
+<p><a id="X7ADD1E46831BEED2" name="X7ADD1E46831BEED2"></a></p>
+
+<h5>2.4-8 <span class="Heading">Skeletal Coproduct</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M1 := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M2 := FinGSet( S3, [ 1, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M3 := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M4 := FinGSet( S3, [ 2, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Coproduct( [ M1, M2, M3, M4 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau2 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau3 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 3 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau4 := InjectionOfCofactorOfCoproduct( [ M1, M2, M3, M4 ], 4 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := [ tau1, tau2, tau3, tau4 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ M1, M2, M3, M4 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_to_be := UniversalMorphismFromCoproduct( D, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( C );</span>
+&lt;An identity morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_to_be = id;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := TerminalObject( M1 );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := UniversalMorphismIntoTerminalObject( M1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := UniversalMorphismIntoTerminalObject( M2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi3 := UniversalMorphismIntoTerminalObject( M3 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi4 := UniversalMorphismIntoTerminalObject( M4 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := [ pi1, pi2, pi3, pi4 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := UniversalMorphismFromCoproduct( D, pi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi = UniversalMorphismIntoTerminalObject( C );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( psi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 7 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p := FinGSet( G, [ 4 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := Coproduct( m, n, p );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( c );</span>
+[ 14 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota1 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iota1 );</span>
+[ [ [ 1, (), 1 ],
+    [ 2, (), 1 ],
+    [ 3, (), 1 ],
+    [ 4, (), 1 ],
+    [ 5, (), 1 ],
+    [ 6, (), 1 ],
+    [ 7, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota3 := InjectionOfCofactorOfCoproduct( [ m, n, p ], 3 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iota3 );</span>
+[ [ [ 11, (), 1 ], [ 12, (), 1 ], [ 13, (), 1 ], [ 14, (), 1 ] ] ]
+</pre></div>
+
+<p><a id="X7CA82F40876ABC87" name="X7CA82F40876ABC87"></a></p>
+
+<h5>2.4-9 <span class="Heading">Skeletal Image</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := ImageObject( phi );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := ImageEmbedding( phi );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi_res := CoastrictionToImage( phi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi = PreCompose( phi_res, iota );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FinGSet( S3, [ 1, 1, 0, 0 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 2 ], [ 1, (), 2 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 := MapOfFinGSets( M, imgs, T );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau2 := MapOfFinGSets( T, imgs, M );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( tau2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi = PreCompose( tau1, tau2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismFromImage( phi, [ tau1, tau2 ] );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 = PreCompose( phi_res, u );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota = PreCompose( u, tau2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ], [ 1, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( M, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := ImageObject( phi );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := ImageEmbedding( phi );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi_res := CoastrictionToImage( phi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi = PreCompose( phi_res, psi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 7 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 7, (), 1 ], [ 5, (), 1 ], [ 5, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := MapOfFinGSets( n, imgs, m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageObject( phi );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( ImageObject( phi ) );</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ImageEmbedding( phi );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi );</span>
+[ [ [ 5, (), 1 ], [ 7, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi_res := CoastrictionToImage( phi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi = PreCompose( phi_res, pi );</span>
+true
+</pre></div>
+
+<p><a id="X8612F06E7F683F4C" name="X8612F06E7F683F4C"></a></p>
+
+<h5>2.4-10 <span class="Heading">Skeletal Equalizer</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := FinGSet( S3, [ 1, 0, 2, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := FinGSet( S3, [ 1, 2, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (1,2), 1 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ [ 1, (), 3 ], [ 1, (1,2,3), 3 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi1 := MapOfFinGSets( s, imgs, r );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [[ 1, (1,2), 3 ]], [], [[ 1, (), 3 ], [ 1, (), 3 ]], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi2 := MapOfFinGSets( s, imgs, r );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ psi1, psi2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eq := Equalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Eq );</span>
+[ 0, 0, 2, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := EmbeddingOfEqualizer( D );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( psi );</span>
+[ [  ], [  ], [ [ 1, (), 3 ], [ 2, (), 3 ] ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( psi, psi1 ) = PreCompose( psi, psi2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := FinGSet( S3, [ 1, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (1,2), 3 ] ], [], [ [ 1, (1,2,3), 3 ] ], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := MapOfFinGSets( t, imgs , s );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( tau );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := UniversalMorphismIntoEqualizer( D, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( phi );</span>
+[ [ [ 2, (1,2), 3 ] ], [  ], [ [ 1, (1,2,3), 3 ] ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( phi, psi ) = tau;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FinGSet( G, [ 5 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f1 := MapOfFinGSets( S, imgs, T );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2 := MapOfFinGSets( S, imgs, T );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f3 := MapOfFinGSets( S, imgs, T );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f1, f2, f3 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eq := Equalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Eq );</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := EmbeddingOfEqualizer( D );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( psi );</span>
+[ [ [ 1, (), 1 ], [ 5, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( psi, f1 ) = PreCompose( psi, f2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( psi, f1 ) = PreCompose( psi, f3 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f2, f3 ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eq := Equalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Eq );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := EmbeddingOfEqualizer( D );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( psi );</span>
+[ [ [ 1, (), 1 ], [ 4, (), 1 ], [ 5, (), 1 ] ] ]
+</pre></div>
+
+<p><a id="X7CAD01387C12A9E8" name="X7CAD01387C12A9E8"></a></p>
+
+<h5>2.4-11 <span class="Heading">Skeletal Pullback</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S3, [ 1, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := FinGSet( S3, [ 2, 1, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 := MapOfFinGSets( A, imgs, C );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ], [ 2, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau2 := MapOfFinGSets( B, imgs, C );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ tau1, tau2 ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, 
+ &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FiberProduct( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( F );</span>
+[ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 0, 0, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfFiberProduct( D, 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi1 );</span>
+[ [ [ 1, (), 1 ] ], [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfFiberProduct( D, 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi2 );</span>
+[ [ [ 2, (), 1 ] ], [  ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := FinGSet( G, [ 5 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n1 := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota1 := MapOfFinGSets( n1, imgs, m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( iota1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n2 := FinGSet( G, [ 4 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 4, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota2 := MapOfFinGSets( n2, imgs, m );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( iota2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ iota1, iota2 ];</span>
+[ &lt;A monomorphism in SkeletalFinGSets&gt;, &lt;A monomorphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fib := FiberProduct( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Fib );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfFiberProduct( D, 1 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi1 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">int1 := ImageObject( pi1 );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( int1 );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfFiberProduct( D, 2 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi2 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">int2 := ImageObject( pi2 );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( int2 );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">omega1 := PreCompose( pi1, iota1 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">omega2 := PreCompose( pi2, iota2 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">omega1 = omega2;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( omega1 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+</pre></div>
+
+<p><a id="X83BC64A980FE2B98" name="X83BC64A980FE2B98"></a></p>
+
+<h5>2.4-12 <span class="Heading">Skeletal Coequalizer</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S5 := SymmetricGroup( 5 );</span>
+Sym( [ 1 .. 5 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_1_1 := ();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_1_2 := (1,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_1_3 := (1,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_1_4 := (1,4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_2_1 := ();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_2_2 := (1,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_2_3 := ();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_2_4 := (1,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_3_1 := ();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_3_2 := (1,2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_3_3 := (1,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g_3_4 := (1,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, g_1_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, g_1_3, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_3, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_3, 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_1 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, g_1_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, g_1_4, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_4, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_4, 4 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_2 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f_1, f_2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Cq );</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );</span>
+&lt;An epimorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_to_be := UniversalMorphismFromCoequalizer( D, pi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( id_to_be );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( Cq );</span>
+&lt;An identity morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id = id_to_be;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, g_1_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, g_1_3, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_3, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_1, 2 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_3, 2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_1 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, g_1_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 1, g_1_4, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, g_2_4, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_2, 4 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, g_3_4, 4 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_2 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f_1, f_2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Cq );</span>
+[ 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );</span>
+&lt;An epimorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id_to_be := UniversalMorphismFromCoequalizer( D, pi );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( id_to_be );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( Cq );</span>
+&lt;An identity morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id = id_to_be;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S5,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [ 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 3 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_1 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (1,2,3), 4] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [], [], [], [], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f_2 := MapOfFinGSets(A, imgs, B);</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f_2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f_1, f_2 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Cq );</span>
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );</span>
+&lt;An epimorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := FinGSet( G, [ 5 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := FinGSet( G, [ 4 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MapOfFinGSets( s, imgs, t );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 3, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 2, (), 1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ 4, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := MapOfFinGSets( s, imgs, t );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f, g ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Coequalizer( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( C );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );</span>
+&lt;An epimorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ], [ 3, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ], [ 2, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := MapOfFinGSets( t, imgs, FinGSet( G, [ 2 ] ) );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := UniversalMorphismFromCoequalizer( D, tau );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( phi );</span>
+[ [ [ 2, (), 1 ], [ 1, (), 1 ], [ 2, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( pi, phi ) = tau;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( G, [ 2 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MapOfFinGSets( A, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], B );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := MapOfFinGSets( A, [ [ [ 2, (), 1 ], [ 3, (), 1 ] ] ], B );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( g );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f, g ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Cq );</span>
+[ Group( () ), [ 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( f, pi ) = PreCompose( g, pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( G, [ 0, 0, 0, 0 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( A );</span>
+&lt;An identity morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ id, id ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Cq );</span>
+[ SymmetricGroup( [ 1 .. 3 ] ), [ 0, 0, 0, 0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( pi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi = id;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( G, [ 0, 0, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( G, [ 1, 1, 1, 1 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MapOfFinGSets( A, [ [ ], [ ], [ ], [ ] ], B );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( f );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ f, f ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cq := Coequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Cq );</span>
+[ SymmetricGroup( [ 1 .. 3 ] ), [ 1, 1, 1, 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := ProjectionOntoCoequalizer( D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi = IdentityMorphism( B );</span>
+true
+</pre></div>
+
+<p><a id="X7A2A65A58651651A" name="X7A2A65A58651651A"></a></p>
+
+<h5>2.4-13 <span class="Heading">Skeletal Pushout</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := SymmetricGroup( 3 );</span>
+Sym( [ 1 .. 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := FinGSet( S3, [ 1, 0, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := FinGSet( S3, [ 2, 1, 0, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := FinGSet( S3, [ 3, 1, 1, 0 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 3, (), 1 ] ], [], [ [ 1, (), 3 ] ], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau1 := MapOfFinGSets( A, imgs, C );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 2, (), 1 ], [ 3, (), 1 ] ], [ [ 1, (), 2 ] ], [], [] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau2 := MapOfFinGSets( B, imgs, C );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ tau1, tau2 ];</span>
+[ &lt;A morphism in SkeletalFinGSets&gt;, 
+ &lt;A morphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FiberProduct( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfFiberProduct( D, 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfFiberProduct( D, 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := UniversalMorphismFromPushout( [ pi1, pi2 ], [ tau1, tau2 ] );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iota );</span>
+[ [ [ 3, (), 1 ], [ 2, (), 1 ] ], [ [ 1, (), 2 ] ], [ [ 1, (), 3 ] ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup( 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := FinGSet( G, [ 5 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N1 := FinGSet( G, [ 3 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imgs := [ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota1 := MapOfFinGSets( N1, imgs, M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( iota1 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N2 := FinGSet( G, [ 2 ] );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota2 := MapOfFinGSets( N2, [ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ], M );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonomorphism( iota2 );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ iota1, iota2 ];</span>
+[ &lt;A monomorphism in SkeletalFinGSets&gt;, &lt;A monomorphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fib := FiberProduct( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( Fib );</span>
+[ 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi1 := ProjectionInFactorOfFiberProduct( D, 1 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi1 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi2 := ProjectionInFactorOfFiberProduct( D, 2 );</span>
+&lt;A monomorphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi2 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ pi1, pi2 ];</span>
+[ &lt;A monomorphism in SkeletalFinGSets&gt;, &lt;A monomorphism in SkeletalFinGSets&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UU := Pushout( D );</span>
+&lt;An object in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsList( UU );</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kappa1 := InjectionOfCofactorOfPushout( D, 1 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( kappa1 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ], [ 3, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kappa2 := InjectionOfCofactorOfPushout( D, 2 );</span>
+&lt;A morphism in SkeletalFinGSets&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( kappa2 );</span>
+[ [ [ 1, (), 1 ], [ 2, (), 1 ] ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( pi1, kappa1 ) = PreCompose( pi2, kappa2 );</span>
+true
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

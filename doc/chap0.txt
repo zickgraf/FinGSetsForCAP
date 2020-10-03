@@ -1,1 +1,96 @@
-Placeholder
+  
+  
+                                [1X FinGSetsForCAP [101X
+  
+  
+               [1X The elementary topos of (skeletal) finite G-sets [101X
+  
+  
+                                   2019.03.03
+  
+  
+                                  3 March 2019
+  
+  
+                                Mohamed Barakat
+  
+                                 Julia Mickisch
+  
+                                Fabian Zickgraf
+  
+  
+  
+  Mohamed Barakat
+      Email:    [7Xmailto:mohamed.barakat@uni-siegen.de[107X
+      Homepage: [7Xhttp://www.mathematik.uni-kl.de/~barakat/[107X
+      Address:  [33X[0;14YWalter-Flex-Str. 3[133X
+                [33X[0;14Y57068 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  Julia Mickisch
+      Email:    [7Xmailto:julia.mickisch@student.uni-siegen.de[107X
+      Homepage: [7Xhttps://github.com/juliamick/[107X
+      Address:  [33X[0;14YWalter-Flex-Str. 3[133X
+                [33X[0;14Y57068 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  Fabian Zickgraf
+      Email:    [7Xmailto:fabian.zickgraf@uni-siegen.de[107X
+      Homepage: [7Xhttps://github.com/zickgraf/[107X
+      Address:  [33X[0;14YWalter-Flex-Str. 3[133X
+                [33X[0;14Y57068 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (FinGSetsForCAP)[101X
+  
+  1 [33X[0;0YMathematical background[133X
+  2 [33X[0;0YThe category of skeletal finite G-sets[133X
+    2.1 [33X[0;0YSkeletal GAP Categories[133X
+      2.1-1 IsSkeletalFinGSet
+      2.1-2 IsSkeletalFinGSetMap
+    2.2 [33X[0;0YSkeletal Attributes[133X
+      2.2-1 AsList
+      2.2-2 UnderlyingGroup
+    2.3 [33X[0;0YSkeletal Constructors[133X
+      2.3-1 FinGSet
+      2.3-2 MapOfFinGSets
+      2.3-3 SkeletalFinGSets
+    2.4 [33X[0;0YSkeletal Examples[133X
+      2.4-1 [33X[0;0YSkeletal IsEqualForObjects[133X
+      2.4-2 [33X[0;0YSkeletal PreCompose[133X
+      2.4-3 [33X[0;0YSkeletal IdentityMorphism[133X
+      2.4-4 [33X[0;0YSkeletal Initial and Terminal Objects[133X
+      2.4-5 [33X[0;0YSkeletal LiftAlongMonomorphism[133X
+      2.4-6 [33X[0;0YSkeletal ColiftAlongEpimorphism[133X
+      2.4-7 [33X[0;0YSkeletal Product[133X
+      2.4-8 [33X[0;0YSkeletal Coproduct[133X
+      2.4-9 [33X[0;0YSkeletal Image[133X
+      2.4-10 [33X[0;0YSkeletal Equalizer[133X
+      2.4-11 [33X[0;0YSkeletal Pullback[133X
+      2.4-12 [33X[0;0YSkeletal Coequalizer[133X
+      2.4-13 [33X[0;0YSkeletal Pushout[133X
+  3 [33X[0;0YTools[133X
+    3.1 [33X[0;0YHelper functions[133X
+      3.1-1 PositionAndConjugatorOfStabilizer
+  4 [33X[0;0YReconstructing G from the category of skeletal finite G-sets[133X
+    4.1 [33X[0;0YReconstruction Tools[133X
+      4.1-1 EndAsEqualizer
+      4.1-2 EndByLifts
+      4.1-3 ReconstructTableOfMarks
+      4.1-4 HomSkeletalFinGSets
+      4.1-5 ForgetfulFunctorSkeletalFinGSets
+      4.1-6 ReconstructGroup
+    4.2 [33X[0;0YExamples[133X
+      4.2-1 [33X[0;0YReconstructing the Table of Marks[133X
+      4.2-2 [33X[0;0YReconstructing the Group[133X
+  5 [33X[0;0YBibliography[133X
+  
+  
+  [32X
