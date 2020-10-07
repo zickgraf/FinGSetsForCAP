@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # This file tests if the package can be loaded without errors or warnings.
