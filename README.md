@@ -8,10 +8,12 @@
 ### Dependencies
 
 To obtain current versions of all dependencies, clone the following repositories:
-1. **homalg_project**: https://github.com/homalg-project/homalg_project
-2. **CAP_project**: https://github.com/homalg-project/CAP_project
-3. **Toposes**: https://github.com/homalg-project/Toposes
-4. **FinSetsForCAP**: https://github.com/homalg-project/FinSetsForCAP
+|   | Repository | URL |
+| - | ---------- | --- |
+| 1. | **homalg_project** | https://github.com/homalg-project/homalg_project |
+| 2. | **CAP_project** | https://github.com/homalg-project/CAP_project |
+| 3. | **Toposes** | https://github.com/homalg-project/Toposes |
+| 4. | **FinSetsForCAP** | https://github.com/homalg-project/FinSetsForCAP |
 
 ---
 
