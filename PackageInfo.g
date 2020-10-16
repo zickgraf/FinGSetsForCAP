@@ -11,14 +11,14 @@ SetPackageInfo( rec(
 PackageName := "FinGSetsForCAP",
 Subtitle := "The elementary topos of (skeletal) finite G-sets",
 Version := Maximum( [
-                   "2018.09.17", ## Mohamed's version
+                   "2018.09-17", ## Mohamed's version
                    ## this line prevents merge conflicts
-                   "2017.05.26", ## Julia's version
+                   "2017.05-26", ## Julia's version
                    ## this line prevents merge conflicts
-                   "2019.03.03", ## Fabian's version
+                   "2020.10-01", ## Fabian's version
                    ] ),
 
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -78,7 +78,7 @@ README_URL      := "https://homalg-project.github.io/FinGSetsForCAP/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/FinGSetsForCAP/releases/download/v", ~.Version, "/FinGSetsForCAP-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
