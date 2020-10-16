@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # FinGSetsForCAP: The elementary topos of (skeletal) finite G-sets
 #
 # This file contains package meta data. For additional information on
@@ -11,14 +11,14 @@ SetPackageInfo( rec(
 PackageName := "FinGSetsForCAP",
 Subtitle := "The elementary topos of (skeletal) finite G-sets",
 Version := Maximum( [
-                   "2018.09.17", ## Mohamed's version
+                   "2018.09-17", ## Mohamed's version
                    ## this line prevents merge conflicts
-                   "2017.05.26", ## Julia's version
+                   "2017.05-26", ## Julia's version
                    ## this line prevents merge conflicts
-                   "2019.03.03", ## Fabian's version
+                   "2020.10-01", ## Fabian's version
                    ] ),
 
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Date := "16/10/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -27,7 +27,7 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Mohamed",
     LastName := "Barakat",
-    WWWHome := "http://www.mathematik.uni-kl.de/~barakat/",
+    WWWHome := "https://mohamed-barakat.github.io/",
     Email := "mohamed.barakat@uni-siegen.de",
     PostalAddress := Concatenation(
                "Walter-Flex-Str. 3\n",
@@ -72,13 +72,13 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/FinGSetsForCAP",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/homalg-project/FinGSetsForCAP",
-PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/FinGSetsForCAP/master/PackageInfo.g",
-README_URL      := "https://raw.githubusercontent.com/homalg-project/FinGSetsForCAP/master/README.md",
+PackageWWWHome  := "https://homalg-project.github.io/FinGSetsForCAP",
+PackageInfoURL  := "https://homalg-project.github.io/FinGSetsForCAP/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/FinGSetsForCAP/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/FinGSetsForCAP/releases/download/v", ~.Version, "/FinGSetsForCAP-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
