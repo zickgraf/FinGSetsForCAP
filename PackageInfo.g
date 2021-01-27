@@ -72,7 +72,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/FinGSetsForCAP",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/FinGSetsForCAP",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/FinGSetsForCAP",
 PackageInfoURL  := "https://homalg-project.github.io/FinGSetsForCAP/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/FinGSetsForCAP/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/FinGSetsForCAP/releases/download/v", ~.Version, "/FinGSetsForCAP-", ~.Version ),
