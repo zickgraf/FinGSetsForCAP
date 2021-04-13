@@ -110,6 +110,8 @@ InstallMethod( SkeletalFinGSets,
     
     SkeletalFinGSets := CreateCapCategory( CategoryName );
     
+    SkeletalFinGSets!.category_as_first_argument := true;
+    
     SkeletalFinGSets!.group_for_category := group;
     
     SetIsCartesianClosedCategory( SkeletalFinGSets, true );
@@ -145,7 +147,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsWellDefinedForObjects( SkeletalFinGSets,
-      function ( Omega )
+      function ( cat, Omega )
         local L;
         
         L := AsList( Omega );
@@ -164,7 +166,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEqualForObjects( SkeletalFinGSets,
-      function ( Omega1, Omega2 )
+      function ( cat, Omega1, Omega2 )
         
         # groups have to be the same, because G is fixed
         return AsList( Omega1 ) = AsList( Omega2 );
@@ -193,7 +195,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsWellDefinedForMorphisms( SkeletalFinGSets,
-      function ( mor )
+      function ( cat, mor )
         local S, T, img, tom, s, t, U_i, U_j, u;
         
         S := Source( mor );
@@ -261,7 +263,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEqualForMorphisms( SkeletalFinGSets,
-      function ( mor1, mor2 )
+      function ( cat, mor1, mor2 )
         
         return AsList( mor1 ) = AsList( mor2 );
         
@@ -269,7 +271,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIdentityMorphism( SkeletalFinGSets,
-      function ( Omega )
+      function ( cat, Omega )
         local L, M, i, C, l;
         
         L := [ ];
@@ -289,7 +291,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddPreCompose( SkeletalFinGSets,
-      function ( map_pre, map_post )
+      function ( cat, map_pre, map_post )
         local cmp, S, M, i, C, l, img_1, r_1, g_1, j_1, img_2, r_2, g_2, j_2;
         
         cmp := [ ];
@@ -390,7 +392,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddLiftAlongMonomorphism( SkeletalFinGSets,
-      function ( iota, phi )
+      function ( cat, iota, phi )
         local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
       
         S := Source( phi );
@@ -426,7 +428,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddColiftAlongEpimorphism( SkeletalFinGSets,
-      function ( pi, phi )
+      function ( cat, pi, phi )
         local S, T, M, D, i, C, l, img, r, g, j, preimagePosition, t, h, s;
       
         S := Range( pi );
@@ -462,7 +464,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddTerminalObject( SkeletalFinGSets,
-      function ( arg )
+      function ( cat )
         local L;
         
         L := IntZeroVector( k );
@@ -475,7 +477,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( SkeletalFinGSets,
-      function ( Omega, T )
+      function ( cat, Omega, T )
         local L, M, i, C, l;
         
         L := [ ];
@@ -496,7 +498,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddDirectProduct( SkeletalFinGSets,
-      function ( L )
+      function ( cat, L )
         local ToM, prod, l, M_l, i, V, B, C;
         
         ToM := TableOfMarks( group );
@@ -597,7 +599,7 @@ InstallMethod( SkeletalFinGSets,
         
     end;
     
-    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "ProjectionInFactorOfBinaryDirectProductToProjectionInFactorOfDirectProduct", SkeletalFinGSets, function ( L1, L2, pos )
+    AddProjectionInFactorOfDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "ProjectionInFactorOfBinaryDirectProductToProjectionInFactorOfDirectProduct", SkeletalFinGSets, function ( cat, L1, L2, pos )
         local S, T, M, N, D, tau, i, j, l, imgs, img, m, n, target, copy_number, pi, P;
         
         S := DirectProduct( [ L1, L2 ] );
@@ -662,7 +664,7 @@ InstallMethod( SkeletalFinGSets,
         
     end;
 
-    AddUniversalMorphismIntoDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "UniversalMorphismIntoBinaryDirectProductToUniversalMorphismIntoDirectProduct", SkeletalFinGSets, function ( tau1, tau2 )
+    AddUniversalMorphismIntoDirectProduct( SkeletalFinGSets, CAPOperationPrepareFunction( "UniversalMorphismIntoBinaryDirectProductToUniversalMorphismIntoDirectProduct", SkeletalFinGSets, function ( cat, tau1, tau2 )
         local S, T, M, N, imgs, i, l, r_1, r_2, g_1, g_2, j_1, j_2, Offset, Orbits, RoO, SRO, img, o, g, s, j, Internaloffset, p, j_p, r, U_j, conj, found_conj;
         
         S := Source( tau1 );
@@ -749,7 +751,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddEmbeddingOfEqualizer( SkeletalFinGSets,
-      function ( D )
+      function ( cat, D )
         local phi_1, S, positions;
         
         phi_1 := D[1];
@@ -768,7 +770,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddInitialObject( SkeletalFinGSets,
-      function ( arg )
+      function ( cat )
         
         return FinGSet( group, IntZeroVector( k ) );
         
@@ -776,7 +778,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismFromInitialObject( SkeletalFinGSets,
-      function ( Omega )
+      function ( cat, Omega )
         
         return MapOfFinGSets( FinGSet( group, IntZeroVector( k ) ), List( AsList( Omega ), x -> [ ] ), Omega );
         
@@ -784,7 +786,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddCoproduct( SkeletalFinGSets,
-      function ( L )
+      function ( cat, L )
         local sum, l;
         
         sum := IntZeroVector( k );
@@ -799,7 +801,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddInjectionOfCofactorOfCoproduct( SkeletalFinGSets,
-      function ( L, pos )
+      function ( cat, L, pos )
         local S, M, T, sum, j, imgs, i, C, l;
         
         S := L[pos];
@@ -830,7 +832,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismFromCoproductWithGivenCoproduct( SkeletalFinGSets,
-      function ( D, tau, S )
+      function ( cat, D, tau, S )
         local T, M, imgs, i, C, j;
         
         T := Range( tau[1] );
@@ -954,7 +956,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddProjectionOntoCoequalizer( SkeletalFinGSets,
-      function ( D )
+      function ( cat, D )
         local S, T, M, N, Cq, rangePositions, imgs, j, r, previousImagePositions, preimagePositions, imagePositions, iota, preimageEmbedding, imageEmbedding, projection, imageEmbeddings, projections, tau, alpha, pi;
         
         S := Source( D[1] );
@@ -1007,7 +1009,7 @@ InstallMethod( SkeletalFinGSets,
     
     ##
     AddImageEmbedding( SkeletalFinGSets,
-      function ( phi )
+      function ( cat, phi )
         
         return EmbeddingOfPositions( ImagePositions( phi ), Range( phi ) );
         
@@ -1015,7 +1017,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsEpimorphism( SkeletalFinGSets,
-      function ( phi )
+      function ( cat, phi )
         
         return ImageObject( phi ) = Range( phi );
         
@@ -1023,7 +1025,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddIsMonomorphism( SkeletalFinGSets,
-      function ( phi )
+      function ( cat, phi )
         
         return AsList( ImageObject( phi ) ) = AsList( Source( phi ) );
         
