@@ -32,7 +32,7 @@ id := IdentityMorphism( C );
 id_to_be = id;
 #! true
 
-T := TerminalObject( M1 );
+T := TerminalObject( CapCategory( M1 ) );
 #! <An object in SkeletalFinGSets>
 pi1 := UniversalMorphismIntoTerminalObject( M1 );
 #! <A morphism in SkeletalFinGSets>
