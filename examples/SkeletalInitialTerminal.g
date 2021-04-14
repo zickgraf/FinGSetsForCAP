@@ -25,13 +25,13 @@ IsWellDefined( u );
 G := SymmetricGroup( 0 );;
 m := FinGSet( G, [ 8 ] );
 #! <An object in SkeletalFinGSets>
-i := InitialObject( m );
+i := InitialObject( CapCategory( m ) );
 #! <An object in SkeletalFinGSets>
 iota := UniversalMorphismFromInitialObject( m );
 #! <A morphism in SkeletalFinGSets>
 AsList( i );
 #! [ 0 ]
-t := TerminalObject( m );
+t := TerminalObject( CapCategory( m ) );
 #! <An object in SkeletalFinGSets>
 AsList( t );
 #! [ 1 ]
