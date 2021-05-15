@@ -832,7 +832,7 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddUniversalMorphismFromCoproductWithGivenCoproduct( SkeletalFinGSets,
-      function ( cat, D, tau, S )
+      function ( cat, D, test_object, tau, S )
         local T, M, imgs, i, C, j;
         
         T := Range( tau[1] );
