@@ -29,6 +29,14 @@ jobs:
       - run: |
           export HOME="/home/gap"
           cd /home/gap/.gap/pkg/
+          cd FinSetsForCAP
+          git remote -vvv
+          #git remote add FinGSetsForCAP https://github.com/zickgraf/FinGSetsForCAP
+          #git remote add FinGSetsForCAP git@github.com:homalg-project/FinGSetsForCAP.git
+          git remote add FinGSetsForCAP https://zickgraf:${{ secrets.YOUR_SECRET_NAME }}@github.com/zickgraf/FinGSetsForCAP
+          cat .git/config
+          #git push origin HEAD:my_new_branch
+          git push FinGSetsForCAP HEAD:refs/heads/my_new_branch
           cp ./FinSetsForCAP/ci_gaprc /home/gap/.gap/gaprc
           git clone --depth 1 https://github.com/gap-packages/AutoDoc.git
           git clone --depth 1 https://github.com/homalg-project/homalg_project.git
