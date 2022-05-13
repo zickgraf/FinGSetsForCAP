@@ -72,7 +72,7 @@ InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, Ind
         S_C_1 := HomFinSetsSkeletal( Set_C_1, Set_C_1 );
         T_C_1_C_2 := HomFinSetsSkeletal( HomC_C_1_C_2, HomSets_C_1_C_2 );
 
-        graph := List( [ 1 .. Length( S_C_1 ) ], function ( x )
+        graph := List( AsList( S_C_1 ), function ( x )
             local f;
 
             f := IntToMorphism( Set_C_1, x, Set_C_1 );
@@ -107,7 +107,7 @@ InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, Ind
         S_C_2 := HomFinSetsSkeletal( Set_C_2, Set_C_2 );
         T_C_1_C_2 := HomFinSetsSkeletal( HomC_C_1_C_2, HomSets_C_1_C_2 );
 
-        graph := List( [ 1 .. Length( S_C_2 ) ], function ( x )
+        graph := List( AsList( S_C_2 ), function ( x )
             local f;
 
             f := IntToMorphism( Set_C_2, x, Set_C_2 );

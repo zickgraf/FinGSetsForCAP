@@ -63,7 +63,7 @@ InstallGlobalFunction( EndByLifts, function ( C, HomC, ForgetfulFunctor, Objects
                 od;
 
                 if not IsEmpty( preimage ) then
-                    newLiftImages := PermutationsListWithRestrictions( [ 1 .. Length( Set_C ) ], preimages );
+                    newLiftImages := PermutationsListWithRestrictions( AsList( Set_C ), preimages );
                 
                     liftImages := Union2( liftImages, newLiftImages );
                 fi;
