@@ -79,7 +79,7 @@ InstallMethod( ForgetfulFunctorSkeletalFinGSets,
                 j := imgs[i][l][3];
                 
                 for h in RightCosets( group, U_i ) do
-                    Add( Set_imgs, OffsetOfCofactorInTarget( r, j ) + OffsetOfElementInCofactor( g * Representative( h ), j ) );
+                    Add( Set_imgs, -1 + OffsetOfCofactorInTarget( r, j ) + OffsetOfElementInCofactor( g * Representative( h ), j ) );
                 od;
             od;
         od;

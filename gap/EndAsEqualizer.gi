@@ -11,12 +11,10 @@ InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, Ind
         local s, t, L, i, phi;
         s := Length( S );
         t := Length( T );
-        L := ListWithIdenticalEntries( s, 1 );
-        # lists start with entry 1, we want to start at 0 and add back 1 later
-        int := int - 1;
+        L := ListWithIdenticalEntries( s, 0 );
         i := 1;
         while int <> 0 do
-            L[ i ] := ( int mod t ) + 1;
+            L[ i ] := ( int mod t );
             int := QuoInt( int, t );
             i := i + 1;
         od;
@@ -42,10 +40,10 @@ InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, Ind
         
         int := 0;
         for i in [ 0 .. ( s - 1 ) ] do
-            int := int + ( imgs[ i + 1 ] - 1 ) * t^i;
+            int := int + imgs[ i + 1 ] * t^i;
         od;
 
-        return int + 1;
+        return int;
     end;
     
     HomFinSetsSkeletal := function ( S, T )
