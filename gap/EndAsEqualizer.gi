@@ -138,7 +138,7 @@ InstallGlobalFunction( EndAsEqualizer, function ( C, HomC, ForgetfulFunctor, Ind
     LambdaComponents := Concatenation( List( [ 1 .. Size( IndexSet ) ], c_1 -> List( [ 1 .. Size( IndexSet ) ], c_2 -> GetLambdaComponent( IndexSet, Projections, c_1, c_2 ) ) ) );
     Lambda := UniversalMorphismIntoDirectProduct( LambdaComponents );
 
-    iota := EmbeddingOfEqualizer( [ Rho, Lambda ] );
+    iota := EmbeddingOfEqualizer( S, [ Rho, Lambda ] );
     EndSkeletal := Source( iota );
     
     # each element x in EndSkeletal corresponds to a tuple of integers by taking all projections of the image of x under the embedding iota
