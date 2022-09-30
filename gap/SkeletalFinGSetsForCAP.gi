@@ -751,12 +751,10 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddEmbeddingOfEqualizer( SkeletalFinGSets,
-      function ( cat, D )
-        local phi_1, S, positions;
+      function ( cat, S, D )
+        local phi_1, positions;
         
         phi_1 := D[1];
-        
-        S := Source( phi_1 );
         
         D := D{[ 2 .. Length( D ) ]};
         
@@ -956,12 +954,11 @@ InstallMethod( SkeletalFinGSets,
 
     ##
     AddProjectionOntoCoequalizer( SkeletalFinGSets,
-      function ( cat, D )
-        local S, T, M, N, Cq, rangePositions, imgs, j, r, previousImagePositions, preimagePositions, imagePositions, iota, preimageEmbedding, imageEmbedding, projection, imageEmbeddings, projections, tau, alpha, pi;
+      function ( cat, T, D )
+        local S, M, N, Cq, rangePositions, imgs, j, r, previousImagePositions, preimagePositions, imagePositions, iota, preimageEmbedding, imageEmbedding, projection, imageEmbeddings, projections, tau, alpha, pi;
         
         S := Source( D[1] );
-        T := Range( D[1] );
-
+        
         M := AsList( S );
         N := AsList( T );
         
