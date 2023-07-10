@@ -12,11 +12,9 @@ InstallMethod( FinGSet,
   function ( group, L )
     local Omega;
     
-    Omega := rec( );
-    
-    ObjectifyObjectForCAPWithAttributes( Omega, SkeletalFinGSets( group ),
-            AsList, ShallowCopy( L ),
-            UnderlyingGroup, group );
+    Omega := CreateCapCategoryObjectWithAttributes( SkeletalFinGSets( group ),
+                                                    AsList, ShallowCopy( L ),
+                                                    UnderlyingGroup, group );
     
     Assert( 4, IsWellDefined( Omega ) );
     
@@ -63,13 +61,10 @@ InstallMethod( MapOfFinGSets,
         return img;
     end ) );
     
-    map := rec( );
-    
-    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( map, SkeletalFinGSets( group ),
-        S,
-        T,
-        AsList, imgs
-    );
+    map := CreateCapCategoryMorphismWithAttributes( SkeletalFinGSets( group ),
+                                                    S,
+                                                    T,
+                                                    AsList, imgs );
     
     Assert( 4, IsWellDefined( map ) );
      
@@ -108,17 +103,20 @@ InstallMethod( SkeletalFinGSets,
         CategoryName := "SkeletalFinGSets";
     fi;
     
-    SkeletalFinGSets := CreateCapCategory( CategoryName );
+    SkeletalFinGSets := CreateCapCategoryWithDataTypes( CategoryName,
+                                                        IsSkeletalFinGSetCategory,
+                                                        IsSkeletalFinGSet,
+                                                        IsSkeletalFinGSetMap,
+                                                        IsCapCategoryTwoCell,
+                                                        fail,
+                                                        fail,
+                                                        fail );
     
     SkeletalFinGSets!.category_as_first_argument := true;
     
     SkeletalFinGSets!.group_for_category := group;
     
     SetIsCartesianClosedCategory( SkeletalFinGSets, true );
-    
-    AddObjectRepresentation( SkeletalFinGSets, IsSkeletalFinGSet );
-    
-    AddMorphismRepresentation( SkeletalFinGSets, IsSkeletalFinGSetMap );
     
     k := Length( MarksTom( TableOfMarks( group ) ) );
     
