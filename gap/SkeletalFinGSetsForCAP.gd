@@ -9,6 +9,13 @@
 #! @Section Skeletal GAP Categories
 
 #! @Description
+#! The GAP category of the category
+#! of skeletal finite $G$-sets.
+#! @Arguments object
+DeclareCategory( "IsSkeletalFinGSetCategory",
+                 IsCapCategory and IsSkeletalCategory );
+
+#! @Description
 #! The GAP category of objects in the category
 #! of skeletal finite $G$-sets.
 #! @Arguments object

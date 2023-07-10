@@ -108,17 +108,20 @@ InstallMethod( SkeletalFinGSets,
         CategoryName := "SkeletalFinGSets";
     fi;
     
-    SkeletalFinGSets := CreateCapCategory( CategoryName );
+    SkeletalFinGSets := CreateCapCategoryWithDataTypes( CategoryName,
+                                                        IsSkeletalFinGSetCategory,
+                                                        IsSkeletalFinGSet,
+                                                        IsSkeletalFinGSetMap,
+                                                        IsCapCategoryTwoCell,
+                                                        fail,
+                                                        fail,
+                                                        fail );
     
     SkeletalFinGSets!.category_as_first_argument := true;
     
     SkeletalFinGSets!.group_for_category := group;
     
     SetIsCartesianClosedCategory( SkeletalFinGSets, true );
-    
-    AddObjectRepresentation( SkeletalFinGSets, IsSkeletalFinGSet );
-    
-    AddMorphismRepresentation( SkeletalFinGSets, IsSkeletalFinGSetMap );
     
     k := Length( MarksTom( TableOfMarks( group ) ) );
     
